@@ -1,4 +1,4 @@
-package fr.insee.webservice.rest;
+package fr.insee.eno.webservice.rest;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,10 +20,10 @@ import org.apache.log4j.Logger;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-import fr.insee.targets.DDI2FR;
-import fr.insee.targets.DDIPreprocessing;
-import fr.insee.utils.CleanFolder;
-import fr.insee.utils.Constants;
+import fr.insee.eno.targets.DDI2FR;
+import fr.insee.eno.targets.DDIPreprocessing;
+import fr.insee.eno.utils.CleanFolder;
+import fr.insee.eno.utils.Constants;
 
 /**
  * Main WebService class of the Questionnaire Generator
@@ -71,7 +71,8 @@ public class RESTGeneration {
 		DDIPreprocessing ddiPreprocessingService = new DDIPreprocessing();
 		DDI2FR ddi2frService = new DDI2FR();
 
-		logger.debug("WebService called with parameter : " + fileDetail);
+		logger.debug("WebService called with parameter file : " + fileDetail);
+		logger.debug("WebService called with parameter parameters : " + parametersDetail);
 		try {
 			// Gets the input file's name without extension : used to create to
 			// folder (ex : simpsons)

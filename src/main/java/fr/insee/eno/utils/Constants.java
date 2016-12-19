@@ -1,4 +1,4 @@
-package fr.insee.utils;
+package fr.insee.eno.utils;
 
 /**
  * This class contains all the different paths used in the application Based on
@@ -22,7 +22,7 @@ public final class Constants {
 	public static final String UTIL_FOLDER = ROOT_FOLDER + "/src/main/xslt/util";
 	public static final String TARGET_FOLDER = ROOT_FOLDER + "/target";
 	public static final String QUESTIONNAIRE_FOLDER = ROOT_FOLDER + "/questionnaires";
-	public static final String TEMP_TEST_FOLDER = TARGET_FOLDER + "/test";
+	public static final String TEMP_TEST_FOLDER = TARGET_FOLDER + "/nonRegressionTest";
 
 	/********************************************************/
 	/******************* ENOPreprocessing *******************/
@@ -106,7 +106,6 @@ public final class Constants {
 	/********************************************************/
 
 	public static final String TEST_FILE_TO_COMPARE = TARGET_FOLDER + "/simpsons/v1/form/form.xhtml";
-	public static final String TEST_REFERENCE_FILE = QUESTIONNAIRE_FOLDER + "/simpsons/xforms/v1/simpsons-form.xhtml";
-
+	public static final String TEST_REFERENCE_FILE = "simpsons-form.xhtml";
 	public static final String TEST_INPUT_XML = "simpsons.xml";
 }

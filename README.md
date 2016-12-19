@@ -39,6 +39,7 @@ The first build of the project **must** be a maven clean install skipping tests.
 * Saxon HE 9.X or higher (The XSLT and XQuery Processor), see also : [Saxon](https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE)
 * [RestAssured](http://rest-assured.io/) : used in the JUnit tests
 * [Log4j](http://logging.apache.org/log4j/2.x/) : used to log the service
+	* The log directory has to be defined in log4j.properties in src/main/resources.
 * All [Jersey](https://jersey.java.net/) related dependencies
 
 After this first build and having the application running on your container, you should be able to perform unit tests by building the project without skipping tests.

@@ -1,4 +1,4 @@
-package fr.insee.targets;
+package fr.insee.eno.targets;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -7,8 +7,8 @@ import java.net.URL;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
-import fr.insee.transform.xsl.XslTransformation;
-import fr.insee.utils.Constants;
+import fr.insee.eno.transform.xsl.XslTransformation;
+import fr.insee.eno.utils.Constants;
 
 /**
  * Class representing the DDIPreprocessing ant target Processes the

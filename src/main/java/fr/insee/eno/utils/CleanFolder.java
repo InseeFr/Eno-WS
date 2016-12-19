@@ -1,4 +1,4 @@
-package fr.insee.utils;
+package fr.insee.eno.utils;
 
 import java.io.File;
 

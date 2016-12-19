@@ -109,7 +109,7 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>fr.insee.targets.EnoPreprocessing</mainClass>
+							<mainClass>fr.insee.eno.targets.EnoPreprocessing</mainClass>
 						</configuration>
 					</execution>
 				</executions>
