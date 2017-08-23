@@ -1,5 +1,18 @@
 # Eno-WS : Questionnaire Generator REST Web Service
 
+## Prerequisite
+
+A dependency to eno-core is required but not satisfied via central nor a proxy at the moment.
+
+Subsequently, those additional steps are required in order to build:
+
+```bash
+git pull https://github.com/InseeFr/Eno.git 
+pushd Eno
+mvn install && mvn install -DskipTests && mvn install:install-file -Dfile=target/eno-core-0.0.1-SNAPSHOT.jar -DgroupId=fr.insee -DartifactId=eno-core -Dversion=0.1 -Dpackaging=jar
+popd
+
+``` 
 ## Introduction
 
 Eno is a tool that generates survey questionnaires starting from their formal description in [DDI](http://ddialliance.org/).
