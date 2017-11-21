@@ -15,7 +15,7 @@ public class Log4j2ServletContextListener implements ServletContextListener {
 
     public Log4j2ServletContextListener() {
         listener = new Log4jServletContextListener();
-        String env = System.getProperty("fr.insee.pogues.env");
+        String env = System.getProperty("fr.insee.eno.env");
         if(null == env) {
             env = "dv";
         }

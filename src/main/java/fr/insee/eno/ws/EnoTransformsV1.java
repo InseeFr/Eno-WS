@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-@Path("/v1")
+@Path("/api")
 @Api(value = "Eno Transforms")
 public class EnoTransformsV1 {
 
@@ -27,19 +27,19 @@ public class EnoTransformsV1 {
     Logger logger = LogManager.getLogger(EnoTransformsV1.class);
 
     @POST
-    @Path("transform")
+    @Path("eno")
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
     @ApiOperation(
-            value = "Get Pogues XForm From Pogues DDI metadata",
-            notes = "Get Transformed XForm document from Pogues DDI metadata representation"
+            value = "Get XForm From DDI metadata",
+            notes = "Get Transformed XForm document from DDI metadata representation"
     )
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Error")
     })
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "poguesDDI", value = "DDI representation of the Pogues Model", paramType = "body", dataType = "string")
+            @ApiImplicitParam(name = "DDI", value = "DDI representation of the Questionnaire", paramType = "body", dataType = "string")
     })
     public Response ddi2XForm(@Context final HttpServletRequest request) throws Exception {
         try {

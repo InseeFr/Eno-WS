@@ -25,7 +25,7 @@ This project uses the prior Eno architecture of folders from the [ENO GitHub Pro
  
 The generation of XForms forms is performed using a number of XSLT transformations from a DDI input file that is sent to the main URL of the service.
 
-The main URL to call is **http://localhost:8080/REST_Questionnaire_Generator/Main/Service/Generation** **(TO MODIFY)**
+The main URL to call is **http://localhost:8080/REST_Questionnaire_Generator/api/eno**
 and takes two arguments:
 
 - ***file*** : the input DDI file to be processed, this argument is mandatory.
