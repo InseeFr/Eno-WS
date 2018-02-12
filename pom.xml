@@ -27,7 +27,7 @@
         <dependency><!-- TODO provide via central -->
             <groupId>fr.insee</groupId>
             <artifactId>eno-core</artifactId>
-            <version>0.1</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>

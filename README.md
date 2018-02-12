@@ -7,7 +7,7 @@ Eno is a tool that generates survey questionnaires starting from their formal de
 
 Due to its modular design, Eno can create questionnaires in different formats from the same DDI description. Currently, Eno generates XForms web questionnaires that can be executed on [Orbeon Forms Runner](http://www.orbeon.com/). PDF questionnaires is under development.
 
-This project uses the prior Eno architecture of folders from the [ENO GitHub Project](https://github.com/InseeFr/Eno) v0.0.9 and performs the same actions within a REST Web Service.
+This project uses the prior Eno architecture of folders from the [ENO GitHub Project](https://github.com/InseeFr/Eno) v1.0.0 and performs the same actions within a REST Web Service.
 
 ## Principles: 
  
@@ -31,7 +31,7 @@ The response element will contain the result of the process, which can be:
  
  * Java 8
  * Any compatible container for the WAR file (Tomcat, Glassfish)
- * War file from last release [ENO-WS last Release on GitHub](https://github.com/InseeFr/Eno-WS/releases/tag/v0.9.0)
+ * War file from last release [ENO-WS last Release on GitHub](https://github.com/InseeFr/Eno-WS/releases/tag/v1.0.0)
  
 
 ### From code source : 
@@ -43,7 +43,7 @@ Subsequently, those additional steps are required in order to build:
 ```bash
 git pull https://github.com/InseeFr/Eno.git 
 pushd Eno
-mvn install && mvn install -DskipTests && mvn install:install-file -Dfile=target/eno-core-0.0.1-SNAPSHOT.jar -DgroupId=fr.insee -DartifactId=eno-core -Dversion=0.1 -Dpackaging=jar
+mvn install && mvn install -DskipTests && mvn install:install-file -Dfile=target/eno-core-1.0.0.jar -DgroupId=fr.insee -DartifactId=eno-core -Dversion=1.0.0 -Dpackaging=jar
 popd
 
 ```  
