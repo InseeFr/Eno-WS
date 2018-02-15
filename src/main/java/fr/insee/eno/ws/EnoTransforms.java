@@ -19,12 +19,12 @@ import javax.ws.rs.core.StreamingOutput;
 
 @Path("/api")
 @Api(value = "Eno Transforms")
-public class EnoTransformsV1 {
+public class EnoTransforms {
 
     @Autowired
     DDIToXForm ddiToXForm;
 
-    Logger logger = LogManager.getLogger(EnoTransformsV1.class);
+    Logger logger = LogManager.getLogger(EnoTransforms.class);
 
     @POST
     @Path("eno")
@@ -44,7 +44,7 @@ public class EnoTransformsV1 {
     public Response ddi2XForm(@Context final HttpServletRequest request) throws Exception {
         try {
             return transform(request, ddiToXForm);
-        } catch(PoguesException e) {
+        } catch(EnoException e) {
             throw e;
         } catch (Exception e) {
             throw e;
@@ -58,7 +58,7 @@ public class EnoTransformsV1 {
                     transformer.transform(request.getInputStream(), output, null);
                 } catch (Exception e) {
                     logger.error(e.getMessage());
-                    throw new PoguesException(500, e.getMessage(), null);
+                    throw new EnoException(500, e.getMessage(), null);
                 }
             };
             return Response.ok(stream).build();

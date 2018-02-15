@@ -17,20 +17,21 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
+		<param-value>/WEB-INF/applicationContext*.xml</param-value>
 	</context-param>
 
 	<listener>
-		<listener-class>
-			fr.insee.eno.config.Log4j2ServletContextListener
-		</listener-class>
+		<listener-class>fr.insee.eno.config.Log4j2EnoServletContextListener</listener-class>
 	</listener>
 
 	<listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
 
 	<servlet>
 		<servlet-name>EnoServlet</servlet-name>

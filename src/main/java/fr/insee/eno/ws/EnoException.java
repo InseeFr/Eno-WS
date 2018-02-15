@@ -2,10 +2,8 @@ package fr.insee.eno.ws;
 
 import java.io.IOException;
 
-/**
- * Created by acordier on 04/07/17.
- */
-public class PoguesException extends IOException {
+
+public class EnoException extends IOException {
 
     private int status;
     private String details;
@@ -16,7 +14,7 @@ public class PoguesException extends IOException {
      * @param message
      * @param details
      */
-    public PoguesException(int status, String message, String details) {
+    public EnoException(int status, String message, String details) {
         super(message);
         this.status = status;
         this.details = details;

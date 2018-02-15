@@ -9,8 +9,8 @@ import javax.ws.rs.ext.Provider;
  * Created by acordier on 04/07/17.
  */
 @Provider
-public class PoguesExceptionMapper implements ExceptionMapper<PoguesException> {
-    public Response toResponse(PoguesException ex) {
+public class EnoExceptionMapper implements ExceptionMapper<EnoException> {
+    public Response toResponse(EnoException ex) {
         RestMessage message = ex.toRestMessage();
         return Response.status(message.getStatus())
                 .entity(message)
