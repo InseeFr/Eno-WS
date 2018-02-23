@@ -67,7 +67,7 @@ and takes one arguments in the body :
 
 The response element will contain the result of the process, which can be:
 
--  Success case: The output Xforms result 
+-  Success case: The output XForms result 
 -  Error case: The error message
 
 ```curl -X POST "http://localhost:8080/api/api/eno" -H "accept: application/xml" -H "content-type: application/xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DDIInstance .... </DDIInstance>"```
@@ -75,7 +75,7 @@ The response element will contain the result of the process, which can be:
 
 ### Swagger UI : 
 
-The main URL to call is **http://localhost:8080/swagger-ui/dist.index.html**
+The main URL to call is **http://localhost:8080/swagger-ui/dist/index.html**
 
 
 ### Example : 
