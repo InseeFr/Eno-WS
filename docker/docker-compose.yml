@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  eno:
+    build: ./eno
+    volumes:
+      - "./eno/eno-ws.war:/usr/local/tomcat/webapps/eno-ws.war"
+      - "./eno/eno.properties:/usr/local/tomcat/webapps/eno.properties"
+    networks:
+      - eno
+    ports:
+      - "8282:8080"
+networks:
+  eno:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
