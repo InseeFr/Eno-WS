@@ -13,7 +13,7 @@ This project uses the prior Eno architecture of folders from the [ENO GitHub Pro
  
 The generation of XForms forms is performed using a number of XSLT transformations from a DDI input file that is sent to the main URL of the service.
 
-The main URL to call is **http://localhost:8080/api/api/eno**
+The main URL to call (POST) is **http://localhost:8080/eno-ws/api/eno/ddi2xforms**
 and takes one arguments in the body :
 
 - ***ddi*** : the input DDI description to be processed.
@@ -23,6 +23,12 @@ The response element will contain the result of the process, which can be:
 -  Success case: The output Xforms result 
 -  Error case: The error message
 
+
+Others endpoints (working progress) :
+
+ http://localhost:8080/eno-ws/api/eno/ddi2fo
+ http://localhost:8080/eno-ws/api/eno/ddi2pdf
+ 
 
 ## Getting Started
 
@@ -36,9 +42,9 @@ The response element will contain the result of the process, which can be:
 
 ### From code source : 
 
-A dependency to eno-core is required but not satisfied via central nor a proxy at the moment.
+A dependency to eno-core is required from maven central or from a local build of eno-core.
 
-Subsequently, those additional steps are required in order to build:
+Subsequently, those additional steps are required in order to build eno:
 
 ```bash
 git pull https://github.com/InseeFr/Eno.git 
@@ -60,22 +66,13 @@ After this first build and having the application running on your container, you
 
 ### Usage : 
 
-The main URL to call is **http://localhost:8080/api/api/eno**
-and takes one arguments in the body :
 
-- ***ddi*** : the input DDI description to be processed.
-
-The response element will contain the result of the process, which can be:
-
--  Success case: The output XForms result 
--  Error case: The error message
-
-```curl -X POST "http://localhost:8080/api/api/eno" -H "accept: application/xml" -H "content-type: application/xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DDIInstance .... </DDIInstance>"```
+```curl -X POST "http://localhost:8080/api/eno/ddi2xforms" -H "accept: application/xml" -H "content-type: application/xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DDIInstance .... </DDIInstance>"```
 
 
 ### Swagger UI : 
 
-The main URL to call is **http://localhost:8080/swagger-ui/dist/index.html**
+The main URL to call is **http://localhost:8080/eno-ws**
 
 
 ### Example : 
