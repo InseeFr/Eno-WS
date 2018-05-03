@@ -27,6 +27,7 @@ The response element will contain the result of the process, which can be:
 Others endpoints (working progress) :
 
  http://localhost:8080/eno-ws/api/eno/ddi2fo
+ 
  http://localhost:8080/eno-ws/api/eno/ddi2pdf
  
 
