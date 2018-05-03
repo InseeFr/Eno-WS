@@ -105,7 +105,7 @@ public class EnoTransforms {
 	
 	@POST
 	@Path("ddi2fo-with-plugin")
-	@Produces("application/pdf")
+	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_XML)
 	@ApiOperation(value = "Get FO (with plugin) From DDI metadata", notes = "Get Transformed XSL FO document from DDI metadata representation")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Error") })
