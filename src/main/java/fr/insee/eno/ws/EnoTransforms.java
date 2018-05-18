@@ -1,7 +1,13 @@
 package fr.insee.eno.ws;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import fr.insee.eno.Constants;
 import fr.insee.eno.transforms.DDIToFO;
 import fr.insee.eno.transforms.DDIToFOWithPlugin;
 import fr.insee.eno.transforms.DDIToPDF;
@@ -44,6 +51,33 @@ public class EnoTransforms {
 
 	Logger logger = LogManager.getLogger(EnoTransforms.class);
 
+	
+	
+	@GET
+	@Path("/pdf")
+	@Produces("application/pdf")
+	@ApiOperation(value = "Get PDF")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK",response=byte.class), @ApiResponse(code = 500, message = "Error") })
+
+	public Response getPdf() throws Exception
+	{
+	    
+		File file = null;
+		URL url = Constants.class.getResource("/pdf/out.pdf");
+	    try {
+	        file = new File(url.toURI());
+	    } catch (URISyntaxException e) {
+	        file = new File(url.getPath());
+	    } 
+	    FileInputStream fileInputStream = new FileInputStream(file);
+	    javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
+	    responseBuilder.type("application/pdf");
+	    
+	    responseBuilder.header("Content-Disposition", "attachment ; filename=test.pdf");
+	    return responseBuilder.build();
+	}
+	
+	
 	@POST
 	@Path("ddi2xforms")
 	@Produces(MediaType.APPLICATION_XML)
