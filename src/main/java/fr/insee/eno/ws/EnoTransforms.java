@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -14,164 +17,85 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.insee.eno.Constants;
-import fr.insee.eno.transforms.DDIToFO;
-import fr.insee.eno.transforms.DDIToFOWithPlugin;
 import fr.insee.eno.transforms.DDIToPDF;
-import fr.insee.eno.transforms.DDIToXForm;
-import fr.insee.eno.transforms.Transformer;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import fr.insee.eno.transforms.PipeLine;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Path("/eno")
-@Api(value = "Eno Transforms")
+@Tag(name = "Eno", description = "Eno transform")
+@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success"),
+		@ApiResponse(responseCode = "204", description = "No Content"),
+		@ApiResponse(responseCode = "400", description = "Bad Request"),
+		@ApiResponse(responseCode = "401", description = "Unauthorized"),
+		@ApiResponse(responseCode = "403", description = "Forbidden"),
+		@ApiResponse(responseCode = "404", description = "Not found"),
+		@ApiResponse(responseCode = "406", description = "Not Acceptable"),
+		@ApiResponse(responseCode = "500", description = "Internal server error") })
 public class EnoTransforms {
 
 	@Autowired
-	DDIToXForm ddiToXForm;
-
-	@Autowired
-	DDIToFO ddiToFO;
-
-	@Autowired
 	DDIToPDF ddiToPDF;
-	
-	@Autowired
-	DDIToFOWithPlugin ddiToFOWithPlugin;
 
 	Logger logger = LogManager.getLogger(EnoTransforms.class);
 
-	
-	
 	@GET
 	@Path("/pdf")
 	@Produces("application/pdf")
-	@ApiOperation(value = "Get PDF")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK",response=byte.class), @ApiResponse(code = 500, message = "Error") })
+	@Operation(operationId = "getPDF", summary = "Get PDF", responses = {
+			@ApiResponse(content = @Content(mediaType = "application/pdf")) })
+	public Response getPdf() throws Exception {
 
-	public Response getPdf() throws Exception
-	{
-	    
 		File file = null;
 		URL url = Constants.class.getResource("/pdf/out.pdf");
-	    try {
-	        file = new File(url.toURI());
-	    } catch (URISyntaxException e) {
-	        file = new File(url.getPath());
-	    } 
-	    FileInputStream fileInputStream = new FileInputStream(file);
-	    javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
-	    responseBuilder.type("application/pdf");
-	    
-	    responseBuilder.header("Content-Disposition", "attachment ; filename=test.pdf");
-	    return responseBuilder.build();
-	}
-	
-	
-	@POST
-	@Path("ddi2xforms")
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
-	@ApiOperation(value = "Get XForm From DDI metadata", notes = "Get Transformed XForm document from DDI metadata representation")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Error") })
-	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "DDI", value = "DDI representation of the Questionnaire", paramType = "body", dataType = "string") })
-	public Response ddi2XForm(@Context final HttpServletRequest request) throws Exception {
 		try {
-			return transform(request, ddiToXForm);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-			throw new EnoException(500, e.getMessage(), null);
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			file = new File(url.getPath());
 		}
-	}
+		FileInputStream fileInputStream = new FileInputStream(file);
+		javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response
+				.ok((Object) fileInputStream);
+		responseBuilder.type("application/pdf");
 
-	@POST
-	@Path("ddi2fo")
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
-	@ApiOperation(value = "Get Fo From DDI metadata", notes = "Get Transformed XSL-FO document from DDI metadata representation")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Error") })
-	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "DDI", value = "DDI representation of the Questionnaire", paramType = "body", dataType = "string") })
-	public Response ddi2FO(@Context final HttpServletRequest request) throws Exception {
-		try {
-			return transform(request, ddiToFO);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-			throw new EnoException(500, e.getMessage(), null);
-		}
+		responseBuilder.header("Content-Disposition", "attachment ; filename=test.pdf");
+		return responseBuilder.build();
 	}
 
 	@POST
 	@Path("ddi2pdf")
-	@Produces("application/pdf")
 	@Consumes(MediaType.APPLICATION_XML)
-	@ApiOperation(value = "Get PDF From DDI metadata", notes = "Get Transformed PDF document from DDI metadata representation")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Error") })
-	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "DDI", value = "DDI representation of the Questionnaire", paramType = "body", dataType = "string") })
-	public Response ddi2PDF(@Context final HttpServletRequest request) throws Exception {
-
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	@Operation(operationId = "getPDF", summary = "Get PDF", responses = {
+			@ApiResponse(content = @Content(mediaType = "application/pdf")) })
+	public Response ddi2pdf(@Context final HttpServletRequest request) throws Exception {
+		PipeLine pipeline = new PipeLine();
+		Map<String, Object> params = new HashMap<>();
+		String filePath = null;
+		String questionnaireName = "pdf";
 		try {
-			
-			String stream = ddiToPDF.transform(request.getInputStream(), null);
-			return Response.ok(stream,"application/pdf")
-					.header("Content-Disposition", "filename=form.pdf").build();
+			filePath = pipeline.from(request.getInputStream()).map(ddiToPDF::transform, params, questionnaireName)
+					.transform();
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
-
-	}
-	
-	@POST
-	@Path("ddi2fo-with-plugin")
-	@Produces(MediaType.APPLICATION_XML)
-	@Consumes(MediaType.APPLICATION_XML)
-	@ApiOperation(value = "Get FO (with plugin) From DDI metadata", notes = "Get Transformed XSL FO document from DDI metadata representation")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 500, message = "Error") })
-	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "DDI", value = "DDI representation of the Questionnaire", paramType = "body", dataType = "string") })
-	public Response ddi2FOWithPlugin(@Context final HttpServletRequest request) throws Exception {
-
-		try {
-			return transform(request, ddiToFOWithPlugin);
-		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error(e.getMessage());
 			throw new EnoException(500, e.getMessage(), null);
 		}
 
+		File file = new File(filePath);
+		byte[] output = Files.readAllBytes(file.toPath());
+		return Response.ok(output, MediaType.APPLICATION_OCTET_STREAM)
+				.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
+
 	}
 
-	private Response transform(HttpServletRequest request, Transformer transformer) throws Exception {
-		try {
-			StreamingOutput stream = output -> {
-				try {
-					transformer.transform(request.getInputStream(), output, null);
-				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e.getMessage());
-					throw new EnoException(500, e.getMessage(), null);
-				}
-			};
-			return Response.ok(stream).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
 }
