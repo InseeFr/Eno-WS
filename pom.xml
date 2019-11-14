@@ -18,7 +18,6 @@
 		
 		
 		<eno.version>2.0.0</eno.version>
-		<lunatic-model.version>1.0.0</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
@@ -67,13 +66,6 @@
 			<groupId>fr.insee.eno</groupId>
 			<artifactId>eno-core</artifactId>
 			<version>${eno.version}</version>
-		</dependency>
-
-		<!-- Lunatic-Model -->
-		<dependency><!-- TODO provide via central -->
-			<groupId>fr.insee.lunatic</groupId>
-			<artifactId>lunatic-model</artifactId>
-			<version>${lunatic-model.version}</version>
 		</dependency>
 
 		<!-- log4j -->
