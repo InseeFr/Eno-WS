@@ -15,8 +15,8 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		
-		
+
+
 		<eno.version>2.0.0</eno.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
@@ -89,7 +89,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>
-		
+
 		<!-- jdk11 -->
 		<dependency>
 			<groupId>com.sun.activation</groupId>
@@ -152,13 +152,21 @@
 			<artifactId>joda-time</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
