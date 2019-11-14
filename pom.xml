@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
@@ -10,12 +10,20 @@
 	<name>Eno-Web-Service</name>
 
 	<properties>
-		<eno.version>2.0.0</eno.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		
+		
+		<eno.version>2.0.0</eno.version>
+		<lunatic-model.version>1.0.0</lunatic-model.version>
+
+		<javax.activation.version>1.2.0</javax.activation.version>
+		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
+		<commons-io.version>2.5</commons-io.version>
 
 	</properties>
 
@@ -40,7 +48,7 @@
 		<version>2.1.9.RELEASE</version>
 	</parent>
 
-	<dependencies>	
+	<dependencies>
 		<!-- spring-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,16 +66,16 @@
 		<dependency>
 			<groupId>fr.insee.eno</groupId>
 			<artifactId>eno-core</artifactId>
-			<version>2.0.0</version>
+			<version>${eno.version}</version>
 		</dependency>
-		
+
 		<!-- Lunatic-Model -->
 		<dependency><!-- TODO provide via central -->
 			<groupId>fr.insee.lunatic</groupId>
 			<artifactId>lunatic-model</artifactId>
-			<version>1.0.0</version>
+			<version>${lunatic-model.version}</version>
 		</dependency>
-		
+
 		<!-- log4j -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -83,8 +91,46 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
 		
+		<!-- jdk11 -->
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>javax.activation</artifactId>
+			<version>${javax.activation.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+		<!-- fin jdk11 -->
+
 		<!-- test -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -114,5 +160,31 @@
 			<artifactId>joda-time</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>ROOT</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+				<spring.profiles.active>local</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 </project>

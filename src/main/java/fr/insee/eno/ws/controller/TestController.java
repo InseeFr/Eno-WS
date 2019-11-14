@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @ConditionalOnExpression("'${spring.profiles.active}'!='prod'")
 public class TestController {
 	
-	private static final Logger log = LoggerFactory.getLogger(TestController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
 	
 	
 	@Operation(description="Check if eno is alive")

@@ -31,5 +31,4 @@ public class EnoWS extends SpringBootServletInitializer{
 				  "file:///${catalina.base}/webapps/"+APP_NAME+".properties,"
 				+ "classpath:"+APP_NAME+".properties");
 	}
-
 }

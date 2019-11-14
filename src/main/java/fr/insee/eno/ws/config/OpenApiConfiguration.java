@@ -15,10 +15,10 @@ public class OpenApiConfiguration{
 	
 	
 	@Bean
-	public OpenAPI customOpenAPI(@Value("${fr.insee.eno.ws.spring.doc}") String appVersion) {
+	public OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(
-						new Info().title("Api for Eno").description("Generator").version(appVersion)
+						new Info().title("Api for Eno").description("Generator").version("0.0.1")
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 	}
 }
