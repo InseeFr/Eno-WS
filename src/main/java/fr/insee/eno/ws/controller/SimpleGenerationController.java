@@ -48,9 +48,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name="Simple Generation of questionnaire")
 @RestController
 @RequestMapping("/simple")
-public class SimpleGenerationQuestionnaireController {
+public class SimpleGenerationController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationQuestionnaireController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationController.class);
 	
 	private ParameterizedGenerationService generationService = new ParameterizedGenerationService();
 
