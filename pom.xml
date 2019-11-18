@@ -18,6 +18,7 @@
 
 
 		<eno.version>2.0.0</eno.version>
+		<lunatic-model.version>1.0.0</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
@@ -66,6 +67,13 @@
 			<groupId>fr.insee.eno</groupId>
 			<artifactId>eno-core</artifactId>
 			<version>${eno.version}</version>
+		</dependency>
+		
+		<!-- Lunatic-Model -->
+		<dependency>
+			<groupId>fr.insee.lunatic</groupId>
+			<artifactId>lunatic-model</artifactId>
+			<version>${lunatic-model.version}</version>
 		</dependency>
 
 		<!-- log4j -->
@@ -160,7 +168,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<delimiters>
+						<delimiter>@</delimiter>
+					</delimiters>
+					<useDefaultDelimiters>false</useDefaultDelimiters>
+				</configuration>
+			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+		</resources>
 	</build>
 
 	<profiles>

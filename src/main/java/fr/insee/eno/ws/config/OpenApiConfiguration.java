@@ -13,12 +13,21 @@ import io.swagger.v3.oas.models.info.License;
 @ConditionalOnExpression("'${spring.profiles.active}'!='prod'")
 public class OpenApiConfiguration{
 	
+	@Value("${fr.insee.enows.enocore.version}")
+	private String enoVersion;
+	
+	@Value("${fr.insee.enows.version}")
+	private String projectVersion;
+	
 	
 	@Bean
 	public OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(
-						new Info().title("Api for Eno").description("Generator").version("0.0.1")
+						new Info()
+						.title("Eno Web Services")
+						.description("## Generator using Eno version : <span style=\"color:darkred;\">"+enoVersion+"</span> ")
+						.version(projectVersion)
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 	}
 }
