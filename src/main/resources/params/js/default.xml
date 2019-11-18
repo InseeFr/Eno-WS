@@ -1,0 +1,27 @@
+<ENOParameters>
+    
+    <Pipeline>
+        <InFormat>ddi</InFormat>
+        <OutFormat>js</OutFormat>
+        
+        <PreProcessing>ddi-dereferencing</PreProcessing>
+        <PreProcessing>ddi-cleaning</PreProcessing>
+        <PreProcessing>ddi-titling</PreProcessing>
+        
+        <PostProcessing>js-sortComponents</PostProcessing>
+        <PostProcessing>js-externalizeVariables</PostProcessing>
+    </Pipeline>
+    
+    <Parameters>
+        
+        <StudyUnit>default</StudyUnit>
+        
+        <Campagne>test</Campagne>
+        
+        <Languages>
+            <Language>fr</Language>
+            <Language>en</Language>
+        </Languages>        
+    </Parameters>
+    
+</ENOParameters>
