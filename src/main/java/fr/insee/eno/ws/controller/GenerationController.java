@@ -43,7 +43,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Generation of questionnaire")
 @RestController
-@RequestMapping("/generation")
+@RequestMapping("/questionnaire")
 public class GenerationController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
@@ -58,7 +58,7 @@ public class GenerationController {
 
 
 	@Operation(description="Generation questionnaire according to params, metadata and specificTreatment")
-	@PostMapping(value="full-param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="in-2-out", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generate(
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
@@ -86,7 +86,7 @@ public class GenerationController {
 
 
 	@Operation(description="Generate fo questionnaire according to the parameters")
-	@PostMapping(value="fo-param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 
 			// Files
@@ -137,7 +137,7 @@ public class GenerationController {
 	}
 
 	@Operation(description="Generate pdf questionnaire according to the parameters")
-	@PostMapping(value="pdf-param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generatePDFQuestionnaire(
 
 			// Files
@@ -189,7 +189,7 @@ public class GenerationController {
 	}
 
 	@Operation(description="Generate xforms questionnaire according to the parameters \n For css, sperate style sheet by ','")
-	@PostMapping(value="xforms-param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 
 			// Files

@@ -3,8 +3,6 @@ package fr.insee.eno.ws.service;
 import java.io.File;
 import java.io.InputStream;
 
-import javax.xml.transform.stream.StreamSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,8 +25,7 @@ public class ParameterService {
 		studyUnit=studyUnit!=null?studyUnit:StudyUnit.DEFAULT;
 		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), studyUnit.value().toLowerCase());
 		InputStream xmlParameters = getInputStreamFromPath(parametersPath);
-		StreamSource xml = new StreamSource(xmlParameters);
-		return valorizatorParameters.getParameters(xml);
+		return valorizatorParameters.getParameters(xmlParameters);
 	}
 	
 		

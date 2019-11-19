@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Parameters")
 @RestController
-@RequestMapping("/parameters")
+@RequestMapping("/parameter")
 public class ParametersController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParametersController.class);
@@ -37,7 +37,7 @@ public class ParametersController {
 
 
 	@Operation(description="Get default xml file parameters")
-	@GetMapping(value="param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value="default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultParam() throws Exception {
 
 		InputStream paramsInputStream = parameterService.getDefaultParametersIS();
@@ -50,7 +50,7 @@ public class ParametersController {
 	}
 
 	@Operation(description="Get default xml file parameters according to the outFormat")
-	@GetMapping(value="out-param", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value="default/custom", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@RequestParam StudyUnit studyUnit,
 			@RequestParam OutFormat outFormat) throws Exception {

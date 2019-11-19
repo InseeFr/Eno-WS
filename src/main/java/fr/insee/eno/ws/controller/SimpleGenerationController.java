@@ -47,7 +47,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Simple Generation of questionnaire")
 @RestController
-@RequestMapping("/simple")
+@RequestMapping("/questionnaire/simple")
 public class SimpleGenerationController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationController.class);
@@ -61,7 +61,7 @@ public class SimpleGenerationController {
 	private TransformService transformService;
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generatePDFQuestionnaire(
 
 			// Files
@@ -91,7 +91,7 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 
 			// Files
@@ -120,7 +120,7 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 
 			// Files
