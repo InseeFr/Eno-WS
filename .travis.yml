@@ -16,6 +16,6 @@ script:
   - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
   - docker build -t $DOCKER_USER/eno-ws:$TRAVIS_TAG .
 
-  - docker push $DOCKER_USER/eno-ws:$TRAVIS_TAG
+  - docker push $DOCKER_USER/eno-ws:travis
   
   
