@@ -18,10 +18,6 @@ deploy:
   token:
     secure: "g9A2pLvML+hhvnJDkW49WtX8bOgcLEwlXz5KVq2KvVpxWceeJ7T90tRHlyj2jBkknYp5z8XBg7/ypW1l5JuPyfNs5M3ycZVj6x9EIrlGJrORbXbOoHKhvdSRAAdOVAhrQ7OxVAzzsWes+TcxEdnt8QuuBfKrfrithrbcI8VNN22U3XSbzmmArR3xiAV2SFNYvODhpOsIJKSizOy1otINh5KJyyGVW62GTxlDkIZtCONHdm58VSG6CIniz8VHdVnMYlG2GhkKnlPV9u8FjtM/W6Hmd4Ieyq6mQ53qBQKtJGOzpUyUu3F5EBiGD4WonXuMMHmfzL6830ESc3P2wK4qnTz9V3oAR8JuE8TcWHh95w2ItTHH+6sEAnBdDdUy8K4lCkVqMy4zo6+sBhGUszltjyuEAEWPW/pI3en6jIfNraDlZBGyksVaEJrR4PRwrG/JFKuQNxwoaoy0Q6kBrVHK79T1WlaXjsYanrBFvFp0jVgKxdW9KOnBzqTVHkwW4yRYsXysa90ozrhiGVxV1CaGBsvx4P3305YygQEY2NGisBdZPoZ/0u//9/UvYI+kt+JBj/vYO2RiSoxonTpvzBGcmXqUFJcAEX7cWiAy8xfdaZA4gSNS//yScYcc4TFGK7sOHak5kNYu2GarbV/ln4VGNR2s5uB+v0M1wyCgqsp6rpw="
   file: target/*.jar
-  on:
-    tags: true
-
-after-deploy:
   script:
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
     - docker build -t $DOCKER_USER/eno-ws:$TRAVIS_TAG .
