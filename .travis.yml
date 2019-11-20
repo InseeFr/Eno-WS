@@ -20,6 +20,8 @@ deploy:
   file: target/*.jar
   on:
     tags: true
+
+deploy:
   provider: script
   script:
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
