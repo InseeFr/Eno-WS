@@ -18,7 +18,5 @@ deploy:
     - docker build -t $DOCKER_USER/eno-ws:$TRAVIS_TAG .
 
     - docker push $DOCKER_USER/eno-ws:$TRAVIS_TAG
-  on:
-    tags: true
   
   
