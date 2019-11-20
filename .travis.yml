@@ -9,7 +9,7 @@ install:
   - wget https://github.com/laurentC35/Eno/releases/download/2.0.0/eno-core-2.0.0.jar
   - mvn install:install-file -Dfile=eno-core-2.0.0.jar -DgroupId=fr.insee.eno -DartifactId=eno-core -Dversion=2.0.0 -Dpackaging=jar
 
-  - mvn install -DskipTests=true
+  - mvn install -DskipTests
 
 deploy:
   skip_cleanup: true
