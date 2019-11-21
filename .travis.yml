@@ -25,3 +25,5 @@ deploy:
       tags: true
   - provider: script
     script: bash scripts/docker_push.sh
+    on:
+      tags: true
