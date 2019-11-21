@@ -19,3 +19,8 @@ deploy:
     file: target/enows.war
     on:
       tags: true
+  - provider: script
+    skip_cleanup: true
+    script: bash scripts/docker_push.sh
+    on:
+      tags: true
