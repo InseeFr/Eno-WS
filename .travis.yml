@@ -15,7 +15,7 @@ install:
   - mvn install -DskipTests
 
 deploy:  
-  skip_cleanup: true
+    skip_cleanup: true
   - provider: releases
     edge: true
     token:
