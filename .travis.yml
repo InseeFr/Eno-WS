@@ -6,10 +6,10 @@ services:
   - docker
 
 install:
-  - wget https://github.com/$TRAVIS_REPO_SLUG/releases/download/1.0.0/lunatic-model-1.0.0.jar
+  - wget https://github.com/laurentC35/Lunatic-Model/releases/download/1.0.0/lunatic-model-1.0.0.jar
   - mvn install:install-file -Dfile=lunatic-model-1.0.0.jar -DgroupId=fr.insee.lunatic -DartifactId=lunatic-model -Dversion=1.0.0 -Dpackaging=jar
 
-  - wget https://github.com/$TRAVIS_REPO_SLUG/releases/download/2.0.0/eno-core-2.0.0.jar
+  - wget https://github.com/laurentC35/Eno/releases/download/2.0.0/eno-core-2.0.0.jar
   - mvn install:install-file -Dfile=eno-core-2.0.0.jar -DgroupId=fr.insee.eno -DartifactId=eno-core -Dversion=2.0.0 -Dpackaging=jar
 
   - mvn install -DskipTests
