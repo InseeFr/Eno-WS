@@ -14,8 +14,7 @@ install:
 deploy:
   - provider: releases
     skip_cleanup: true
-    edge: true
-    token:
+    api_key:
       secure: "OxMwnCX9BpZEs2EFAdnwWagWw7Q3DUixh7prcftsKTmG9CpexoYE358noQdnD+wv9CeZHJSItHlKISLAzijJC8NArkAogUXT2pCNUlREMzoECGYtq5LgP4+GR72CrtOhEy1npHgFmJjfVq+Y6jyUxbdgd9ureEpW1pd5myLoDgwJSCT5hThzTVIdLSwRHq3BI9q+f8rlBxTFn5RBe/rZby2Stzr2hL1Yx/zAtvfrJKfHFDD7M5/1qJVC9IePN+Tn9OxlK5NVi12cOyva3/+fKShdnSW2lU9swpDQpN/iPizSthUsDzMz6Eof31dZpB/i4exPUpjr+nUrdaef98tWQm43fPGejL5HnSvZNgBKHBsnFJJGQ1AADZVlIqiKhgxrjIQRJgnQfw25hb1aUbZYqIF2B6/+GtvNiLG7ApJdaABgVAVxUwUXHWYufjgar9H7D19eusYLwGwcr/QfOnIb4FsTiAFwKAx+cgW69+Z3ea0IDEQSdzUQHZDovuIIeXEJyxdxzQisXOS8sl3icqB1YogBnWxRlDu564HPrZIFLHdMI6SEnaSUpqIBpNgFviRZKvJDaZNHRPNR1PGaEsDHCjnZsGNL6Lf9doWnwolZ6SA2kWt4Pjf1wMcyKFhmgRv/J1CSb9NuDpqEX1n9trAwXs5HmyQCA6XeqxrsfNhH2cc="
     file: target/enows.war
     on:
