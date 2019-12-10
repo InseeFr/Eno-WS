@@ -1,4 +1,4 @@
-FROM tomcat:jdk8-openjdk-slim
+FROM tomcat:8.0-jre8
 
 RUN rm -rf $CATALINA_HOME/webapps/*
 ADD src/main/resources/log4j2.xml $CATALINA_HOME/webapps/log4j2.xml
