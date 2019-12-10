@@ -15,13 +15,13 @@ import io.swagger.v3.oas.models.servers.Server;
 public class OpenApiConfiguration {
 	
 
-	@Value("${fr.insee.enows.server.url}")
+	@Value("${enows.server.url}")
 	private String baseUrl;
 		
-	@Value("${fr.insee.enows.enocore.version}")
+	@Value("${enows.enocore.version}")
 	private String enoVersion;
 	
-	@Value("${fr.insee.enows.version}")
+	@Value("${enows.version}")
 	private String projectVersion;
 	
 	@Bean
