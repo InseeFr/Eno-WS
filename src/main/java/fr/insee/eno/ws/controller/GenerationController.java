@@ -60,7 +60,7 @@ public class GenerationController {
 
 
 	@Operation(
-			summary="Generation of questionnaire according to params, metadata and specificTreatment",
+			summary="Generation of questionnaire according to params, metadata and specificTreatment.",
 			description="It generates a questionnaire : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 			)
 	@PostMapping(value="in-2-out", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -145,7 +145,7 @@ public class GenerationController {
 	}
 
 	@Operation(
-			summary="Generation of pdf questionnaire according to the given pdf parameters.",
+			summary="Generation of pdf questionnaire according to the given pdf parameters and specificTreatment.",
 			description="It generates a pdf questionnaire from a ddi questionnaire using the fo/pdf parameters given."
 			)
 	@PostMapping(value="ddi-2-pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -200,7 +200,7 @@ public class GenerationController {
 	}
 
 	@Operation(
-			summary="Generation of xforms questionnaire according to the given xforms (FR-FormRunner) parameters.",
+			summary="Generation of xforms questionnaire according to the given xforms (FR-FormRunner) parameters, metadata and specificTreatment.",
 			description="It generates a xforms questionnaire from a ddi questionnaire using the xforms parameters given. For css parameters, sperate style sheet by ','"
 			)
 	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -263,7 +263,7 @@ public class GenerationController {
 	}
 
 	@Operation(
-			summary="Generation of json-lunatic questionnaire according to the given js parameters.",
+			summary="Generation of json-lunatic questionnaire according to the given js parameters and specificTreatment.",
 			description="It generates a json-lunatic questionnaire from a ddi questionnaire using the js parameters given."
 			)
 	@PostMapping(value="ddi-2-js", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)

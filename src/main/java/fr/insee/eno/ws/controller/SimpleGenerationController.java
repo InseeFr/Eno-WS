@@ -45,7 +45,7 @@ public class SimpleGenerationController {
 	private TransformService transformService;
 	
 	@Operation(
-			summary="Generation of pdf questionnaire according to the study unit",
+			summary="Generation of pdf questionnaire according to the study unit.",
 			description="It generates a pdf questionnaire from a ddi questionnaire using the default fo/pdf parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{studyUnit}/default*"
 			)
@@ -79,7 +79,7 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(
-			summary="Generation of fo questionnaire according to the study unit",
+			summary="Generation of fo questionnaire according to the study unit.",
 			description="It generates a fo questionnaire from a ddi questionnaire using the default fo parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{studyUnit}/default*"
 			)
@@ -112,7 +112,7 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(
-			summary="Generation of xforms questionnaire according to the study unit",
+			summary="Generation of xforms questionnaire according to the study unit.",
 			description="It generates a xforms questionnaire from a ddi questionnaire using the default xforms parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{studyUnit}/default*"
 			)
@@ -144,7 +144,10 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
-	@Operation(description="Generate specification of questionnaire")
+	@Operation(
+			summary="Generation of the specifications of the questionnaire according.",
+			description="It generates a \".fodt\" questionnaire from a ddi questionnaire."
+			)
 	@PostMapping(value="odt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
 			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
@@ -166,7 +169,7 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(
-			summary="Generation of pdf questionnaire according to the study unit",
+			summary="Generation of pdf questionnaire according to the study unit.",
 			description="It generates a xml-lunatic questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{studyUnit}/default*"
 			)
@@ -201,7 +204,7 @@ public class SimpleGenerationController {
 	
 	
 	@Operation(
-			summary="Generation of pdf questionnaire according to the study unit",
+			summary="Generation of pdf questionnaire according to the study unit.",
 			description="It generates a json-lunatic questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{studyUnit}/default*"
 			)
