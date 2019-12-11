@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,7 +48,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Simple Generation of questionnaire")
 @RestController
-@RequestMapping("/questionnaire/simple")
+@RequestMapping("/questionnaire")
 public class SimpleGenerationController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationController.class);
@@ -61,14 +62,14 @@ public class SimpleGenerationController {
 	private TransformService transformService;
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="ddi-2-pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{studyUnit}/pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generatePDFQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@RequestParam StudyUnit studyUnit) throws Exception {
+			@PathVariable StudyUnit studyUnit) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -91,14 +92,14 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="ddi-2-fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{studyUnit}/fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@RequestParam StudyUnit studyUnit) throws Exception {
+			@PathVariable StudyUnit studyUnit) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -120,48 +121,19 @@ public class SimpleGenerationController {
 	}
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{studyUnit}/xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@RequestParam StudyUnit studyUnit) throws Exception {
+			@PathVariable StudyUnit studyUnit) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(studyUnit,OutFormat.FR);
-		
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
-
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
-	}
-	
-	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="xml-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
-
-			// Files
-			@RequestPart(value="in",required=true) MultipartFile in,
-			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-
-			@RequestParam StudyUnit studyUnit) throws Exception {
-
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -193,19 +165,51 @@ public class SimpleGenerationController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
+				.header(HttpHeaders.ACCEPT, "*")
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
 				.body(stream);
 	}
 	
 	@Operation(description="Generate pdf questionnaire according to the studyunit")
-	@PostMapping(value="json-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{studyUnit}/xml-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
+
+			// Files
+			@RequestPart(value="in",required=true) MultipartFile in,
+			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+
+			@PathVariable StudyUnit studyUnit) throws Exception {
+
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
+		
+		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
+	
+	
+	
+	@Operation(description="Generate json-lunatic questionnaire according to the studyunit and ")
+	@PostMapping(value="{studyUnit}/json-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@RequestParam StudyUnit studyUnit,
+			@PathVariable StudyUnit studyUnit,
 			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");

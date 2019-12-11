@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,10 +50,10 @@ public class ParametersController {
 				.body(stream);
 	}
 
-	@Operation(description="Get default xml file parameters according to the outFormat")
-	@GetMapping(value="default/custom", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@Operation(description="Get default xml file parameters for the given studyUnit according to the the outFormat")
+	@GetMapping(value="{studyUnit}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
-			@RequestParam StudyUnit studyUnit,
+			@PathVariable StudyUnit studyUnit,
 			@RequestParam OutFormat outFormat) throws Exception {
 		File fileParam;
 
@@ -77,7 +78,7 @@ public class ParametersController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(fileParam.toPath()));
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"default-"+outFormat+"-params.xml\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+studyUnit+"-"+outFormat+"-default-params.xml\"")
 				.body(stream);
 	}
 
