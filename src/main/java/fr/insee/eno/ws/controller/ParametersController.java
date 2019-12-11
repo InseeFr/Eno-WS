@@ -34,16 +34,8 @@ public class ParametersController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParametersController.class);
 
-	@Value("${logging.config}")
-	private String log;
-
 	@Autowired
 	private ParameterService parameterService;
-
-	@GetMapping()
-	public ResponseEntity<?> getProps() throws Exception {	
-		return  new ResponseEntity<>(log, HttpStatus.OK);
-	}
 	
 	@Operation(
 			summary="Get default xml file parameters", 
