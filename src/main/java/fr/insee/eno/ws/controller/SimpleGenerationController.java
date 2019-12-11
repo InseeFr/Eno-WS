@@ -3,17 +3,14 @@ package fr.insee.eno.ws.controller;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,26 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import fr.insee.eno.ParameterizedGenerationService;
-import fr.insee.eno.parameters.AccompanyingMail;
-import fr.insee.eno.parameters.Capture;
-import fr.insee.eno.parameters.CaptureEnum;
 import fr.insee.eno.parameters.ENOParameters;
-import fr.insee.eno.parameters.EndQuestion;
-import fr.insee.eno.parameters.Format;
-import fr.insee.eno.parameters.InFormat;
-import fr.insee.eno.parameters.Level;
-import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.PDFParameters;
-import fr.insee.eno.parameters.Parameters;
-import fr.insee.eno.parameters.Pipeline;
-import fr.insee.eno.parameters.PreProcessing;
 import fr.insee.eno.parameters.StudyUnit;
-import fr.insee.eno.ws.service.TransformService;
 import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Simple Generation of questionnaire")
@@ -170,7 +153,7 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
-	@Operation(description="Generate pdf questionnaire according to the studyunit")
+	@Operation(description="Generate xml-lunatic questionnaire according to the studyunit")
 	@PostMapping(value="{studyUnit}/xml-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
 

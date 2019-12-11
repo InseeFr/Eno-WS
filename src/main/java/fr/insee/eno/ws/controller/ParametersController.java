@@ -9,7 +9,9 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +34,20 @@ public class ParametersController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParametersController.class);
 
+	@Value("${logging.config}")
+	private String log;
 
 	@Autowired
 	private ParameterService parameterService;
 
-
-	@Operation(description="Get default xml file parameters")
+	@GetMapping()
+	public ResponseEntity<?> getProps() throws Exception {	
+		return  new ResponseEntity<>(log, HttpStatus.OK);
+	}
+	
+	@Operation(
+			summary="Get default xml file parameters", 
+			description="It returns the default parameters file which is overloaded.")
 	@GetMapping(value="default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultParam() throws Exception {
 
@@ -50,7 +60,9 @@ public class ParametersController {
 				.body(stream);
 	}
 
-	@Operation(description="Get default xml file parameters for the given studyUnit according to the the outFormat")
+	@Operation(
+			summary="Get default xml parameters file for the given studyUnit according to the outFormat",
+			description="It returns parameters used by default according to the studyunit and the outFormat.")
 	@GetMapping(value="{studyUnit}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@PathVariable StudyUnit studyUnit,

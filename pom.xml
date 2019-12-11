@@ -190,10 +190,10 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>dev</id>
+			<id>server</id>
 			<properties>
-				<env>dev</env>
-				<spring.profiles.active>dev</spring.profiles.active>
+				<env>server</env>
+				<spring.profiles.active>server</spring.profiles.active>
 			</properties>
 		</profile>
 	</profiles>
