@@ -44,7 +44,11 @@ public class SimpleGenerationController {
 	@Autowired
 	private TransformService transformService;
 	
-	@Operation(description="Generate pdf questionnaire according to the studyunit")
+	@Operation(
+			summary="Generation of pdf questionnaire according to the study unit",
+			description="It generates a pdf questionnaire from a ddi questionnaire using the default fo/pdf parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{studyUnit}/default*"
+			)
 	@PostMapping(value="{studyUnit}/pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generatePDFQuestionnaire(
 
@@ -74,7 +78,11 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
-	@Operation(description="Generate pdf questionnaire according to the studyunit")
+	@Operation(
+			summary="Generation of fo questionnaire according to the study unit",
+			description="It generates a fo questionnaire from a ddi questionnaire using the default fo parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{studyUnit}/default*"
+			)
 	@PostMapping(value="{studyUnit}/fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 
@@ -103,7 +111,11 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
-	@Operation(description="Generate pdf questionnaire according to the studyunit")
+	@Operation(
+			summary="Generation of xforms questionnaire according to the study unit",
+			description="It generates a xforms questionnaire from a ddi questionnaire using the default xforms parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{studyUnit}/default*"
+			)
 	@PostMapping(value="{studyUnit}/xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 
@@ -153,7 +165,11 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
-	@Operation(description="Generate xml-lunatic questionnaire according to the studyunit")
+	@Operation(
+			summary="Generation of pdf questionnaire according to the study unit",
+			description="It generates a xml-lunatic questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{studyUnit}/default*"
+			)
 	@PostMapping(value="{studyUnit}/xml-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
 
@@ -184,7 +200,11 @@ public class SimpleGenerationController {
 	
 	
 	
-	@Operation(description="Generate json-lunatic questionnaire according to the studyunit and ")
+	@Operation(
+			summary="Generation of pdf questionnaire according to the study unit",
+			description="It generates a json-lunatic questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{studyUnit}/default*"
+			)
 	@PostMapping(value="{studyUnit}/json-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 

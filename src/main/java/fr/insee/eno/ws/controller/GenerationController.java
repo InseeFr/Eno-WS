@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,14 +31,15 @@ import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
 import fr.insee.eno.parameters.FRParameters;
 import fr.insee.eno.parameters.Format;
+import fr.insee.eno.parameters.JSParameters;
 import fr.insee.eno.parameters.Level;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.PDFParameters;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.StudyUnit;
-import fr.insee.eno.ws.service.TransformService;
 import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -57,7 +59,10 @@ public class GenerationController {
 	private TransformService transformService;
 
 
-	@Operation(description="Generation questionnaire according to params, metadata and specificTreatment")
+	@Operation(
+			summary="Generation of questionnaire according to params, metadata and specificTreatment",
+			description="It generates a questionnaire : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			)
 	@PostMapping(value="in-2-out", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generate(
 			@RequestPart(value="in",required=true) MultipartFile in, 
@@ -85,7 +90,10 @@ public class GenerationController {
 	}
 
 
-	@Operation(description="Generate fo questionnaire according to the parameters")
+	@Operation(
+			summary="Generation of fo questionnaire according to the given fo parameters.",
+			description="It generates a fo questionnaire from a ddi questionnaire using the fo parameters given."
+			)
 	@PostMapping(value="ddi-2-fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 
@@ -136,7 +144,10 @@ public class GenerationController {
 				.body(stream);
 	}
 
-	@Operation(description="Generate pdf questionnaire according to the parameters")
+	@Operation(
+			summary="Generation of pdf questionnaire according to the given pdf parameters.",
+			description="It generates a pdf questionnaire from a ddi questionnaire using the fo/pdf parameters given."
+			)
 	@PostMapping(value="ddi-2-pdf", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generatePDFQuestionnaire(
 
@@ -188,7 +199,10 @@ public class GenerationController {
 				.body(stream);
 	}
 
-	@Operation(description="Generate xforms questionnaire according to the parameters \n For css, sperate style sheet by ','")
+	@Operation(
+			summary="Generation of xforms questionnaire according to the given xforms (FR-FormRunner) parameters.",
+			description="It generates a xforms questionnaire from a ddi questionnaire using the xforms parameters given. For css parameters, sperate style sheet by ','"
+			)
 	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 
@@ -237,6 +251,52 @@ public class GenerationController {
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
+
+	@Operation(
+			summary="Generation of json-lunatic questionnaire according to the given js parameters.",
+			description="It generates a json-lunatic questionnaire from a ddi questionnaire using the js parameters given."
+			)
+	@PostMapping(value="ddi-2-js", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateJSQuestionnaire(
+
+			// Files
+			@RequestPart(value="in",required=true) MultipartFile in,
+			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+
+			@PathVariable StudyUnit studyUnit,			
+			@RequestParam(value="managemnt", defaultValue="false") boolean management,
+			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
+
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
+		Parameters parameters = enoParameters.getParameters();
+		parameters.setStudyUnit(studyUnit);
+		
+		JSParameters jsParameters = parameters.getJsParameters();
+		if(jsParameters!=null) {
+			jsParameters.setManagement(management);
+		}
+		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoOutput;
+		if(flatModel) {
+			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+		}else {
+			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
+		}
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());

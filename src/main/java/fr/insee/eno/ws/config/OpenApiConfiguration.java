@@ -33,7 +33,8 @@ public class OpenApiConfiguration {
 				.info(
 						new Info()
 						.title("Eno Web Services")
-						.description("## Generator using Eno version : <span style=\"color:darkred;\">"+enoVersion+"</span> ")
+						.description(
+								"<p><h2>Generator using Eno version : <span style=\"color:darkred;\">"+enoVersion+"</span></h2></p>")
 						.version(projectVersion)
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 		return openAPI;
