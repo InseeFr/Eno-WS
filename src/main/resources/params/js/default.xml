@@ -10,6 +10,7 @@
         
         <PostProcessing>js-sortComponents</PostProcessing>
         <PostProcessing>js-externalizeVariables</PostProcessing>
+        <PostProcessing>js-vtlParser</PostProcessing>
     </Pipeline>
     
     <Parameters>
@@ -21,7 +22,11 @@
         <Languages>
             <Language>fr</Language>
             <Language>en</Language>
-        </Languages>        
+        </Languages>
+        
+        <js-parameters>            
+            <FilterDescription>false</FilterDescription>
+        </js-parameters>        
     </Parameters>
     
 </ENOParameters>
