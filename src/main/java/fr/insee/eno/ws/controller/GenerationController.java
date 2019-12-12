@@ -266,15 +266,15 @@ public class GenerationController {
 			summary="Generation of json-lunatic questionnaire according to the given js parameters and specificTreatment.",
 			description="It generates a json-lunatic questionnaire from a ddi questionnaire using the js parameters given."
 			)
-	@PostMapping(value="ddi-2-js", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-json-lunatic", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateJSQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@PathVariable StudyUnit studyUnit,			
-			@RequestParam(value="managemnt", defaultValue="false") boolean management,
+			@RequestParam StudyUnit studyUnit,			
+			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
 			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -286,7 +286,7 @@ public class GenerationController {
 		
 		JSParameters jsParameters = parameters.getJsParameters();
 		if(jsParameters!=null) {
-			jsParameters.setManagement(management);
+			jsParameters.setFilterDescription(filterDescription);
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
