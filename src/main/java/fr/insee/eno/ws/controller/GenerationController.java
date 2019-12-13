@@ -339,6 +339,70 @@ public class GenerationController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
 				.body(stream);
 	}
+	
+	@Operation(
+			summary="Generation of ddi questionnaire from pogues-xml questionnaire.",
+			description="It generates a ddi questionnaire from a pogues-xml questionnaire. You can choose if the tranformation uses markdown to xhtml post processor."
+			)
+	@PostMapping(value="xmlpogues-2-ddi", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateDDIQuestionnaire(
+
+			// Files
+			@RequestPart(value="in",required=true) MultipartFile in,
+			@RequestParam(value="mw-2-xhtml",required=true,defaultValue="true") boolean mw2xhtml) throws Exception {
+
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+		ENOParameters enoParameters = new ENOParameters();
+		Pipeline pipeline = new Pipeline();
+		pipeline.getPreProcessing().add(PreProcessing.POGUES_XML_GOTO_2_ITE);
+		if(mw2xhtml) {
+			pipeline.getPostProcessing().add(PostProcessing.DDI_MARKDOWN_TO_XHTML);
+		}
+		enoParameters.setPipeline(pipeline);
+		
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
+	
+	
+	@Operation(
+			summary="Generation of ddi33 questionnaire from dd32 questionnaire.",
+			description="It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire."
+			)
+	@PostMapping(value="ddi32-2-ddi33", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateDDI33Questionnaire(
+			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
+
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		ENOParameters enoParameters =  new ENOParameters();
+		Pipeline pipeline = new Pipeline();
+		pipeline.setInFormat(InFormat.DDI);
+		pipeline.setOutFormat(OutFormat.DDI);
+		pipeline.getPreProcessing().add(PreProcessing.DDI_32_TO_DDI_33);
+		enoParameters.setPipeline(pipeline);
+		
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
 
 
 
