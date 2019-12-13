@@ -375,7 +375,7 @@ public class GenerationController {
 	
 	
 	@Operation(
-			summary="Generation of ddi33 questionnaire from dd32 questionnaire.",
+			summary="Generation of ddi33 questionnaire from ddi32 questionnaire.",
 			description="It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire."
 			)
 	@PostMapping(value="ddi32-2-ddi33", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
