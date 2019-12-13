@@ -31,13 +31,18 @@ import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
 import fr.insee.eno.parameters.FRParameters;
 import fr.insee.eno.parameters.Format;
+import fr.insee.eno.parameters.InFormat;
 import fr.insee.eno.parameters.JSParameters;
 import fr.insee.eno.parameters.Level;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.PDFParameters;
 import fr.insee.eno.parameters.Parameters;
+import fr.insee.eno.parameters.Pipeline;
+import fr.insee.eno.parameters.PostProcessing;
+import fr.insee.eno.parameters.PreProcessing;
 import fr.insee.eno.parameters.StudyUnit;
+import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -100,7 +105,9 @@ public class GenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-
+			
+			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+			
 			@RequestParam StudyUnit studyUnit,
 
 			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
@@ -116,7 +123,14 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(studyUnit,OutFormat.PDF);
+		
+		if(ddiVersion.equals(DDIVersion.DDI_32)) {
+			Pipeline pipeline = enoParameters.getPipeline();
+			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
+		}	
+		
 		Parameters parameters = enoParameters.getParameters();
+		
 		parameters.setStudyUnit(studyUnit);
 		EndQuestion endQuestion = parameters.getEndQuestion();
 		endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
@@ -154,6 +168,8 @@ public class GenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+			
+			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
 
 			@RequestParam StudyUnit studyUnit,
 
@@ -170,6 +186,10 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(studyUnit,OutFormat.PDF);
+		if(ddiVersion.equals(DDIVersion.DDI_32)) {
+			Pipeline pipeline = enoParameters.getPipeline();
+			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
+		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setStudyUnit(studyUnit);
 		EndQuestion endQuestion = parameters.getEndQuestion();
@@ -210,6 +230,8 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,			
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+			
+			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
 
 			@RequestParam StudyUnit studyUnit,
 
@@ -229,6 +251,10 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(studyUnit,OutFormat.FR);
+		if(ddiVersion.equals(DDIVersion.DDI_32)) {
+			Pipeline pipeline = enoParameters.getPipeline();
+			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
+		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setStudyUnit(studyUnit);
 		BeginQuestion beginQuestion = parameters.getBeginQuestion();
@@ -272,6 +298,8 @@ public class GenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+			
+			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
 
 			@RequestParam StudyUnit studyUnit,			
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
@@ -281,6 +309,10 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
+		if(ddiVersion.equals(DDIVersion.DDI_32)) {
+			Pipeline pipeline = enoParameters.getPipeline();
+			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
+		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setStudyUnit(studyUnit);
 		
