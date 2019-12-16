@@ -15,7 +15,7 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		
+
 		<final.war.name>enows</final.war.name>
 
 
@@ -78,7 +78,7 @@
 			<artifactId>lunatic-model</artifactId>
 			<version>${lunatic-model.version}</version>
 		</dependency>
-		
+
 		<!-- apache fop -->
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
@@ -136,6 +136,15 @@
 
 		<!-- test -->
 		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -162,7 +171,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
