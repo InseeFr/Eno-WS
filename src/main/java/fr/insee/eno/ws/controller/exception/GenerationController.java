@@ -1,4 +1,4 @@
-package fr.insee.eno.ws.controller;
+package fr.insee.eno.ws.controller.exception;
 
 import java.io.File;
 import java.io.InputStream;
@@ -301,7 +301,12 @@ public class GenerationController {
 			
 			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
 
-			@RequestParam StudyUnit studyUnit,			
+			@RequestParam StudyUnit studyUnit,
+			
+			@RequestParam(value="IdentificationQuestion") boolean IdentificationQuestion,
+			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
+			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
+			
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
 			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
 
@@ -315,7 +320,13 @@ public class GenerationController {
 		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setStudyUnit(studyUnit);
-		
+		BeginQuestion beginQuestion = parameters.getBeginQuestion();
+		if(beginQuestion!=null) {beginQuestion.setIdentification(IdentificationQuestion);}
+		EndQuestion endQuestion = parameters.getEndQuestion();
+		if(endQuestion!=null) {
+			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
+			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
+		}
 		JSParameters jsParameters = parameters.getJsParameters();
 		if(jsParameters!=null) {
 			jsParameters.setFilterDescription(filterDescription);
