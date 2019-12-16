@@ -1,4 +1,4 @@
-package fr.insee.eno.ws.controller.exception;
+package fr.insee.eno.ws.controller;
 
 import java.io.File;
 import java.io.InputStream;
