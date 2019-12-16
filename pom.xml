@@ -20,7 +20,7 @@
 
 
 		<eno.version>2.0.0</eno.version>
-		<lunatic-model.version>1.0.0</lunatic-model.version>
+		<lunatic-model.version>1.0.1</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
