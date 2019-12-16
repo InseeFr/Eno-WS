@@ -185,7 +185,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(studyUnit, OutFormat.JS);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -221,7 +221,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(studyUnit, OutFormat.JS);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
