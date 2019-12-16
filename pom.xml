@@ -132,10 +132,9 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>${jaxb.api.version}</version>
 		</dependency>
-		<!-- fin jdk11 -->
+		<!-- end jdk11 -->
 
 		<!-- test -->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -163,8 +162,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- correction d'un problème dans le lancement du tomcat au CEI -->
+		
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
