@@ -27,8 +27,8 @@ public class EnoWS extends SpringBootServletInitializer{
 	
 	@ConditionalOnExpression("'${spring.profiles.active}'!='local')")
 	public static void setProperty() {
-		System.setProperty("spring.config.location", 
-				  "file:///${catalina.base}/webapps/"+APP_NAME+".properties,"
-				+ "classpath:"+APP_NAME+".properties");
+		System.setProperty("spring.config.location",
+				"classpath:"+APP_NAME+".properties,"
+				+ "file:///${catalina.base}/webapps/"+APP_NAME+".properties");
 	}
 }

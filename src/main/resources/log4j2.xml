@@ -4,8 +4,8 @@
 	<!-- Propriétés surchargeables par le CEI indiquant le chemin vers le dossier 
 		contenant les logs et le nom du fichier de log -->
 	<Properties>
-        <property name="dossierLog">/var/log/tomcat8</property>
-        <property name="nomFichierLog">eno-web-services</property>
+        <property name="logDirectory">/var/log/tomcat9</property>
+        <property name="logFile">enows</property>
     </Properties>
 
 	<Appenders>
@@ -17,8 +17,8 @@
 			</PatternLayout>
 		</Console>
 		<RollingFile name="File-Appender">
-			<FileName>${dossierLog}/${nomFichierLog}.log</FileName>
-			<FilePattern>${dossierLog}/%d{yyyy-MM-dd}-${nomFichierLog}.log
+			<FileName>${logDirectory}/${logFile}.log</FileName>
+			<FilePattern>${logDirectory}/%d{yyyy-MM-dd}-${logFile}.log
 			</FilePattern>
 			<PatternLayout>
 				<Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} -
