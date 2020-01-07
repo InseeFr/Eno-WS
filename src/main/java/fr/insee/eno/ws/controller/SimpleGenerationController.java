@@ -65,7 +65,7 @@ public class SimpleGenerationController {
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput = transformService.foToPDFtransform(enoTempFO);
 
 		LOGGER.info("END of eno processing");
@@ -99,7 +99,7 @@ public class SimpleGenerationController {
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -132,7 +132,7 @@ public class SimpleGenerationController {
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -155,7 +155,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.ODT);
-		File enoOutput = generationService.generateQuestionnaire(enoInput,enoParameters, null, null);
+		File enoOutput = generationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -189,7 +189,7 @@ public class SimpleGenerationController {
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -225,7 +225,7 @@ public class SimpleGenerationController {
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput;
 		if(flatModel) {
 			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);

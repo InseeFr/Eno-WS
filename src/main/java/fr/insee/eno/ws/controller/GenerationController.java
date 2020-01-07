@@ -73,7 +73,8 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
-			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
+			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
+			@RequestPart(value="ampping",required=false) MultipartFile mapping) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -81,8 +82,9 @@ public class GenerationController {
 		InputStream paramsIS = params!=null ? params.getInputStream():null;
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+		InputStream mappingIS = mapping!=null ? mapping.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -146,7 +148,7 @@ public class GenerationController {
 
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -206,7 +208,7 @@ public class GenerationController {
 
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput = transformService.foToPDFtransform(enoTempFO);
 
 		LOGGER.info("END of eno processing");
@@ -276,7 +278,7 @@ public class GenerationController {
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -333,7 +335,7 @@ public class GenerationController {
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS);
+		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput;
 		if(flatModel) {
 			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
@@ -372,7 +374,7 @@ public class GenerationController {
 		}
 		enoParameters.setPipeline(pipeline);
 		
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -403,7 +405,7 @@ public class GenerationController {
 		pipeline.getPreProcessing().add(PreProcessing.DDI_32_TO_DDI_33);
 		enoParameters.setPipeline(pipeline);
 		
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null);
+		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
