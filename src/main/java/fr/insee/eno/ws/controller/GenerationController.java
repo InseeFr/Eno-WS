@@ -74,7 +74,7 @@ public class GenerationController {
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			@RequestPart(value="ampping",required=false) MultipartFile mapping) throws Exception {
+			@RequestPart(value="mapping",required=false) MultipartFile mapping) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
