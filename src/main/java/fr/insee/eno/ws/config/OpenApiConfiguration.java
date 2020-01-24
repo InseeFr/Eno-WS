@@ -20,9 +20,6 @@ public class OpenApiConfiguration {
 	
 	@Value("${fr.insee.enows.api.host}")
 	private String apiHost;
-	
-	@Value("${fr.insee.enows.api.port}")
-	private String apiPort;
 		
 	@Value("${fr.insee.enows.enocore.version}")
 	private String enoVersion;
@@ -33,7 +30,7 @@ public class OpenApiConfiguration {
 	@Bean
 	public OpenAPI customOpenAPI() {
 		Server server = new Server();
-		server.setUrl(apiScheme+"://"+apiHost+":"+apiPort);		
+		server.setUrl(apiScheme+"://"+apiHost);		
 		OpenAPI openAPI = new OpenAPI()
 				.addServersItem(server)
 				.info(
