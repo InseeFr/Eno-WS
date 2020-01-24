@@ -15,19 +15,25 @@ import io.swagger.v3.oas.models.servers.Server;
 public class OpenApiConfiguration {
 	
 
-	@Value("${enows.server.url}")
-	private String baseUrl;
+	@Value("${fr.insee.enows.api.scheme}")
+	private String apiScheme;
+	
+	@Value("${fr.insee.enows.api.host}")
+	private String apiHost;
+	
+	@Value("${fr.insee.enows.api.port}")
+	private String apiPort;
 		
-	@Value("${enows.enocore.version}")
+	@Value("${fr.insee.enows.enocore.version}")
 	private String enoVersion;
 	
-	@Value("${enows.version}")
+	@Value("${fr.insee.enows.version}")
 	private String projectVersion;
 	
 	@Bean
 	public OpenAPI customOpenAPI() {
 		Server server = new Server();
-		server.setUrl(baseUrl);		
+		server.setUrl(apiScheme+"://"+apiHost+":"+apiPort);		
 		OpenAPI openAPI = new OpenAPI()
 				.addServersItem(server)
 				.info(

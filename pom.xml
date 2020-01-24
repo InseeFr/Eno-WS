@@ -187,21 +187,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>local</id>
-			<properties>
-				<env>local</env>
-				<spring.profiles.active>local</spring.profiles.active>
-			</properties>
-		</profile>
-		<profile>
-			<id>server</id>
-			<properties>
-				<env>server</env>
-				<spring.profiles.active>server</spring.profiles.active>
-			</properties>
-		</profile>
-	</profiles>
 </project>
