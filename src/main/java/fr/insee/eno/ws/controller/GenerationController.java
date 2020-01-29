@@ -368,6 +368,8 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 		ENOParameters enoParameters = new ENOParameters();
 		Pipeline pipeline = new Pipeline();
+		pipeline.setInFormat(InFormat.POGUES_XML);
+		pipeline.setOutFormat(OutFormat.DDI);
 		pipeline.getPreProcessing().add(PreProcessing.POGUES_XML_GOTO_2_ITE);
 		if(mw2xhtml) {
 			pipeline.getPostProcessing().add(PostProcessing.DDI_MARKDOWN_TO_XHTML);
