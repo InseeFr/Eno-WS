@@ -24,6 +24,9 @@ public class OpenApiConfiguration {
 	@Value("${fr.insee.enows.enocore.version}")
 	private String enoVersion;
 	
+	@Value("${fr.insee.enows.lunatic.model.version}")
+	private String lunaticModelVersion;
+	
 	@Value("${fr.insee.enows.version}")
 	private String projectVersion;
 	
@@ -37,7 +40,12 @@ public class OpenApiConfiguration {
 						new Info()
 						.title("Eno Web Services")
 						.description(
-								"<p><h2>Generator using Eno version : <span style=\"color:darkred;\">"+enoVersion+"</span></h2></p>")
+								"<p><h2>Generator using :</h2></p>"
+							  + "<style>.cell{border: black 2px solid; text-align: center; font-weight: bold; font-size: 1.5em;} .version{color:darkred}</style>"
+							  + "<table style=\"width:40%\">"
+							  + "	<tr><td class=\"cell\">Eno version</td><td class=\"cell version\">"+enoVersion+"</td></tr>"
+							  + "	<tr><td class=\"cell\">Lunatic Model version</td><td class=\"cell version\">"+lunaticModelVersion+"</td></tr>"
+							  + "</table>")
 						.version(projectVersion)
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 		return openAPI;
