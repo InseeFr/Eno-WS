@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.ParameterizedGenerationService;
 import fr.insee.eno.parameters.AccompanyingMail;
 import fr.insee.eno.parameters.BeginQuestion;
 import fr.insee.eno.parameters.Capture;
@@ -42,6 +40,8 @@ import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
 import fr.insee.eno.parameters.PreProcessing;
 import fr.insee.eno.parameters.StudyUnit;
+import fr.insee.eno.service.MultiModelService;
+import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
@@ -56,6 +56,8 @@ public class GenerationController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
 
 	private ParameterizedGenerationService generationService = new ParameterizedGenerationService();
+	
+	private MultiModelService multiModelService =  new MultiModelService();
 
 	@Autowired
 	private ParameterService parameterService;
@@ -74,7 +76,9 @@ public class GenerationController {
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			@RequestPart(value="mapping",required=false) MultipartFile mapping) throws Exception {
+			@RequestPart(value="mapping",required=false) MultipartFile mapping,
+			
+			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -84,7 +88,13 @@ public class GenerationController {
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 		InputStream mappingIS = mapping!=null ? mapping.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
+		File enoOutput;
+		if(multiModel) {
+			enoOutput = multiModelService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
+		}
+		else {
+			enoOutput = generationService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
+		}
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -107,8 +117,9 @@ public class GenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			
+						
 			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 			
 			@RequestParam StudyUnit studyUnit,
 
@@ -148,7 +159,14 @@ public class GenerationController {
 
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+		
+		File enoOutput;
+		if(multiModel) {
+			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+		}
+		else {
+			enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+		}
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -232,8 +250,9 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,			
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			
-			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+						
+			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,			
+			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 
 			@RequestParam StudyUnit studyUnit,
 
@@ -278,7 +297,14 @@ public class GenerationController {
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		
+		File enoOutput;
+		if(multiModel) {
+			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		}
+		else {
+			enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		}
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());

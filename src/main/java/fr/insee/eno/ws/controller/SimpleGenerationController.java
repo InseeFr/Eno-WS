@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.ParameterizedGenerationService;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.StudyUnit;
+import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
