@@ -58,7 +58,9 @@ public class EnoWS extends SpringBootServletInitializer{
                 .filter(prop -> prop.startsWith("fr.insee") || prop.startsWith("logging") || prop.startsWith("spring"))
                 .sorted()
                 .forEach(prop -> LOGGER.info("{}: {}", prop, env.getProperty(prop)));
+        LOGGER.info("===========================================================================");
         LOGGER.info("Available CPU : "+Runtime.getRuntime().availableProcessors());
+        LOGGER.info(String.format("Max memory : %.2f GB",Runtime.getRuntime().maxMemory()/1e9d));
         LOGGER.info("===========================================================================");
     }
 	
