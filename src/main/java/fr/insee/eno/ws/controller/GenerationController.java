@@ -42,6 +42,7 @@ import fr.insee.eno.parameters.PreProcessing;
 import fr.insee.eno.parameters.StudyUnit;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.utils.FolderCleaner;
 import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
@@ -95,6 +96,8 @@ public class GenerationController {
 		else {
 			enoOutput = generationService.generateQuestionnaire(enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
 		}
+		
+		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -167,6 +170,8 @@ public class GenerationController {
 		else {
 			enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		}
+		
+		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -228,6 +233,8 @@ public class GenerationController {
 
 		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput = transformService.foToPDFtransform(enoTempFO);
+		
+		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -305,6 +312,8 @@ public class GenerationController {
 		else {
 			enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		}
+		
+		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -368,6 +377,8 @@ public class GenerationController {
 		}else {
 			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
 		}
+		
+		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
@@ -404,6 +415,8 @@ public class GenerationController {
 		
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -435,6 +448,8 @@ public class GenerationController {
 		
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 

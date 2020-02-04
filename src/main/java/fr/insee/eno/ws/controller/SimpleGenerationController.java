@@ -68,6 +68,8 @@ public class SimpleGenerationController {
 		File enoTempFO = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 		File enoOutput = transformService.foToPDFtransform(enoTempFO);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -101,6 +103,8 @@ public class SimpleGenerationController {
 
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -134,6 +138,8 @@ public class SimpleGenerationController {
 
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -157,6 +163,8 @@ public class SimpleGenerationController {
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(StudyUnit.DEFAULT,OutFormat.ODT);
 		File enoOutput = generationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -191,6 +199,8 @@ public class SimpleGenerationController {
 
 		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
 
+		FileUtils.forceDelete(enoInput);
+		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
@@ -232,6 +242,8 @@ public class SimpleGenerationController {
 		}else {
 			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
 		}
+		
+		FileUtils.forceDelete(enoInput);
 		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
