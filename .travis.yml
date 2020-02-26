@@ -1,26 +1,12 @@
 language: java
 jdk:
-  - openjdk8
+  - openjdk11
 
 install:
-  - wget https://github.com/laurentC35/Lunatic-Model/releases/download/1.0.0/lunatic-model-1.0.0.jar
-  - mvn install:install-file -Dfile=lunatic-model-1.0.0.jar -DgroupId=fr.insee.lunatic -DartifactId=lunatic-model -Dversion=1.0.0 -Dpackaging=jar
+  - wget https://github.com/laurentC35/Lunatic-Model/releases/download/1.0.1/lunatic-model-1.0.1.jar
+  - mvn install:install-file -Dfile=lunatic-model-1.0.1.jar -DgroupId=fr.insee.lunatic -DartifactId=lunatic-model -Dversion=1.0.1 -Dpackaging=jar
 
-  - wget https://github.com/laurentC35/Eno/releases/download/2.0.0/eno-core-2.0.0.jar
-  - mvn install:install-file -Dfile=eno-core-2.0.0.jar -DgroupId=fr.insee.eno -DartifactId=eno-core -Dversion=2.0.0 -Dpackaging=jar
+  - wget https://github.com/laurentC35/Eno/releases/download/2.0.1/eno-core-2.0.1.jar
+  - mvn install:install-file -Dfile=eno-core-2.0.1.jar -DgroupId=fr.insee.eno -DartifactId=eno-core -Dversion=2.0.1 -Dpackaging=jar
 
   - mvn install -DskipTests
-
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: "OxMwnCX9BpZEs2EFAdnwWagWw7Q3DUixh7prcftsKTmG9CpexoYE358noQdnD+wv9CeZHJSItHlKISLAzijJC8NArkAogUXT2pCNUlREMzoECGYtq5LgP4+GR72CrtOhEy1npHgFmJjfVq+Y6jyUxbdgd9ureEpW1pd5myLoDgwJSCT5hThzTVIdLSwRHq3BI9q+f8rlBxTFn5RBe/rZby2Stzr2hL1Yx/zAtvfrJKfHFDD7M5/1qJVC9IePN+Tn9OxlK5NVi12cOyva3/+fKShdnSW2lU9swpDQpN/iPizSthUsDzMz6Eof31dZpB/i4exPUpjr+nUrdaef98tWQm43fPGejL5HnSvZNgBKHBsnFJJGQ1AADZVlIqiKhgxrjIQRJgnQfw25hb1aUbZYqIF2B6/+GtvNiLG7ApJdaABgVAVxUwUXHWYufjgar9H7D19eusYLwGwcr/QfOnIb4FsTiAFwKAx+cgW69+Z3ea0IDEQSdzUQHZDovuIIeXEJyxdxzQisXOS8sl3icqB1YogBnWxRlDu564HPrZIFLHdMI6SEnaSUpqIBpNgFviRZKvJDaZNHRPNR1PGaEsDHCjnZsGNL6Lf9doWnwolZ6SA2kWt4Pjf1wMcyKFhmgRv/J1CSb9NuDpqEX1n9trAwXs5HmyQCA6XeqxrsfNhH2cc="
-    file: target/enows.war
-    on:
-      tags: true
-  - provider: script
-    skip_cleanup: true
-    script: bash scripts/docker_push.sh
-    on:
-      tags: true
