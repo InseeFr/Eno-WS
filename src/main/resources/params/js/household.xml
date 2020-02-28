@@ -16,7 +16,7 @@
     
     <Parameters>
         
-        <StudyUnit>household</StudyUnit>
+        <Context>household</Context>
         
         <Campagne>test-2019-x00</Campagne>
         
