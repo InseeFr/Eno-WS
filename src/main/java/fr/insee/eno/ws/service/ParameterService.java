@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.StudyUnit;
+import fr.insee.eno.parameters.Context;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
 
@@ -21,17 +21,17 @@ public class ParameterService {
 	
 	private ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 	
-	public ENOParameters getDefaultCustomParameters(StudyUnit studyUnit, OutFormat outFormat) throws Exception  {
-		studyUnit=studyUnit!=null?studyUnit:StudyUnit.DEFAULT;
-		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), studyUnit.value().toLowerCase());
+	public ENOParameters getDefaultCustomParameters(Context context, OutFormat outFormat) throws Exception  {
+		context=context!=null?context:Context.DEFAULT;
+		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), context.value().toLowerCase());
 		InputStream xmlParameters = getInputStreamFromPath(parametersPath);
 		return valorizatorParameters.getParameters(xmlParameters);
 	}
 	
 		
-	public File getDefaultCustomParametersFile(StudyUnit studyUnit, OutFormat outFormat) throws Exception  {		
-		studyUnit=studyUnit!=null?studyUnit:StudyUnit.DEFAULT;
-		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), studyUnit.value().toLowerCase());
+	public File getDefaultCustomParametersFile(Context context, OutFormat outFormat) throws Exception  {		
+		context=context!=null?context:Context.DEFAULT;
+		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), context.value().toLowerCase());
 		File fileParam = new File(TransformService.class.getResource(parametersPath).toURI());
 		return valorizatorParameters.mergeParameters(fileParam);
 	}

@@ -16,7 +16,7 @@
     
     <Parameters>
         
-        <StudyUnit>business</StudyUnit>
+        <Context>business</Context>
         
         <Campagne>test-2019-x00</Campagne>
         
