@@ -28,19 +28,18 @@ import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.DecimalSeparator;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
-import fr.insee.eno.parameters.FRParameters;
+import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.parameters.Format;
 import fr.insee.eno.parameters.InFormat;
-import fr.insee.eno.parameters.JSParameters;
+import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Level;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.PDFParameters;
+import fr.insee.eno.parameters.FOParameters;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
 import fr.insee.eno.parameters.PreProcessing;
-import fr.insee.eno.parameters.Context;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.DDIVersion;
@@ -138,7 +137,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.PDF);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO);
 		
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
@@ -151,14 +150,14 @@ public class GenerationController {
 		EndQuestion endQuestion = parameters.getEndQuestion();
 		endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 		endQuestion.setCommentQuestion(EndQuestionCommentQuestion);        
-		PDFParameters pdfParameters = parameters.getPdfParameters();
-		Format format = pdfParameters.getFormat();
+		FOParameters FOParameters = parameters.getFoParameters();
+		Format format = FOParameters.getFormat();
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
-		pdfParameters.setAccompanyingMail(accompanyingMail);
-		Capture capture2 = pdfParameters.getCapture();
+		FOParameters.setAccompanyingMail(accompanyingMail);
+		Capture capture2 = FOParameters.getCapture();
 		capture2.setNumeric(capture);
-		pdfParameters.setCapture(capture2);
+		FOParameters.setCapture(capture2);
 
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -216,7 +215,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FR);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
 			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
@@ -230,14 +229,14 @@ public class GenerationController {
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
 		}
-		FRParameters frParameters = parameters.getFrParameters();
-		if(frParameters!=null) {
-			frParameters.setNumericExample(numericExample);
-			frParameters.setDeblocage(deblocage);
-			frParameters.setSatisfaction(satisfaction);
-			frParameters.setLengthOfLongTable(lengthOfLongTable);
-			frParameters.setDecimalSeparator(decimalSeparator);
-			frParameters.getCss().addAll(Arrays.asList(css.split(",")));		
+		XFORMSParameters xformsParameters = parameters.getXformsParameters();
+		if(xformsParameters!=null) {
+			xformsParameters.setNumericExample(numericExample);
+			xformsParameters.setDeblocage(deblocage);
+			xformsParameters.setSatisfaction(satisfaction);
+			xformsParameters.setLengthOfLongTable(lengthOfLongTable);
+			xformsParameters.setDecimalSeparator(decimalSeparator);
+			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));		
 		}
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
@@ -288,7 +287,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML);
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
 			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
@@ -302,7 +301,7 @@ public class GenerationController {
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
 		}
-		JSParameters jsParameters = parameters.getJsParameters();
+		LunaticXMLParameters jsParameters = parameters.getLunaticXmlParameters();
 		if(jsParameters!=null) {
 			jsParameters.setFilterDescription(filterDescription);
 		}
@@ -379,7 +378,7 @@ public class GenerationController {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.ODT);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT);
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
 		FileUtils.forceDelete(enoInput);

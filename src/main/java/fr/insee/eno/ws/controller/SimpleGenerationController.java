@@ -62,7 +62,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.PDF);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.FO);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -97,7 +97,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.FR);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -133,7 +133,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.LUNATIC_XML);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -171,7 +171,7 @@ public class SimpleGenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.LUNATIC_XML);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
