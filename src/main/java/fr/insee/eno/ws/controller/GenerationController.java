@@ -120,7 +120,7 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 						
-			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+			@RequestParam(value="DDIVersion",required=false,defaultValue="DDI_33") DDIVersion ddiVersion,
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 			
 			@RequestParam Context context,
@@ -147,18 +147,21 @@ public class GenerationController {
 		Parameters parameters = enoParameters.getParameters();
 		
 		parameters.setContext(context);
+		
 		EndQuestion endQuestion = parameters.getEndQuestion();
-		endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
-		endQuestion.setCommentQuestion(EndQuestionCommentQuestion);        
-		FOParameters FOParameters = parameters.getFoParameters();
-		Format format = FOParameters.getFormat();
+			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
+			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
+		
+		FOParameters foParameters = parameters.getFoParameters();
+		
+		Format format = foParameters.getFormat();
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
-		FOParameters.setAccompanyingMail(accompanyingMail);
-		Capture capture2 = FOParameters.getCapture();
+		foParameters.setAccompanyingMail(accompanyingMail);
+		Capture capture2 = foParameters.getCapture();
 		capture2.setNumeric(capture);
-		FOParameters.setCapture(capture2);
-
+		foParameters.setCapture(capture2);
+		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		
@@ -184,7 +187,7 @@ public class GenerationController {
 
 
 	@Operation(
-			summary="Generation of xforms questionnaire according to the given xforms (FR-FormRunner) parameters, metadata and specificTreatment.",
+			summary="Generation of xforms questionnaire according to the given xforms parameters, metadata and specificTreatment.",
 			description="It generates a xforms questionnaire from a ddi questionnaire using the xforms parameters given. For css parameters, sperate style sheet by ','"
 			)
 	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -301,9 +304,9 @@ public class GenerationController {
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
 		}
-		LunaticXMLParameters jsParameters = parameters.getLunaticXmlParameters();
-		if(jsParameters!=null) {
-			jsParameters.setFilterDescription(filterDescription);
+		LunaticXMLParameters lunaticXMLParameters = parameters.getLunaticXmlParameters();
+		if(lunaticXMLParameters!=null) {
+			lunaticXMLParameters.setFilterDescription(filterDescription);
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 

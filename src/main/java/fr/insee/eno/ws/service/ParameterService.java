@@ -2,10 +2,13 @@ package fr.insee.eno.ws.service;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.OutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.ENOParameters;
@@ -22,10 +25,11 @@ public class ParameterService {
 	private ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 	
 	public ENOParameters getDefaultCustomParameters(Context context, OutFormat outFormat) throws Exception  {
-		context=context!=null?context:Context.DEFAULT;
-		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), context.value().toLowerCase());
-		InputStream xmlParameters = getInputStreamFromPath(parametersPath);
-		return valorizatorParameters.getParameters(xmlParameters);
+		File mergedParams = getDefaultCustomParametersFile(context, outFormat);
+		InputStream mergedParamsInputStream = FileUtils.openInputStream(mergedParams);
+		ENOParameters finalParams = valorizatorParameters.getParameters(mergedParamsInputStream);
+		mergedParamsInputStream.close();
+		return finalParams;
 	}
 	
 		

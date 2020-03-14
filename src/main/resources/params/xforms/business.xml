@@ -11,8 +11,8 @@
         
         <PostProcessing>xforms-insert-generic-questions</PostProcessing>
         <PostProcessing>xforms-browsing</PostProcessing>
-        <PostProcessing>xforms-modele-coltrane</PostProcessing>
-        <PostProcessing>xforms-edit-patron</PostProcessing>
+        <PostProcessing>xforms-insee-model</PostProcessing>
+        <PostProcessing>xforms-insee-pattern</PostProcessing>
         <PostProcessing>xforms-identification</PostProcessing>
         <PostProcessing>xforms-insert-welcome</PostProcessing>
         <PostProcessing>xforms-insert-end</PostProcessing>

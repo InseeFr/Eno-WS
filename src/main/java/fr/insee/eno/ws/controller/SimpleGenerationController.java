@@ -117,7 +117,7 @@ public class SimpleGenerationController {
 	
 	
 	@Operation(
-			summary="Generation of pdf questionnaire according  to the context.",
+			summary="Generation of lunatic-xml questionnaire according  to the context.",
 			description="It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
@@ -195,5 +195,6 @@ public class SimpleGenerationController {
 				.body(stream);
 	}
 	
+
 	
 }

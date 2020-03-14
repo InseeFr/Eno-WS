@@ -6,7 +6,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
@@ -18,8 +18,8 @@
 
 		<final.war.name>enows</final.war.name>
 
-
-		<eno.version>2.0.2</eno.version>
+	<javax.activation.version>1.2.0</javax.activation.version>
+		<eno.version>2.0.3</eno.version>
 		<lunatic-model.version>1.0.1</lunatic-model.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
@@ -106,7 +106,29 @@
 			<version>${commons-io.version}</version>
 		</dependency>
 
-		
+			<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>javax.activation</artifactId>
+			<version>${javax.activation.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.api.version}</version>
+		</dependency>
 
 		<!-- test -->
 		<dependency>
@@ -163,7 +185,16 @@
 				</includes>
 			</resource>
 		</resources>
-		<plugins>			
+		<plugins>	
+					<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>		
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
