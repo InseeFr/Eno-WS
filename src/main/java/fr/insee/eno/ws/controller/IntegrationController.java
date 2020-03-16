@@ -68,7 +68,7 @@ public class IntegrationController {
 
 		
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext();
+		Context currentContext = currentEnoParams.getParameters().getContext()!=null ?currentEnoParams.getParameters().getContext():Context.BUSINESS;
 
 		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.XFORMS);
 		

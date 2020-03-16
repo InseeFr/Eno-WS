@@ -311,13 +311,8 @@ public class GenerationController {
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-		File enoOutput;
-		if(flatModel) {
-			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
-		}else {
-			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
-		}
-		
+		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+
 		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
@@ -375,7 +370,7 @@ public class GenerationController {
 			summary="Generation of the specifications of the questionnaire according .",
 			description="It generates a \".fodt\" questionnaire from a ddi questionnaire."
 			)
-	@PostMapping(value="odt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
 			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
 

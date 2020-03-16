@@ -74,6 +74,7 @@ public class ParametersController {
 			break;
 		default:
 			fileParam = File.createTempFile("default-param", ".xml");
+			
 			FileUtils.copyInputStreamToFile(parameterService.getDefaultParametersIS(), fileParam);
 			break;
 		}

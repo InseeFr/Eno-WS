@@ -14,18 +14,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.Context;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.parameters.Context;
+
 import fr.insee.eno.ws.service.TransformService;
+import fr.insee.eno.ws.service.QuestionnaireGenerateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -36,14 +35,12 @@ public class SimpleGenerationController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationController.class);
 	
-	private ParameterizedGenerationService generationService = new ParameterizedGenerationService();
-
-	@Autowired
-	private ParameterService parameterService;
 
 	@Autowired
 	private TransformService transformService;
 	
+	@Autowired
+	private QuestionnaireGenerateService generateQuestionnaireService;
 	
 	@Operation(
 			summary="Generation of fo questionnaire according to the context.",
@@ -58,27 +55,13 @@ public class SimpleGenerationController {
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
 			@PathVariable Context context) throws Exception {
-
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.FO);
 		
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-
-		FileUtils.forceDelete(enoInput);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FO,in, specificTreatment);
 		
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
+		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
 	}
+	
+
 	
 	@Operation(
 			summary="Generation of xforms questionnaire according to the context.",
@@ -94,25 +77,10 @@ public class SimpleGenerationController {
 
 			@PathVariable Context context) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
 		
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-
-		FileUtils.forceDelete(enoInput);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,in, specificTreatment);
 		
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
+		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
 	}
 	
 	
@@ -129,26 +97,10 @@ public class SimpleGenerationController {
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
 			@PathVariable Context context) throws Exception {
-
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.LUNATIC_XML);
 		
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoOutput = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-
-		FileUtils.forceDelete(enoInput);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,in, specificTreatment);
 		
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
+		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
 	}
 	
 	
@@ -165,36 +117,18 @@ public class SimpleGenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@PathVariable Context context,
-			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
+			@PathVariable Context context) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, OutFormat.LUNATIC_XML);
 		
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoTemp = generationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-		File enoOutput;
-		if(flatModel) {
-			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
-		}else {
-			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
-		}
+		File enoTemp = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,in, specificTreatment);
 		
-		FileUtils.forceDelete(enoInput);
-		
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
+		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+	
+		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
 	}
 	
 
+
+	
 	
 }
