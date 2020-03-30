@@ -1,14 +1,10 @@
 package fr.insee.eno.ws.controller;
 
 import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.parameters.Context;
-
-import fr.insee.eno.ws.service.TransformService;
+import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.ws.service.QuestionnaireGenerateService;
+import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -58,7 +52,7 @@ public class SimpleGenerationController {
 		
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FO,in, specificTreatment);
 		
-		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
+		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
 
@@ -80,7 +74,7 @@ public class SimpleGenerationController {
 		
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,in, specificTreatment);
 		
-		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
+		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
 	
@@ -100,7 +94,7 @@ public class SimpleGenerationController {
 		
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,in, specificTreatment);
 		
-		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
+		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
 	
@@ -123,8 +117,8 @@ public class SimpleGenerationController {
 		File enoTemp = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,in, specificTreatment);
 		
 		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
-	
-		return generateQuestionnaireService.generateQuestionnaireResponse(enoOutput);
+		
+		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
 

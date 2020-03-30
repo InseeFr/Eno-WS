@@ -112,9 +112,9 @@ public class IntegrationController {
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext();
 
-		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO);
+		ENOParameters defaultEnoParamsddi2Fo =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO);
 		
-		Pipeline defaultPipeline = defaultEnoParamsddi2Xforms.getPipeline();
+		Pipeline defaultPipeline = defaultEnoParamsddi2Fo.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
 		
 		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);

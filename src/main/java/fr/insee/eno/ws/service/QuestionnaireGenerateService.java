@@ -2,17 +2,13 @@ package fr.insee.eno.ws.service;
 
 import java.io.File;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
@@ -31,14 +27,7 @@ public class QuestionnaireGenerateService {
 	private ParameterService parameterService;
 	
 
-	public ResponseEntity<StreamingResponseBody> generateQuestionnaireResponse(File enoOutput)throws Exception {
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
-	}
 	
 	public File generateQuestionnaireFile(Context context, OutFormat outFormat, MultipartFile in, MultipartFile specificTreatment)throws Exception {
 
