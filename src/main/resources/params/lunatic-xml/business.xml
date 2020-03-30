@@ -2,23 +2,21 @@
     
     <Pipeline>
         <InFormat>ddi</InFormat>
-        <OutFormat>js</OutFormat>
+        <OutFormat>lunatic-xml</OutFormat>
         
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
         
-        <PostProcessing>js-sortComponents</PostProcessing>
-        <PostProcessing>js-insert-generic-questions</PostProcessing>
-        <PostProcessing>js-externalizeVariables</PostProcessing>
-        <PostProcessing>js-vtlParser</PostProcessing>
+        <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
+        <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
+        <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
+        <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
     </Pipeline>
     
     <Parameters>
         
         <Context>business</Context>
-        
-        <Campagne>test-2019-x00</Campagne>
         
         <Languages>
             <Language>fr</Language>
@@ -33,13 +31,6 @@
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
         
-        <js-parameters>            
-            <FilterDescription>false</FilterDescription>
-        </js-parameters>
-        
-        <Title>
-            <Browsing>module</Browsing>
-        </Title>
     </Parameters>
     
 </ENOParameters>

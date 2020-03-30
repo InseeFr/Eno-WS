@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -28,19 +29,18 @@ import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.DecimalSeparator;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
-import fr.insee.eno.parameters.FRParameters;
+import fr.insee.eno.parameters.FOParameters;
 import fr.insee.eno.parameters.Format;
 import fr.insee.eno.parameters.InFormat;
-import fr.insee.eno.parameters.JSParameters;
 import fr.insee.eno.parameters.Level;
+import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.PDFParameters;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
 import fr.insee.eno.parameters.PreProcessing;
-import fr.insee.eno.parameters.Context;
+import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.DDIVersion;
@@ -121,7 +121,7 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 						
-			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+			@RequestParam(value="DDIVersion",required=false,defaultValue="DDI_33") DDIVersion ddiVersion,
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 			
 			@RequestParam Context context,
@@ -138,7 +138,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.PDF);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO);
 		
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
@@ -148,18 +148,21 @@ public class GenerationController {
 		Parameters parameters = enoParameters.getParameters();
 		
 		parameters.setContext(context);
+		
 		EndQuestion endQuestion = parameters.getEndQuestion();
-		endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
-		endQuestion.setCommentQuestion(EndQuestionCommentQuestion);        
-		PDFParameters pdfParameters = parameters.getPdfParameters();
-		Format format = pdfParameters.getFormat();
+			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
+			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
+		
+		FOParameters foParameters = parameters.getFoParameters();
+		
+		Format format = foParameters.getFormat();
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
-		pdfParameters.setAccompanyingMail(accompanyingMail);
-		Capture capture2 = pdfParameters.getCapture();
+		foParameters.setAccompanyingMail(accompanyingMail);
+		Capture capture2 = foParameters.getCapture();
 		capture2.setNumeric(capture);
-		pdfParameters.setCapture(capture2);
-
+		foParameters.setCapture(capture2);
+		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		
@@ -185,7 +188,7 @@ public class GenerationController {
 
 
 	@Operation(
-			summary="Generation of xforms questionnaire according to the given xforms (FR-FormRunner) parameters, metadata and specificTreatment.",
+			summary="Generation of xforms questionnaire according to the given xforms parameters, metadata and specificTreatment.",
 			description="It generates a xforms questionnaire from a ddi questionnaire using the xforms parameters given. For css parameters, sperate style sheet by ','"
 			)
 	@PostMapping(value="ddi-2-xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -216,7 +219,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FR);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
 			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
@@ -230,14 +233,14 @@ public class GenerationController {
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
 		}
-		FRParameters frParameters = parameters.getFrParameters();
-		if(frParameters!=null) {
-			frParameters.setNumericExample(numericExample);
-			frParameters.setDeblocage(deblocage);
-			frParameters.setSatisfaction(satisfaction);
-			frParameters.setLengthOfLongTable(lengthOfLongTable);
-			frParameters.setDecimalSeparator(decimalSeparator);
-			frParameters.getCss().addAll(Arrays.asList(css.split(",")));		
+		XFORMSParameters xformsParameters = parameters.getXformsParameters();
+		if(xformsParameters!=null) {
+			xformsParameters.setNumericExample(numericExample);
+			xformsParameters.setDeblocage(deblocage);
+			xformsParameters.setSatisfaction(satisfaction);
+			xformsParameters.setLengthOfLongTable(lengthOfLongTable);
+			xformsParameters.setDecimalSeparator(decimalSeparator);
+			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));		
 		}
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
@@ -288,7 +291,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.JS);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML);
 		if(ddiVersion.equals(DDIVersion.DDI_32)) {
 			Pipeline pipeline = enoParameters.getPipeline();
 			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
@@ -302,20 +305,15 @@ public class GenerationController {
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
 			endQuestion.setCommentQuestion(EndQuestionCommentQuestion);
 		}
-		JSParameters jsParameters = parameters.getJsParameters();
-		if(jsParameters!=null) {
-			jsParameters.setFilterDescription(filterDescription);
+		LunaticXMLParameters lunaticXMLParameters = parameters.getLunaticXmlParameters();
+		if(lunaticXMLParameters!=null) {
+			lunaticXMLParameters.setFilterDescription(filterDescription);
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
-		File enoOutput;
-		if(flatModel) {
-			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
-		}else {
-			enoOutput = transformService.XMLLunaticToJSONLunatic(enoTemp);
-		}
-		
+		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+
 		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
@@ -373,13 +371,13 @@ public class GenerationController {
 			summary="Generation of the specifications of the questionnaire according .",
 			description="It generates a \".fodt\" questionnaire from a ddi questionnaire."
 			)
-	@PostMapping(value="odt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
 			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.ODT);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT);
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
 		FileUtils.forceDelete(enoInput);

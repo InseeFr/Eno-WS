@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Integration of questionnaire")
 @RestController
-@RequestMapping("/integration")
+@RequestMapping("/integration-business")
 public class IntegrationController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
@@ -50,8 +49,8 @@ public class IntegrationController {
 	
 
 	@Operation(
-			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
-			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
+			description="It generates a questionnaire for intregation with default business pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 			)
 	@PostMapping(value= {"ddi-2-xforms"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXforms(
@@ -69,9 +68,9 @@ public class IntegrationController {
 
 		
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext();
+		Context currentContext = currentEnoParams.getParameters().getContext()!=null ?currentEnoParams.getParameters().getContext():Context.BUSINESS;
 
-		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FR);
+		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.XFORMS);
 		
 		Pipeline defaultPipeline = defaultEnoParamsddi2Xforms.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
@@ -113,9 +112,9 @@ public class IntegrationController {
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext();
 
-		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.PDF);
+		ENOParameters defaultEnoParamsddi2Fo =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO);
 		
-		Pipeline defaultPipeline = defaultEnoParamsddi2Xforms.getPipeline();
+		Pipeline defaultPipeline = defaultEnoParamsddi2Fo.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
 		
 		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);

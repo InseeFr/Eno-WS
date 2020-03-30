@@ -60,20 +60,21 @@ public class ParametersController {
 		File fileParam;
 
 		switch (outFormat) {
-		case FR:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FR);
+		case XFORMS:
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS);
 			break;
-		case PDF:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.PDF);
+		case FO:
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO);
 			break;
-		case JS:
-			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.JS);
+		case LUNATIC_XML:
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML);
 			break;
-		case ODT:
-			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.ODT);
+		case FODT:
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT);
 			break;
 		default:
 			fileParam = File.createTempFile("default-param", ".xml");
+			
 			FileUtils.copyInputStreamToFile(parameterService.getDefaultParametersIS(), fileParam);
 			break;
 		}
