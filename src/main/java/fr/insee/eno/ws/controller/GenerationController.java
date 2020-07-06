@@ -165,6 +165,7 @@ public class GenerationController {
 		
 		PageBreakBetween pageBreakbetweenFo = foParameters.getPageBreakBetween();
 		pageBreakbetweenFo.setPdf(pageBreakBetween);
+		foParameters.setPageBreakBetween(pageBreakbetweenFo);
 		
 		Capture capture2 = foParameters.getCapture();
 		capture2.setNumeric(capture);
