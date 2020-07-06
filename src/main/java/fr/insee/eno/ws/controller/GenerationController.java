@@ -36,6 +36,7 @@ import fr.insee.eno.parameters.Level;
 import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
+import fr.insee.eno.parameters.PageBreakBetween;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
@@ -133,6 +134,7 @@ public class GenerationController {
 			@RequestParam(value="Format-column",defaultValue="1") int nbColumn,
 			@RequestParam(value="AccompanyingMail") AccompanyingMail accompanyingMail,
 			@RequestParam(value="PageBreakBetween") Level pageBreakBetween, 
+			@RequestParam(value="InitializeAllVariables", defaultValue="false") boolean initializeAllVariables, 
 			@RequestParam(value="Capture") CaptureEnum capture) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -158,10 +160,17 @@ public class GenerationController {
 		Format format = foParameters.getFormat();
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
+		
 		foParameters.setAccompanyingMail(accompanyingMail);
+		
+		PageBreakBetween pageBreakbetweenFo = foParameters.getPageBreakBetween();
+		pageBreakbetweenFo.setPdf(pageBreakBetween);
+		
 		Capture capture2 = foParameters.getCapture();
 		capture2.setNumeric(capture);
 		foParameters.setCapture(capture2);
+		
+	    foParameters.setInitializeAllVariables(initializeAllVariables);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
