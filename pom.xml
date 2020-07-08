@@ -19,6 +19,7 @@
 		<final.war.name>enows</final.war.name>
 
 	<javax.activation.version>1.2.0</javax.activation.version>
+
 		<eno.version>2.0.4</eno.version>
 		<lunatic-model.version>1.0.1</lunatic-model.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>

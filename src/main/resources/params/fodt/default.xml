@@ -2,7 +2,7 @@
     
     <Pipeline>
         <InFormat>ddi</InFormat>
-        <OutFormat>odt</OutFormat>
+        <OutFormat>fodt</OutFormat>
         
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
