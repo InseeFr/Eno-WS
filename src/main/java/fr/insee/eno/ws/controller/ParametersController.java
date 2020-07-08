@@ -36,8 +36,8 @@ public class ParametersController {
 	private ParameterService parameterService;
 	
 	@Operation(
-			summary="Get default xml file parameters", 
-			description="It returns the default parameters file which is overloaded.")
+			summary="Get all default out format parameters.", 
+			description="It returns the default parameters file without Pipeline which is overloaded. This file don't be used directly : you have to fill Pipeline.")
 	@GetMapping(value="default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultParam() throws Exception {
 
@@ -68,6 +68,9 @@ public class ParametersController {
 			break;
 		case LUNATIC_XML:
 			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML);
+			break;
+		case DDI:
+			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI);
 			break;
 		case FODT:
 			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT);

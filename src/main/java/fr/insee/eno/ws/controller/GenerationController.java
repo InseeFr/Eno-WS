@@ -33,13 +33,17 @@ import fr.insee.eno.parameters.FOParameters;
 import fr.insee.eno.parameters.Format;
 import fr.insee.eno.parameters.InFormat;
 import fr.insee.eno.parameters.Level;
+import fr.insee.eno.parameters.Loop;
 import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
+import fr.insee.eno.parameters.PageBreakBetween;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
 import fr.insee.eno.parameters.PreProcessing;
+import fr.insee.eno.parameters.Roster;
+import fr.insee.eno.parameters.Roster.Row;
 import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
@@ -129,10 +133,16 @@ public class GenerationController {
 			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
 			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
 
+			@RequestParam(value="Row-defaultSize", defaultValue="10") int RowDefaultSize,
+			@RequestParam(value="Row-MinimumEmpty", defaultValue="1") int RowMinimumEmpty,
+			@RequestParam(value="Loop-defaultOccurence", defaultValue="10") int LoopDefaultOccurence,
+			@RequestParam(value="Loop-MinimumEmptyOccurence", defaultValue="1") int LoopMinimumEmptyOccurence, 
+			
 			@RequestParam(value="Format-orientation") Orientation orientation,
 			@RequestParam(value="Format-column",defaultValue="1") int nbColumn,
 			@RequestParam(value="AccompanyingMail") AccompanyingMail accompanyingMail,
 			@RequestParam(value="PageBreakBetween") Level pageBreakBetween, 
+			@RequestParam(value="InitializeAllVariables", defaultValue="false") boolean initializeAllVariables, 
 			@RequestParam(value="Capture") CaptureEnum capture) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -158,10 +168,29 @@ public class GenerationController {
 		Format format = foParameters.getFormat();
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
+		
+		Roster rosterFo = foParameters.getRoster();
+		Row rowFo = rosterFo.getRow();
+		rowFo.setDefaultSize(RowDefaultSize);		
+		rowFo.setMinimumEmpty(RowMinimumEmpty);
+		rosterFo.setRow(rowFo);
+		foParameters.setRoster(rosterFo);
+		
+		Loop loopFo = foParameters.getLoop();
+		loopFo.setDefaultOccurrence(LoopDefaultOccurence);
+		loopFo.setMinimumEmptyOccurrence(LoopMinimumEmptyOccurence);
+		
 		foParameters.setAccompanyingMail(accompanyingMail);
+		
+		PageBreakBetween pageBreakbetweenFo = foParameters.getPageBreakBetween();
+		pageBreakbetweenFo.setPdf(pageBreakBetween);
+		foParameters.setPageBreakBetween(pageBreakbetweenFo);
+		
 		Capture capture2 = foParameters.getCapture();
 		capture2.setNumeric(capture);
 		foParameters.setCapture(capture2);
+		
+	    foParameters.setInitializeAllVariables(initializeAllVariables);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -210,11 +239,11 @@ public class GenerationController {
 			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
 
 			@RequestParam(value="NumericExample") boolean numericExample,
-			@RequestParam(value="Deblocage") boolean deblocage,
-			@RequestParam(value="Satisfaction") boolean satisfaction,
+			@RequestParam(value="Deblocage", defaultValue="false") boolean deblocage,
+			@RequestParam(value="Satisfaction", defaultValue="false") boolean satisfaction,
 			@RequestParam(value="LengthOfLongTable", defaultValue="7") int lengthOfLongTable, 
 			@RequestParam(value="DecimalSeparator") DecimalSeparator decimalSeparator,
-			@RequestParam(value="css") String css) throws Exception {
+			@RequestParam(value="css", required=false) String css) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -267,10 +296,10 @@ public class GenerationController {
 	}
 
 	@Operation(
-			summary="Generation of lunatic-json-flat questionnaire according to the given js parameters and specificTreatment.",
-			description="It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the js parameters given."
+			summary="Generation of lunatic-json questionnaire according to the given js parameters and specificTreatment.",
+			description="It generates a lunatic-json (flat) questionnaire from a ddi questionnaire using the js parameters given."
 			)
-	@PostMapping(value="ddi-2-lunatic-json-flat", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-lunatic-json", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateJSQuestionnaire(
 
 			// Files
@@ -285,8 +314,8 @@ public class GenerationController {
 			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
 			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
 			
-			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
-			@RequestParam(value="flatModel", defaultValue="true") boolean flatModel) throws Exception {
+			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription
+			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -371,7 +400,7 @@ public class GenerationController {
 			summary="Generation of the specifications of the questionnaire according .",
 			description="It generates a \".fodt\" questionnaire from a ddi questionnaire."
 			)
-	@PostMapping(value="fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
 			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
 
