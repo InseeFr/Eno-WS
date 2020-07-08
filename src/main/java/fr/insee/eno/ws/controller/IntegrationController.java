@@ -56,7 +56,7 @@ public class IntegrationController {
 	public ResponseEntity<StreamingResponseBody> generateXforms(
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
-			@RequestPart(value="metadata",required=false) MultipartFile metadata,
+			@RequestPart(value="metadata",required=true) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -98,7 +98,7 @@ public class IntegrationController {
 	public ResponseEntity<StreamingResponseBody> generateFo(
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
-			@RequestPart(value="metadata",required=false) MultipartFile metadata,
+			@RequestPart(value="metadata",required=true) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
