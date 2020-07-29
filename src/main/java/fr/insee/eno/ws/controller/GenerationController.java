@@ -288,7 +288,8 @@ public class GenerationController {
 			xformsParameters.setSatisfaction(satisfaction);
 			xformsParameters.setLengthOfLongTable(lengthOfLongTable);
 			xformsParameters.setDecimalSeparator(decimalSeparator);
-			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));		
+			if(css!=null) {
+			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));	}	
 		}
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
