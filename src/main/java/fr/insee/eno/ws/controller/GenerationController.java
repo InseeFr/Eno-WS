@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import fr.insee.eno.parameters.AccompanyingMail;
 import fr.insee.eno.parameters.BeginQuestion;
+import fr.insee.eno.parameters.BrowsingEnum;
 import fr.insee.eno.parameters.Capture;
 import fr.insee.eno.parameters.CaptureEnum;
 import fr.insee.eno.parameters.Context;
@@ -31,6 +32,7 @@ import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
 import fr.insee.eno.parameters.FOParameters;
 import fr.insee.eno.parameters.Format;
+import fr.insee.eno.parameters.GlobalNumbering;
 import fr.insee.eno.parameters.InFormat;
 import fr.insee.eno.parameters.Level;
 import fr.insee.eno.parameters.Loop;
@@ -47,6 +49,7 @@ import fr.insee.eno.parameters.Roster.Row;
 import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.model.BrowsingSuggest;
 import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
@@ -143,7 +146,9 @@ public class GenerationController {
 			@RequestParam(value="AccompanyingMail") AccompanyingMail accompanyingMail,
 			@RequestParam(value="PageBreakBetween") Level pageBreakBetween, 
 			@RequestParam(value="InitializeAllVariables", defaultValue="false") boolean initializeAllVariables, 
-			@RequestParam(value="Capture") CaptureEnum capture) throws Exception {
+			@RequestParam(value="Capture") CaptureEnum capture,
+			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -158,6 +163,11 @@ public class GenerationController {
 		Parameters parameters = enoParameters.getParameters();
 		
 		parameters.setContext(context);
+		
+		GlobalNumbering title = parameters.getTitle();
+		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
+		title.setBrowsing(browsing);
+		parameters.setTitle(title);
 		
 		EndQuestion endQuestion = parameters.getEndQuestion();
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
@@ -191,6 +201,7 @@ public class GenerationController {
 		foParameters.setCapture(capture2);
 		
 	    foParameters.setInitializeAllVariables(initializeAllVariables);
+	    
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
@@ -243,7 +254,9 @@ public class GenerationController {
 			@RequestParam(value="Satisfaction", defaultValue="false") boolean satisfaction,
 			@RequestParam(value="LengthOfLongTable", defaultValue="7") int lengthOfLongTable, 
 			@RequestParam(value="DecimalSeparator") DecimalSeparator decimalSeparator,
-			@RequestParam(value="css", required=false) String css) throws Exception {
+			@RequestParam(value="css", required=false) String css,
+			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -255,6 +268,12 @@ public class GenerationController {
 		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
+		
+		GlobalNumbering title = parameters.getTitle();
+		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
+		title.setBrowsing(browsing);
+		parameters.setTitle(title);
+		
 		BeginQuestion beginQuestion = parameters.getBeginQuestion();
 		if(beginQuestion!=null) {beginQuestion.setIdentification(IdentificationQuestion);}
 		EndQuestion endQuestion = parameters.getEndQuestion();
@@ -269,7 +288,8 @@ public class GenerationController {
 			xformsParameters.setSatisfaction(satisfaction);
 			xformsParameters.setLengthOfLongTable(lengthOfLongTable);
 			xformsParameters.setDecimalSeparator(decimalSeparator);
-			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));		
+			if(css!=null) {
+			xformsParameters.getCss().addAll(Arrays.asList(css.split(",")));	}	
 		}
 		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
@@ -314,7 +334,8 @@ public class GenerationController {
 			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
 			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
 			
-			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription
+			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
+			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -327,6 +348,14 @@ public class GenerationController {
 		}
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
+		
+		GlobalNumbering title = parameters.getTitle();
+		
+		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
+		
+		title.setBrowsing(browsing);
+		parameters.setTitle(title);
+		
 		BeginQuestion beginQuestion = parameters.getBeginQuestion();
 		if(beginQuestion!=null) {beginQuestion.setIdentification(IdentificationQuestion);}
 		EndQuestion endQuestion = parameters.getEndQuestion();
@@ -402,11 +431,23 @@ public class GenerationController {
 			)
 	@PostMapping(value="ddi-2-fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
-			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
+			@RequestPart(value="in",required=true) MultipartFile in,
+			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT);
+		
+		Parameters parameters = enoParameters.getParameters();
+		
+		GlobalNumbering title = parameters.getTitle();
+		
+		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
+		
+		title.setBrowsing(browsing);
+		parameters.setTitle(title);
+		
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
 		FileUtils.forceDelete(enoInput);
