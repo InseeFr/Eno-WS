@@ -136,16 +136,11 @@ public class GenerationController {
 			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
 			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
 
-			@RequestParam(value="Row-defaultSize", defaultValue="10") int RowDefaultSize,
-			@RequestParam(value="Row-MinimumEmpty", defaultValue="1") int RowMinimumEmpty,
-			@RequestParam(value="Loop-defaultOccurence", defaultValue="10") int LoopDefaultOccurence,
-			@RequestParam(value="Loop-MinimumEmptyOccurence", defaultValue="1") int LoopMinimumEmptyOccurence, 
 			
 			@RequestParam(value="Format-orientation") Orientation orientation,
 			@RequestParam(value="Format-column",defaultValue="1") int nbColumn,
 			@RequestParam(value="AccompanyingMail") AccompanyingMail accompanyingMail,
 			@RequestParam(value="PageBreakBetween") Level pageBreakBetween, 
-			@RequestParam(value="InitializeAllVariables", defaultValue="false") boolean initializeAllVariables, 
 			@RequestParam(value="Capture") CaptureEnum capture,
 			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
 			) throws Exception {
@@ -179,16 +174,7 @@ public class GenerationController {
 		format.setOrientation(orientation);
 		format.setColumns(nbColumn);
 		
-		Roster rosterFo = foParameters.getRoster();
-		Row rowFo = rosterFo.getRow();
-		rowFo.setDefaultSize(RowDefaultSize);		
-		rowFo.setMinimumEmpty(RowMinimumEmpty);
-		rosterFo.setRow(rowFo);
-		foParameters.setRoster(rosterFo);
-		
-		Loop loopFo = foParameters.getLoop();
-		loopFo.setDefaultOccurrence(LoopDefaultOccurence);
-		loopFo.setMinimumEmptyOccurrence(LoopMinimumEmptyOccurence);
+
 		
 		foParameters.setAccompanyingMail(accompanyingMail);
 		
@@ -200,7 +186,6 @@ public class GenerationController {
 		capture2.setNumeric(capture);
 		foParameters.setCapture(capture2);
 		
-	    foParameters.setInitializeAllVariables(initializeAllVariables);
 	    
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
