@@ -35,7 +35,6 @@ import fr.insee.eno.parameters.Format;
 import fr.insee.eno.parameters.GlobalNumbering;
 import fr.insee.eno.parameters.InFormat;
 import fr.insee.eno.parameters.Level;
-import fr.insee.eno.parameters.Loop;
 import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Orientation;
 import fr.insee.eno.parameters.OutFormat;
@@ -44,8 +43,7 @@ import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
 import fr.insee.eno.parameters.PreProcessing;
-import fr.insee.eno.parameters.Roster;
-import fr.insee.eno.parameters.Roster.Row;
+
 import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
