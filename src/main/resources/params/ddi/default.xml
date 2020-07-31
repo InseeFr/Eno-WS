@@ -4,10 +4,7 @@
         <InFormat>pogues-xml</InFormat>
         <OutFormat>ddi</OutFormat>
         
-        <PreProcessing>pogues-xml-goto-2-ite</PreProcessing>
-        <PreProcessing>pogues-xml-suppression-goto</PreProcessing>
-        <PreProcessing>pogues-xml-tweak-to-merge-equivalent-ite</PreProcessing>
-        
+        <PreProcessing>pogues-xml-goto-2-ite</PreProcessing>      
         <PostProcessing>ddi-markdownToXhtml</PostProcessing>
     </Pipeline>
     
