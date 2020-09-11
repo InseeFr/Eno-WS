@@ -121,6 +121,27 @@ public class SimpleGenerationController {
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
+	
+	
+	@Operation(
+			summary="Generation of fodt questionnaire according  to the context.",
+			description="It generates a odt questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
+					+ "See it using the end point : */parameter/{context}/default*"
+			)
+	@PostMapping(value="{context}/fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateFodtQuestionnaire(
+
+			// Files
+			@RequestPart(value="in",required=true) MultipartFile in,
+		
+			@PathVariable Context context) throws Exception {
+
+		
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,in,null);
+		
+		
+		return ResponseUtil.generateResponseFromFile(enoOutput);
+	}
 
 
 	
