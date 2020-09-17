@@ -6,7 +6,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
@@ -20,7 +20,7 @@
 
 	<javax.activation.version>1.2.0</javax.activation.version>
 
-		<eno.version>2.0.4</eno.version>
+		<eno.version>2.0.5</eno.version>
 		<lunatic-model.version>1.0.2</lunatic-model.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
