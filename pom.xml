@@ -16,7 +16,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<final.war.name>enows</final.war.name>
+		<final.war.name>eno-ws</final.war.name>
 
 	<javax.activation.version>1.2.0</javax.activation.version>
 
