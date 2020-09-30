@@ -13,7 +13,7 @@ install:
 
 script:
   - mvn clean install -DskipTests
-  - docker build -t inseefr/eno-ws .
+  - docker build -t laurentc35/eno-ws .
 
 after_script:
   - bash scripts/gitbook.sh
