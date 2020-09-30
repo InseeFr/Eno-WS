@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: eno-ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eno-ws
+  template:
+    metadata:
+      labels:
+        app: eno-ws
+    spec:
+      containers:
+        - name: eno-ws
+          image: inseefr/eno-ws:latest
+          env:
+            - name: FR_INSEE_ENOWS_API_SCHEME
+              value: "https"
+            - name: FR_INSEE_ENOWS_API_HOST
+              value: "queen.demo.dev.sspcloud.fr"
