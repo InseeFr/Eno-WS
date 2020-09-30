@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: eno-ws
+  name: eno
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
@@ -14,5 +14,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: eno-ws
+              serviceName: eno
               servicePort: http

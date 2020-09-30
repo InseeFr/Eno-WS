@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: eno-ws
+  name: eno
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: eno-ws
+      app: eno
   template:
     metadata:
       labels:
-        app: eno-ws
+        app: eno
     spec:
       containers:
-        - name: eno-ws
+        - name: eno
           image: laurentc35/eno-ws:latest
           env:
             - name: FR_INSEE_ENOWS_API_SCHEME
