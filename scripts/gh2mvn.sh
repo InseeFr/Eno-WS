@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #title           :install_from_vch.sh
 #description     :This script installs files stored on github to local mvn repo
-#author		     :a-cordier
+#author          :Laurent Caouissin
 #==============================================================================
 
 set -e

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #title           :gitbook.sh
 #description     :This script generates gitbook documentation on a travis build
-#author		     :a-cordier
+#author          :a-cordier
 #==============================================================================
 
 set -e
