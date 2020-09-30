@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eno
-          image: laurentc35/eno-ws:latest
+          image: inseefr/eno-ws:latest
           env:
             - name: FR_INSEE_ENOWS_API_SCHEME
               value: "https"

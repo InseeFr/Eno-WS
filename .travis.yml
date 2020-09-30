@@ -13,7 +13,7 @@ install:
 
 script:
   - mvn clean install -DskipTests
-  - docker build -t laurentc35/eno-ws .
+  - docker build -t inseefr/eno-ws .
 
 after_script:
   - bash scripts/gitbook.sh
@@ -23,7 +23,7 @@ deploy:
     provider: script
     script:
       echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-      && docker push laurentc35/eno-ws
+      && docker push inseefr/eno-ws
     on:
       branch: master
 
