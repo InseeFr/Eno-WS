@@ -29,6 +29,6 @@ deploy:
 
   - skip_cleanup: true
     provider: script
-    script: kubectl --token $K8S_TOKEN --server $K8S_SERVER --insecure-skip-tls-verify rollout restart deployment/eno-ws -n eno-ws
+    script: kubectl --token $K8S_TOKEN --server $K8S_SERVER --insecure-skip-tls-verify rollout restart deployment/eno-ws -n pogues-eno
     on:
       branch: master
