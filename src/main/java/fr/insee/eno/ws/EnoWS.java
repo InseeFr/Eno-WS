@@ -17,7 +17,6 @@ import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
 
-
 @SpringBootApplication(scanBasePackages = "fr.insee.eno.ws")
 public class EnoWS extends SpringBootServletInitializer{
 	
@@ -39,9 +38,10 @@ public class EnoWS extends SpringBootServletInitializer{
 	}
 	
 	public static void setProperty() {
+		String propertiesFileName = Constants.getPropertiesFileName();
 		System.setProperty("spring.config.location",
 				"classpath:"+APP_NAME+".properties,"
-				+ "file:///${catalina.base}/webapps/"+APP_NAME+".properties");
+				+ "file:///${catalina.base}/webapps/"+propertiesFileName+".properties");
 	}
 	
 	@EventListener
