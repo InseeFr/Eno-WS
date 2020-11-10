@@ -1,0 +1,13 @@
+<ENOParameters>
+    
+    <Pipeline>
+        <InFormat>pogues-xml</InFormat>
+        <OutFormat>ddi</OutFormat>
+        
+        <PreProcessing>pogues-xml-goto-2-ite</PreProcessing>      
+        <PostProcessing>ddi-markdownToXhtml</PostProcessing>
+    </Pipeline>
+    
+    <Parameters/>
+    
+</ENOParameters>
