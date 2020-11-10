@@ -6,7 +6,7 @@ import java.util.Properties;
 public class Constants {
 
     public static String getPropertiesFileName(){
-        String propertiesFileName="";
+        String propertiesFileName="enows";
         try {
             Properties properties = new Properties();
             properties.load(Constants.class.getResourceAsStream("/enows.properties"));
