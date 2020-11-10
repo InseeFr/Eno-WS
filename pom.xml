@@ -16,9 +16,9 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<final.war.name>eno-ws</final.war.name>
+		<final.war.name>enows</final.war.name>
 
-	<javax.activation.version>1.2.0</javax.activation.version>
+		<javax.activation.version>1.2.0</javax.activation.version>
 
 		<eno.version>2.0.5</eno.version>
 		<lunatic-model.version>1.0.2</lunatic-model.version>
