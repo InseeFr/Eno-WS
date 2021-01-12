@@ -6,7 +6,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.5</version>
+	<version>1.0.5-develop</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
@@ -16,7 +16,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<final.war.name>enows</final.war.name>
+		<final.war.name>eno-ws</final.war.name>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 
