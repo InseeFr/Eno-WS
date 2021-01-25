@@ -3,16 +3,15 @@ package fr.insee.eno.ws.controller;
 import java.io.File;
 import java.nio.file.Files;
 
+import fr.insee.eno.postprocessing.lunaticxml.LunaticXMLVTLParserPostprocessor;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -33,6 +32,8 @@ public class UtilController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilController.class);
 	
 	private ParameterizedGenerationService parameterizedGenerationService = new ParameterizedGenerationService();
+
+	private LunaticXMLVTLParserPostprocessor parser = new LunaticXMLVTLParserPostprocessor();
 
 	@Operation(summary = "Generation of ddi33 questionnaire from ddi32 questionnaire.", description = "It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire.")
 	@PostMapping(value = "ddi32-2-ddi33", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -61,6 +62,17 @@ public class UtilController {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + enoOutput.getName() + "\"")
 				.body(stream);
+	}
+
+	@Operation(summary = "Generation of VTL formula from Xpath formula", description = "It generates a VTL in 2.0 version from a Xpath in 1.1 version.")
+	@PostMapping(value = "xpath-2-vtl")
+	public ResponseEntity<String> generateVTLFormula(
+			@RequestParam(value = "xpath", required = true) String xpath) throws Exception {
+
+		String vtl = parser.parseToVTL(xpath);
+		LOGGER.info("Xpath parse to" + vtl);
+		return ResponseEntity.ok()
+				.body(vtl);
 	}
 
 }
