@@ -9,6 +9,7 @@
         <PreProcessing>ddi-titling</PreProcessing>
         
         <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
+		<PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
         <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
         <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
         <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
