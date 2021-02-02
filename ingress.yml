@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: eno
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+spec:
+  tls:
+    - hosts:
+        - eno.demo.dev.sspcloud.fr
+  rules:
+    - host: eno.demo.dev.sspcloud.fr
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: eno
+              servicePort: http

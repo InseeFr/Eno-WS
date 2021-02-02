@@ -1,12 +1,34 @@
 language: java
 jdk:
   - openjdk8
+sudo: required
+services:
+  - docker
+
+before_script:
+  - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
 install:
-  - wget https://github.com/laurentC35/Lunatic-Model/releases/download/1.0.1/lunatic-model-1.0.1.jar
-  - mvn install:install-file -Dfile=lunatic-model-1.0.1.jar -DgroupId=fr.insee.lunatic -DartifactId=lunatic-model -Dversion=1.0.1 -Dpackaging=jar
+  - bash scripts/install.sh $TRAVIS_BRANCH
 
-  - wget https://github.com/laurentC35/Eno/releases/download/2.0.1/eno-core-2.0.1.jar
-  - mvn install:install-file -Dfile=eno-core-2.0.1.jar -DgroupId=fr.insee.eno -DartifactId=eno-core -Dversion=2.0.1 -Dpackaging=jar
+script:
+  - mvn clean install -DskipTests
+  - docker build -t inseefr/eno-ws .
 
-  - mvn install -DskipTests
+after_script:
+  - bash scripts/gitbook.sh
+
+deploy:
+  - skip_cleanup: true
+    provider: script
+    script:
+      echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+      && docker push inseefr/eno-ws
+    on:
+      branch: master
+
+  - skip_cleanup: true
+    provider: script
+    script: kubectl --token $K8S_TOKEN --server $K8S_SERVER --insecure-skip-tls-verify rollout restart deployment/eno -n pogues-eno
+    on:
+      branch: master

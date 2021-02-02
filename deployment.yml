@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eno
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eno
+  template:
+    metadata:
+      labels:
+        app: eno
+    spec:
+      containers:
+        - name: eno
+          image: inseefr/eno-ws:latest
+          env:
+            - name: FR_INSEE_ENOWS_API_SCHEME
+              value: "https"
+            - name: FR_INSEE_ENOWS_API_HOST
+              value: "eno.demo.dev.sspcloud.fr"
