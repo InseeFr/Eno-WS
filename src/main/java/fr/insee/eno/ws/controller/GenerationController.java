@@ -290,12 +290,12 @@ public class GenerationController {
 
 			@RequestParam Context context,
 
-			@RequestParam(value="IdentificationQuestion") boolean IdentificationQuestion,
-			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
-			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
+			@RequestParam(value="IdentificationQuestion", required=false, defaultValue = "false") boolean IdentificationQuestion,
+			@RequestParam(value="ResponseTimeQuestion", required=false, defaultValue = "false") boolean EndQuestionResponseTime,
+			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
 
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
-			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest,
+			@RequestParam(value="Browsing", required=false, defaultValue = "TEMPLATE") BrowsingSuggest browsingSuggest,
 			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination
 			) throws Exception {
 
