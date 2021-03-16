@@ -29,6 +29,12 @@
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
 
+        <lunatic-xml-parameters>
+            <FilterDescription>false</FilterDescription>
+            <AddFilterResult>false</AddFilterResult>
+            <Pagination>none</Pagination>
+        </lunatic-xml-parameters>
+
         <Title>
             <Browsing>template</Browsing>
         </Title>
