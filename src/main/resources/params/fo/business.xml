@@ -1,13 +1,13 @@
 <ENOParameters>
-    
+
     <Pipeline>
         <InFormat>ddi</InFormat>
         <OutFormat>fo</OutFormat>
-        
+
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
-        
+
         <PostProcessing>fo-mailing</PostProcessing>
         <PostProcessing>fo-tableColumn</PostProcessing>
         <PostProcessing>fo-insertEndQuestion</PostProcessing>
@@ -16,32 +16,32 @@
         <PostProcessing>fo-insertCoverPage</PostProcessing>
         <PostProcessing>fo-insertAccompanyingMails</PostProcessing>
     </Pipeline>
-    
+
     <Parameters>
-        
+
         <Context>business</Context>
-        
-       
+
+
         <Languages>
             <Language>fr</Language>
         </Languages>
-        
-              <BeginQuestion>
-         <Identification>true</Identification>
-      </BeginQuestion>
-        
-      <EndQuestion>
-         <ResponseTimeQuestion>true</ResponseTimeQuestion>
-         <CommentQuestion>true</CommentQuestion>
-      </EndQuestion>
-        
+
+        <BeginQuestion>
+            <Identification>true</Identification>
+        </BeginQuestion>
+
+        <EndQuestion>
+            <ResponseTimeQuestion>true</ResponseTimeQuestion>
+            <CommentQuestion>true</CommentQuestion>
+        </EndQuestion>
+
         <fo-parameters>
-         <Capture>
-            <Numeric>manual</Numeric>
-         </Capture>
+            <Capture>
+                <Numeric>manual</Numeric>
+            </Capture>
         </fo-parameters>
-        
+
 
     </Parameters>
-    
+
 </ENOParameters>

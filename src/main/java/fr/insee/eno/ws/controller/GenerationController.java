@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Map;
 
+import fr.insee.eno.parameters.*;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,30 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.parameters.AccompanyingMail;
-import fr.insee.eno.parameters.BeginQuestion;
-import fr.insee.eno.parameters.BrowsingEnum;
-import fr.insee.eno.parameters.Capture;
-import fr.insee.eno.parameters.CaptureEnum;
-import fr.insee.eno.parameters.Context;
-import fr.insee.eno.parameters.DecimalSeparator;
-import fr.insee.eno.parameters.ENOParameters;
-import fr.insee.eno.parameters.EndQuestion;
-import fr.insee.eno.parameters.FOParameters;
-import fr.insee.eno.parameters.Format;
-import fr.insee.eno.parameters.GlobalNumbering;
-import fr.insee.eno.parameters.InFormat;
-import fr.insee.eno.parameters.Level;
-import fr.insee.eno.parameters.LunaticXMLParameters;
-import fr.insee.eno.parameters.Orientation;
-import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.PageBreakBetween;
-import fr.insee.eno.parameters.Parameters;
-import fr.insee.eno.parameters.Pipeline;
-import fr.insee.eno.parameters.PostProcessing;
-import fr.insee.eno.parameters.PreProcessing;
-
-import fr.insee.eno.parameters.XFORMSParameters;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.BrowsingSuggest;
@@ -308,17 +285,18 @@ public class GenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			
-			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,
+
+			@RequestParam(value="DDIVersion",required=true, defaultValue="DDI_33") DDIVersion ddiVersion,
 
 			@RequestParam Context context,
-			
-			@RequestParam(value="IdentificationQuestion") boolean IdentificationQuestion,
-			@RequestParam(value="ResponseTimeQuestion") boolean EndQuestionResponseTime,
-			@RequestParam(value="CommentQuestion") boolean EndQuestionCommentQuestion,
-			
+
+			@RequestParam(value="IdentificationQuestion", required=false, defaultValue = "false") boolean IdentificationQuestion,
+			@RequestParam(value="ResponseTimeQuestion", required=false, defaultValue = "false") boolean EndQuestionResponseTime,
+			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
+
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
-			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			@RequestParam(value="Browsing", required=false, defaultValue = "TEMPLATE") BrowsingSuggest browsingSuggest,
+			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -349,6 +327,7 @@ public class GenerationController {
 		LunaticXMLParameters lunaticXMLParameters = parameters.getLunaticXmlParameters();
 		if(lunaticXMLParameters!=null) {
 			lunaticXMLParameters.setFilterDescription(filterDescription);
+			lunaticXMLParameters.setPagination(pagination);
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
