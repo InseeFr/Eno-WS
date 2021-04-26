@@ -16,6 +16,10 @@
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
     </Pipeline>
 
-    <Parameters/>
+    <Parameters>
+      <lunatic-xml-parameters>
+            <Pagination>question</Pagination>
+        </lunatic-xml-parameters>
+</Parameters>
 
 </ENOParameters>
