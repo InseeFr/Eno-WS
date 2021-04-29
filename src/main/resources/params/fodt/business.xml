@@ -4,6 +4,7 @@
         <InFormat>ddi</InFormat>
         <OutFormat>fodt</OutFormat>
 
+        <PreProcessing>ddi-markdownToXhtml</PreProcessing>
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
