@@ -5,7 +5,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
-	<version>1.2.7</version>
+	<version>1.2.7-dev-lunaticJson</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
