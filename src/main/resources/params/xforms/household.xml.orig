@@ -4,8 +4,11 @@
         <InFormat>ddi</InFormat>
         <OutFormat>xforms</OutFormat>
 
-	<PreProcessing>ddi-multimodal-selection</PreProcessing>
+<<<<<<< HEAD
+		<PreProcessing>ddi-multimodal-selection</PreProcessing>
+=======
         <PreProcessing>ddi-markdownToXhtml</PreProcessing>
+>>>>>>> dev-multi-md2xhtml_as_ddi_preproc
         <PreProcessing>ddi-mapping</PreProcessing>
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>

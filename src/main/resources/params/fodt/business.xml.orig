@@ -2,16 +2,16 @@
 
     <Pipeline>
         <InFormat>ddi</InFormat>
-        <OutFormat>xforms</OutFormat>
+        <OutFormat>fodt</OutFormat>
 
-	<PreProcessing>ddi-multimodal-selection</PreProcessing>
+<<<<<<< HEAD
+		<PreProcessing>ddi-multimodal-selection</PreProcessing>
+=======
         <PreProcessing>ddi-markdownToXhtml</PreProcessing>
+>>>>>>> dev-multi-md2xhtml_as_ddi_preproc
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
-
-        <PostProcessing>xforms-browsing</PostProcessing>
-        <PostProcessing>xforms-fix-adherence</PostProcessing>
     </Pipeline>
 
     <Parameters/>
