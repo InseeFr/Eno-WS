@@ -20,6 +20,7 @@ import fr.insee.eno.parameters.InFormat;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PreProcessing;
+import fr.insee.eno.ws.service.TransformService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +28,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Util")
 @RestController
 @RequestMapping("/util")
+
+
 public class UtilController {
+	
+	@Autowired
+	private TransformService transformService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilController.class);
 	
@@ -73,6 +79,30 @@ public class UtilController {
 		LOGGER.info("Xpath parse to" + vtl);
 		return ResponseEntity.ok()
 				.body(vtl);
+	}
+	
+	@Operation(summary = "Generation of Lunatic Json from Lunatic XML", description = "It generates a Lunatic Json from a Lunatic XML, using the Lunatic-Model library.")
+	@PostMapping(value = "lunatic-model/xml-2-json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
+	public ResponseEntity<StreamingResponseBody> generateLunaticJson(
+			@RequestPart(value = "in", required = true) MultipartFile in) throws Exception {
+		
+		LOGGER.info("START of Lunatic XML -> Lunatic Json transforming");
+		File lunaticXMLInput = File.createTempFile("lunatic", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), lunaticXMLInput);
+
+		File lunaticJsonOnput = transformService.XMLLunaticToJSONLunaticFlat(lunaticXMLInput);
+
+		FileUtils.forceDelete(lunaticXMLInput);
+		
+		LOGGER.info("END of Lunatic XML -> Lunatic Json transforming");
+		LOGGER.info("OutPut File :"+lunaticJsonOnput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(lunaticJsonOnput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+lunaticJsonOnput.getName()+"\"")
+				.body(stream);
 	}
 
 }
