@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.model.BrowsingSuggest;
 import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
@@ -117,7 +116,9 @@ public class GenerationController {
 			@RequestParam(value="AccompanyingMail") AccompanyingMail accompanyingMail,
 			@RequestParam(value="PageBreakBetween") Level pageBreakBetween, 
 			@RequestParam(value="Capture") CaptureEnum capture,
-			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			@RequestParam(value="QuestNum") BrowsingEnum questNum,
+			@RequestParam(value="SeqNum") boolean seqNum,
+			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -134,10 +135,11 @@ public class GenerationController {
 		
 		parameters.setContext(context);
 		
-		GlobalNumbering title = parameters.getTitle();
-		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
-		title.setBrowsing(browsing);
-		parameters.setTitle(title);
+		GlobalNumbering numerotation = parameters.getNumerotation();
+		numerotation.setQuestNum(questNum);
+		numerotation.setSeqNum(seqNum);
+		numerotation.setPreQuestSymbol(preQuestSymbol);
+		parameters.setNumerotation(numerotation);
 		
 		EndQuestion endQuestion = parameters.getEndQuestion();
 			endQuestion.setResponseTimeQuestion(EndQuestionResponseTime);
@@ -215,7 +217,9 @@ public class GenerationController {
 			@RequestParam(value="LengthOfLongTable", defaultValue="7") int lengthOfLongTable, 
 			@RequestParam(value="DecimalSeparator") DecimalSeparator decimalSeparator,
 			@RequestParam(value="css", required=false) String css,
-			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			@RequestParam(value="QuestNum") BrowsingEnum questNum,
+			@RequestParam(value="SeqNum") boolean seqNum,
+			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -229,10 +233,11 @@ public class GenerationController {
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
 		
-		GlobalNumbering title = parameters.getTitle();
-		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
-		title.setBrowsing(browsing);
-		parameters.setTitle(title);
+		GlobalNumbering numerotation = parameters.getNumerotation();
+		numerotation.setQuestNum(questNum);
+		numerotation.setSeqNum(seqNum);
+		numerotation.setPreQuestSymbol(preQuestSymbol);
+		parameters.setNumerotation(numerotation);
 		
 		BeginQuestion beginQuestion = parameters.getBeginQuestion();
 		if(beginQuestion!=null) {beginQuestion.setIdentification(IdentificationQuestion);}
@@ -295,7 +300,9 @@ public class GenerationController {
 			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
 
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
-			@RequestParam(value="Browsing", required=false, defaultValue = "TEMPLATE") BrowsingSuggest browsingSuggest,
+			@RequestParam(value="QuestNum") BrowsingEnum questNum,
+			@RequestParam(value="SeqNum") boolean seqNum,
+			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol,
 			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination
 			) throws Exception {
 
@@ -310,12 +317,11 @@ public class GenerationController {
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
 		
-		GlobalNumbering title = parameters.getTitle();
-		
-		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
-		
-		title.setBrowsing(browsing);
-		parameters.setTitle(title);
+		GlobalNumbering numerotation = parameters.getNumerotation();
+		numerotation.setQuestNum(questNum);
+		numerotation.setSeqNum(seqNum);
+		numerotation.setPreQuestSymbol(preQuestSymbol);
+		parameters.setNumerotation(numerotation);
 		
 		BeginQuestion beginQuestion = parameters.getBeginQuestion();
 		if(beginQuestion!=null) {beginQuestion.setIdentification(IdentificationQuestion);}
@@ -395,7 +401,9 @@ public class GenerationController {
 	@PostMapping(value="ddi-2-fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateODTQuestionnaire(
 			@RequestPart(value="in",required=true) MultipartFile in,
-			@RequestParam(value="Browsing") BrowsingSuggest browsingSuggest
+			@RequestParam(value="QuestNum") BrowsingEnum questNum,
+			@RequestParam(value="SeqNum") boolean seqNum,
+			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -404,12 +412,11 @@ public class GenerationController {
 		
 		Parameters parameters = enoParameters.getParameters();
 		
-		GlobalNumbering title = parameters.getTitle();
-		
-		BrowsingEnum browsing = browsingSuggest.toBrowsingEnum();
-		
-		title.setBrowsing(browsing);
-		parameters.setTitle(title);
+		GlobalNumbering numerotation = parameters.getNumerotation();
+		numerotation.setQuestNum(questNum);
+		numerotation.setSeqNum(seqNum);
+		numerotation.setPreQuestSymbol(preQuestSymbol);
+		parameters.setNumerotation(numerotation);
 		
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput,enoParameters, null, null, null);
 
