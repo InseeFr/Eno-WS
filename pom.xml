@@ -19,7 +19,7 @@
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 
-		<eno.version>2.2.8</eno.version>
+		<eno.version>2.2.7</eno.version>
 		<lunatic-model.version>2.1.1</lunatic-model.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
