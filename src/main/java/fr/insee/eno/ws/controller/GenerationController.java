@@ -354,8 +354,7 @@ public class GenerationController {
 	public ResponseEntity<StreamingResponseBody> generateDDIQuestionnaire(
 
 			// Files
-			@RequestPart(value="in",required=true) MultipartFile in,
-			@RequestParam(value="mw-2-xhtml",required=true,defaultValue="true") boolean mw2xhtml) throws Exception {
+			@RequestPart(value="in",required=true) MultipartFile in) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -365,9 +364,7 @@ public class GenerationController {
 		pipeline.setOutFormat(OutFormat.DDI);
 		pipeline.getPreProcessing().add(PreProcessing.POGUES_XML_INSERT_FILTER_LOOP_INTO_QUESTION_TREE);
 		pipeline.getPreProcessing().add(PreProcessing.POGUES_XML_GOTO_2_ITE);
-		if(mw2xhtml) {
-			pipeline.getPostProcessing().add(PostProcessing.DDI_MARKDOWN_TO_XHTML);
-		}
+
 		enoParameters.setPipeline(pipeline);
 		
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
