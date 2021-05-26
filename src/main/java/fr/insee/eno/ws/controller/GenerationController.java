@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.Map;
 
 import fr.insee.eno.parameters.*;
 import org.apache.commons.io.FileUtils;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.BrowsingSuggest;
-import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
