@@ -8,9 +8,9 @@ metadata:
 spec:
   tls:
     - hosts:
-        - eno.demo.dev.sspcloud.fr
+        - dev.insee.io
   rules:
-    - host: eno.demo.dev.sspcloud.fr
+    - host: dev.insee.io
       http:
         paths:
           - path: /

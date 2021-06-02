@@ -19,4 +19,4 @@ spec:
             - name: FR_INSEE_ENOWS_API_SCHEME
               value: "https"
             - name: FR_INSEE_ENOWS_API_HOST
-              value: "eno.demo.dev.sspcloud.fr"
+              value: "dev.insee.io"

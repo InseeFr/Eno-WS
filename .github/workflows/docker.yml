@@ -22,7 +22,7 @@ jobs:
 
       - name: Build with Maven Eno
         working-directory: ./Eno
-        run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core"
+        run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
 
       - name: Checkout Lunatic model repo
         uses: actions/checkout@v2
@@ -34,13 +34,13 @@ jobs:
 
       - name: Build with Maven Lunatic model
         working-directory: ./Lunatic-model
-        run: mvn install -Djar.finalName="lunatic-model"
+        run: mvn install -Djar.finalName="lunatic-model" -B -V --file pom.xml
 
       - name: Checkout Eno-WS repo
         uses: actions/checkout@v2
 
       - name: Build with Maven Eno-WS
-        run: mvn clean install -DskipTests=true     
+        run: mvn clean install -DskipTests=true -B -V --file pom.xml   
 
       - name: Upload war
         uses: actions/upload-artifact@v2
