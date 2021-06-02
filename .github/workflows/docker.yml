@@ -34,7 +34,6 @@ jobs:
 
       - name: Build with Maven Lunatic model
         working-directory: ./Lunatic-model
-        run: cd Lunatic-model
         run: mvn install -Djar.finalName="lunatic-model"
 
       - name: Checkout Eno-WS repo
