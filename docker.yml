@@ -15,20 +15,25 @@ jobs:
       - name: Checkout Eno repo
         uses: actions/checkout@v2
         with:
+          fetch-depth: 1
+          ref: master
           repository: InseeFr/Eno
           path: Eno
 
       - name: Build with Maven Eno
-        run: cd Eno
+        working-directory: ./Eno
         run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core"
 
       - name: Checkout Lunatic model repo
         uses: actions/checkout@v2
         with:
+          fetch-depth: 1
+          ref: master
           repository: InseeFr/Lunatic-model
           path: Lunatic-model
 
       - name: Build with Maven Lunatic model
+       working-directory: ./Lunatic-model
         run: cd Lunatic-model
         run: mvn install -Djar.finalName="lunatic-model"
 
