@@ -5,7 +5,6 @@
         <OutFormat>ddi</OutFormat>
         <PreProcecessing>pogues-xml-insert-filter-loop-into-question-tree</PreProcecessing>
         <PreProcessing>pogues-xml-goto-2-ite</PreProcessing>
-        <PostProcessing>ddi-markdownToXhtml</PostProcessing>
     </Pipeline>
 
     <Parameters/>
