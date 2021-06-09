@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.Map;
 
 import fr.insee.eno.parameters.*;
 import org.apache.commons.io.FileUtils;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.model.BrowsingSuggest;
-import fr.insee.eno.ws.model.DDIVersion;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -103,7 +101,6 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 						
-			@RequestParam(value="DDIVersion",required=false,defaultValue="DDI_33") DDIVersion ddiVersion,
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 			
 			@RequestParam Context context,
@@ -124,11 +121,6 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO);
-		
-		if(ddiVersion.equals(DDIVersion.DDI_32)) {
-			Pipeline pipeline = enoParameters.getPipeline();
-			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
-		}	
 		
 		Parameters parameters = enoParameters.getParameters();
 		
@@ -198,8 +190,7 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,			
 			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-						
-			@RequestParam(value="DDIVersion",required=true,defaultValue="DDI_33") DDIVersion ddiVersion,			
+								
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel,
 
 			@RequestParam Context context,
@@ -222,10 +213,7 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
-		if(ddiVersion.equals(DDIVersion.DDI_32)) {
-			Pipeline pipeline = enoParameters.getPipeline();
-			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
-		}
+
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
 		
@@ -286,14 +274,12 @@ public class GenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@RequestParam(value="DDIVersion",required=true, defaultValue="DDI_33") DDIVersion ddiVersion,
-
 			@RequestParam Context context,
 
 			@RequestParam(value="IdentificationQuestion", required=false, defaultValue = "false") boolean IdentificationQuestion,
 			@RequestParam(value="ResponseTimeQuestion", required=false, defaultValue = "false") boolean EndQuestionResponseTime,
 			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
-
+			@RequestParam(value="parsingXpathVTL",required=false, defaultValue="true")  boolean parsingXpathVTL,
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
 			@RequestParam(value="Browsing", required=false, defaultValue = "TEMPLATE") BrowsingSuggest browsingSuggest,
 			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination
@@ -303,10 +289,14 @@ public class GenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML);
-		if(ddiVersion.equals(DDIVersion.DDI_32)) {
-			Pipeline pipeline = enoParameters.getPipeline();
-			pipeline.getPreProcessing().add(0, PreProcessing.DDI_32_TO_DDI_33);
+		
+		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
+		if(!parsingXpathVTL) {
+		Pipeline pipeline = enoParameters.getPipeline();
+		pipeline.getPostProcessing().remove(PostProcessing.LUNATIC_XML_VTL_PARSER);
+		enoParameters.setPipeline(pipeline);
 		}
+	
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
 		

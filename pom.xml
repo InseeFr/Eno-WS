@@ -5,7 +5,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
-	<version>1.2.10-dev-lunatic-singleloop</version>
+	<version>1.2.11-dev-lunatic-singleloop</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
