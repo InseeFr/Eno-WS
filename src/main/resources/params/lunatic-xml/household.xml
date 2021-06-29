@@ -37,9 +37,11 @@
             <Pagination>none</Pagination>
         </lunatic-xml-parameters>
 
-        <Title>
-            <Browsing>template</Browsing>
-        </Title>
+        <Numerotation>   
+             <QuestNum>no-number</QuestNum> 
+             <SeqNum>true</SeqNum> 
+             <PreQuestSymbol>true</PreQuestSymbol> 
+        </Numerotation>
     </Parameters>
 
 </ENOParameters>

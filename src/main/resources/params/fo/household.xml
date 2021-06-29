@@ -36,6 +36,12 @@
                 <Columns>2</Columns>
             </Format>
         </fo-parameters>
+        
+        <Numerotation>   
+             <QuestNum>all</QuestNum> 
+             <SeqNum>false</SeqNum> 
+             <PreQuestSymbol>true</PreQuestSymbol> 
+        </Numerotation>
 
     </Parameters>
 
