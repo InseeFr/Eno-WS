@@ -61,6 +61,6 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: inseefr/eno-ws
+          name: opherogel/eno-ws:v1.3.2
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
