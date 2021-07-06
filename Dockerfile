@@ -1,8 +1,9 @@
-FROM tomcat:jdk11-openjdk-slim-buster
+FROM openjdk:11-jdk-slim
 
 RUN rm -rf $CATALINA_HOME/webapps/*
-ADD src/main/resources/log4j2.xml $CATALINA_HOME/webapps/log4j2.xml
-ADD src/main/resources/enows-server.properties $CATALINA_HOME/webapps/enows.properties
-COPY ./target/*.war $CATALINA_HOME/webapps/ROOT.war
+ADD src/main/resources/log4j2.xml log4j2.xml
+ADD src/main/resources/enows-server.properties enows.properties
+COPY ./target/*.jar app.jar
 
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["java","-jar","/app.jar","--spring.config.location=file:///enows.properties"]
+
