@@ -21,6 +21,7 @@
     <Parameters>
       <lunatic-xml-parameters>
             <Pagination>question</Pagination>
+            <AddFilterResult>true</AddFilterResult>
         </lunatic-xml-parameters>
 </Parameters>
 
