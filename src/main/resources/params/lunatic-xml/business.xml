@@ -39,6 +39,7 @@
         <lunatic-xml-parameters>
             <FilterDescription>true</FilterDescription>
             <AddFilterResult>false</AddFilterResult>
+            <MissingVar>false</MissingVar>
             <Pagination>none</Pagination>
         </lunatic-xml-parameters>
 

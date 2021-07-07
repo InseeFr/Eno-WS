@@ -20,6 +20,7 @@
 
     <Parameters>
       <lunatic-xml-parameters>
+      		<MissingVar>false</MissingVar>
             <Pagination>question</Pagination>
             <AddFilterResult>true</AddFilterResult>
         </lunatic-xml-parameters>
