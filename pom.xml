@@ -4,7 +4,7 @@
 
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<version>1.3.0</version>
 

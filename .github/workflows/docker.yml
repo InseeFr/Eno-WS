@@ -42,25 +42,36 @@ jobs:
       - name: Build with Maven Eno-WS
         run: mvn clean install -DskipTests=true -B -V --file pom.xml   
 
-      - name: Upload jar
+      - name: Upload war
         uses: actions/upload-artifact@v2
         with:
-          name: jar
-          path: target/*.jar
+          name: war
+          path: target/*.war
+
   docker:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Download build
         id: download
         uses: actions/download-artifact@v2
         with:
-          name: jar
-          path: target/
+          name: artifacts
+          path: ./
+
+      - name: Get current version
+        id: version
+        run: echo "::set-output name=prop::$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
+      - run: echo ${{steps.version.outputs.prop}}
+
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: opherogel/eno-ws
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          tags: ${{steps.version.outputs.prop}}
+
+  
