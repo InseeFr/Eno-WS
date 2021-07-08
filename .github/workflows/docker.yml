@@ -58,7 +58,7 @@ jobs:
         id: download
         uses: actions/download-artifact@v2
         with:
-          name: artifacts
+          name: war
           path: target/
 
       - name: Get current version
