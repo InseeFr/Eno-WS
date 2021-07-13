@@ -32,6 +32,10 @@ jobs:
           repository: InseeFr/Lunatic-model
           path: Lunatic-model
 
+      - name: Build with Maven Lunatic model
+        working-directory: ./Lunatic-model
+        run: mvn install -Djar.finalName="lunatic-model" -B -V --file pom.xml
+
       - name: Test, package and analyze with maven & SonarCloud
         run: mvn verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
         env:
