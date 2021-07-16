@@ -33,8 +33,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Integration of questionnaire")
 @RestController
-@RequestMapping("/integration-business")
-public class IntegrationController {
+@RequestMapping("/integration-household")
+public class IntegrationHouseholdController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
 
@@ -48,76 +48,33 @@ public class IntegrationController {
 	private ParameterService parameterService;
 	
 
-	@Operation(
-			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
-			description="It generates a questionnaire for intregation with default business pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
-			)
-	@PostMapping(value= {"ddi-2-xforms"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<StreamingResponseBody> generateXforms(
-			@RequestPart(value="in",required=true) MultipartFile in, 
-			@RequestPart(value="params",required=true) MultipartFile params,
-			@RequestPart(value="metadata",required=true) MultipartFile metadata,
-			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		InputStream paramsIS = params!=null ? params.getInputStream():null;
-		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		
-		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext()!=null ?currentEnoParams.getParameters().getContext():Context.BUSINESS;
-
-		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.XFORMS);
-		
-		Pipeline defaultPipeline = defaultEnoParamsddi2Xforms.getPipeline();
-		currentEnoParams.setPipeline(defaultPipeline);
-		
-		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);
-
-		FileUtils.forceDelete(enoInput);
-
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :"+enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
-				.body(stream);
-	}
-	
-	
 	@Operation(
 			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
 			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 			)
-	@PostMapping(value= {"ddi-2-fo"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<StreamingResponseBody> generateFo(
+	@PostMapping(value= {"ddi-2-lunatic-json"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateLunatic(
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
-			@RequestPart(value="metadata",required=true) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		InputStream paramsIS = params!=null ? params.getInputStream():null;
-		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext();
 
-		ENOParameters defaultEnoParamsddi2Fo =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO);
+		ENOParameters defaultEnoParamsddi2Lunatic =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.LUNATIC_XML);
 		
-		Pipeline defaultPipeline = defaultEnoParamsddi2Fo.getPipeline();
+		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
 		
-		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);
+		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
 		
 		FileUtils.forceDelete(enoInput);
 
@@ -130,7 +87,6 @@ public class IntegrationController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
 				.body(stream);
 	}
-	
 
 
 }
