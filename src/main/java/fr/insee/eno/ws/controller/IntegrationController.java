@@ -130,6 +130,45 @@ public class IntegrationController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
 				.body(stream);
 	}
+	
+	@Operation(
+			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
+			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			)
+	@PostMapping(value= {"ddi-2-lunatic-json"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateLunatic(
+			@RequestPart(value="in",required=true) MultipartFile in, 
+			@RequestPart(value="params",required=true) MultipartFile params,
+			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
+
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		InputStream paramsIS = params!=null ? params.getInputStream():null;
+		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		
+		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
+		Context currentContext = currentEnoParams.getParameters().getContext();
+
+		ENOParameters defaultEnoParamsddi2Lunatic =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.LUNATIC_XML);
+		
+		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
+		currentEnoParams.setPipeline(defaultPipeline);
+		
+		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
+		
+		FileUtils.forceDelete(enoInput);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
 
 
 }

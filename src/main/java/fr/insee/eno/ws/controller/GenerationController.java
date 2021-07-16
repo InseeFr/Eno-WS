@@ -287,6 +287,7 @@ public class GenerationController {
 			@RequestParam(value="parsingXpathVTL",required=false, defaultValue="true")  boolean parsingXpathVTL,
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
 			@RequestParam(value="missingVar", defaultValue="false") boolean missingVar,
+			@RequestParam(value="AddFilterResult") boolean addFilterResult,
 			@RequestParam(value="QuestNum") BrowsingEnum questNum,
 			@RequestParam(value="SeqNum") boolean seqNum,
 			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol,
@@ -326,6 +327,7 @@ public class GenerationController {
 			lunaticXMLParameters.setFilterDescription(filterDescription);
 			lunaticXMLParameters.setMissingVar(missingVar);
 			lunaticXMLParameters.setPagination(pagination);
+			lunaticXMLParameters.setAddFilterResult(addFilterResult);
 		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
