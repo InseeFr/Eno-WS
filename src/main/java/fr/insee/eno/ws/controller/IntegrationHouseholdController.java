@@ -24,9 +24,9 @@ import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
-import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -37,8 +37,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class IntegrationHouseholdController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
-
-	private MultiModelService multiModelService =  new MultiModelService();
 	
 	private ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
 	
@@ -48,6 +46,8 @@ public class IntegrationHouseholdController {
 	private ParameterService parameterService;
 	
 
+	@Autowired
+	private TransformService transformService;
 
 	@Operation(
 			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
@@ -74,7 +74,8 @@ public class IntegrationHouseholdController {
 		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
 		
-		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
+		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
+	    File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
 		
 		FileUtils.forceDelete(enoInput);
 
