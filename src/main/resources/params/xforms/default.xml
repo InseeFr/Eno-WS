@@ -13,7 +13,7 @@
         <PostProcessing>xforms-browsing</PostProcessing>
         <PostProcessing>xforms-fix-adherence</PostProcessing>
     </Pipeline>
-
+    <Mode>cawi</Mode>
     <Parameters/>
 
 </ENOParameters>

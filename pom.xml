@@ -21,7 +21,7 @@
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 
-		<eno.version>2.2.10-dev-mode</eno.version>
+		<eno.version>2.2.10-dev-mode-parameters</eno.version>
 
 		<lunatic-model.version>2.1.1</lunatic-model.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>

@@ -10,7 +10,7 @@
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
     </Pipeline>
-
+    <Mode>none</Mode>
     <Parameters/>
-
+    
 </ENOParameters>
