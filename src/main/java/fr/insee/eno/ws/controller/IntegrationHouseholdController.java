@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.params.ValorizatorParameters;
@@ -68,8 +69,9 @@ public class IntegrationHouseholdController {
 		
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext();
+		Mode currentMode = currentEnoParams.getMode();
 
-		ENOParameters defaultEnoParamsddi2Lunatic =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.LUNATIC_XML);
+		ENOParameters defaultEnoParamsddi2Lunatic =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.LUNATIC_XML, currentMode);
 		
 		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);

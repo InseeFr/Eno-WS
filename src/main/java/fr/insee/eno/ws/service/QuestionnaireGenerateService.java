@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.controller.GenerationController;
@@ -29,12 +30,12 @@ public class QuestionnaireGenerateService {
 
 
 	
-	public File generateQuestionnaireFile(Context context, OutFormat outFormat, MultipartFile in, MultipartFile specificTreatment)throws Exception {
+	public File generateQuestionnaireFile(Context context, OutFormat outFormat,Mode mode, MultipartFile in, MultipartFile specificTreatment)throws Exception {
 
 	    File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
 		
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 

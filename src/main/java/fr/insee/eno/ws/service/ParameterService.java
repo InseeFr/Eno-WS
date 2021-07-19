@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
@@ -20,8 +21,8 @@ public class ParameterService {
 	
 	private ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 	
-	public ENOParameters getDefaultCustomParameters(Context context, OutFormat outFormat) throws Exception  {
-		File mergedParams = getDefaultCustomParametersFile(context, outFormat);
+	public ENOParameters getDefaultCustomParameters(Context context, OutFormat outFormat, Mode mode) throws Exception  {
+		File mergedParams = getDefaultCustomParametersFile(context, outFormat, mode);
 		InputStream mergedParamsInputStream = FileUtils.openInputStream(mergedParams);
 		ENOParameters finalParams = valorizatorParameters.getParameters(mergedParamsInputStream);
 		mergedParamsInputStream.close();
@@ -29,9 +30,15 @@ public class ParameterService {
 	}
 	
 		
-	public File getDefaultCustomParametersFile(Context context, OutFormat outFormat) throws Exception  {		
+	public File getDefaultCustomParametersFile(Context context, OutFormat outFormat, Mode mode) throws Exception  {		
 		context=context!=null?context:Context.DEFAULT;
-		String parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), context.value().toLowerCase());
+		String parametersPath="";
+		if(mode!=null) {
+		parametersPath = String.format("/params/%s/%s/%s.xml", outFormat.value().toLowerCase(),mode.value().toLowerCase(), context.value().toLowerCase());
+		}
+		else {
+		parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(), context.value().toLowerCase());
+		}
 		File fileParam = new File(TransformService.class.getResource(parametersPath).toURI());
 		return valorizatorParameters.mergeParameters(fileParam);
 	}

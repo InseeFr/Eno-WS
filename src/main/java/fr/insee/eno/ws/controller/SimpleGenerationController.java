@@ -29,6 +29,7 @@ import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
 import fr.insee.eno.parameters.GlobalNumbering;
 import fr.insee.eno.parameters.LunaticXMLParameters;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pagination;
 import fr.insee.eno.parameters.Parameters;
@@ -77,7 +78,7 @@ public class SimpleGenerationController {
 
 			@PathVariable Context context) throws Exception {
 		
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FO,in, specificTreatment);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FO,null,in, specificTreatment);
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
@@ -99,7 +100,7 @@ public class SimpleGenerationController {
 			@PathVariable Context context) throws Exception {
 
 		
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,in, specificTreatment);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,null,in, specificTreatment);
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
@@ -110,16 +111,17 @@ public class SimpleGenerationController {
 			description="It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
-	@PostMapping(value="{context}/lunatic-xml", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{context}/{mode}/lunatic-xml", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
 
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@PathVariable Context context) throws Exception {
+			@PathVariable Context context,
+			@PathVariable Mode mode) throws Exception {
 		
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,in, specificTreatment);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,mode,in, specificTreatment);
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
@@ -132,7 +134,7 @@ public class SimpleGenerationController {
 					+ "See it using the end point : */parameter/{context}/default*"
 					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."
 			)
-	@PostMapping(value="{context}/lunatic-json-flat", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{context}/{mode}/lunatic-json", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 			
@@ -142,13 +144,14 @@ public class SimpleGenerationController {
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
-			@PathVariable Context context) throws Exception {
+			@PathVariable Context context,
+			@PathVariable Mode mode) throws Exception {
 		
 		
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.LUNATIC_XML);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.LUNATIC_XML,mode);
 		
 		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
 		
@@ -186,7 +189,7 @@ public class SimpleGenerationController {
 			@PathVariable Context context) throws Exception {
 
 		
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,in,null);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,null,in,null);
 		
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);

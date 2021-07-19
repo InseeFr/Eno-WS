@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Context;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,27 +57,28 @@ public class ParametersController {
 	@GetMapping(value="{context}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@PathVariable Context context,
-			@RequestParam OutFormat outFormat) throws Exception {
+			@RequestParam OutFormat outFormat,
+			@RequestParam Mode mode) throws Exception {
 		File fileParam;
 
 		switch (outFormat) {
 		case XFORMS:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS,null);
 			break;
 		case FO:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO,null);
 			break;
 		case LUNATIC_XML:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML,mode);
 			break;
 		case DDI:
-			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI);
+			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI,null);
 			break;
 		case FODT:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT,null);
 			break;
 		default:
-			fileParam = File.createTempFile("default-param", ".xml");
+			fileParam = File.createTempFile("default-param-"+ context +"-"+ (outFormat==OutFormat.LUNATIC_XML?mode.value():""), ".xml");
 			
 			FileUtils.copyInputStreamToFile(parameterService.getDefaultParametersIS(), fileParam);
 			break;

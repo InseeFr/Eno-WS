@@ -70,7 +70,7 @@ public class IntegrationController {
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext()!=null ?currentEnoParams.getParameters().getContext():Context.BUSINESS;
 
-		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.XFORMS);
+		ENOParameters defaultEnoParamsddi2Xforms =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.XFORMS,null);
 		
 		Pipeline defaultPipeline = defaultEnoParamsddi2Xforms.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
@@ -112,7 +112,7 @@ public class IntegrationController {
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context currentContext = currentEnoParams.getParameters().getContext();
 
-		ENOParameters defaultEnoParamsddi2Fo =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO);
+		ENOParameters defaultEnoParamsddi2Fo =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.FO,null);
 		
 		Pipeline defaultPipeline = defaultEnoParamsddi2Fo.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);

@@ -216,7 +216,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS,null);
 
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
@@ -280,6 +280,7 @@ public class GenerationController {
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
 			@RequestParam Context context,
+			@RequestParam Mode mode,
 
 			@RequestParam(value="IdentificationQuestion", required=false, defaultValue = "false") boolean IdentificationQuestion,
 			@RequestParam(value="ResponseTimeQuestion", required=false, defaultValue = "false") boolean EndQuestionResponseTime,
@@ -297,7 +298,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML,mode);
 		
 		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
 		if(!parsingXpathVTL) {
@@ -399,7 +400,7 @@ public class GenerationController {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT,null);
 		
 		Parameters parameters = enoParameters.getParameters();
 		
