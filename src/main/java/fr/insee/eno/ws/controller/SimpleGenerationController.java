@@ -30,6 +30,7 @@ import fr.insee.eno.parameters.EndQuestion;
 import fr.insee.eno.parameters.GlobalNumbering;
 import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.OutFormat;
+import fr.insee.eno.parameters.Pagination;
 import fr.insee.eno.parameters.Parameters;
 import fr.insee.eno.parameters.Pipeline;
 import fr.insee.eno.parameters.PostProcessing;
@@ -135,7 +136,7 @@ public class SimpleGenerationController {
 	
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 			
-			@RequestParam(value="parsingXpathVTL",required=false, defaultValue="true")  boolean parsingXpathVTL,
+			@RequestParam(value="pagination",required=false)  Pagination pagination,
 			// Files
 
 			@RequestPart(value="in",required=true) MultipartFile in,
@@ -150,12 +151,10 @@ public class SimpleGenerationController {
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.LUNATIC_XML);
 		
 		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
-		if(!parsingXpathVTL) {
-		Pipeline pipeline = enoParameters.getPipeline();
-		pipeline.getPostProcessing().remove(PostProcessing.LUNATIC_XML_VTL_PARSER);
-		enoParameters.setPipeline(pipeline);
-		}
-	
+		
+	    Parameters parameters = enoParameters.getParameters();
+	    parameters.getLunaticXmlParameters().setPagination(pagination);
+		
 	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
