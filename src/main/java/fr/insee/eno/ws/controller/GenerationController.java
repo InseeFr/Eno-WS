@@ -121,7 +121,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO,null);
 		
 		Parameters parameters = enoParameters.getParameters();
 		
