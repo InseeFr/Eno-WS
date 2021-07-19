@@ -28,8 +28,12 @@
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
 
-        <Numerotation>
-            <QuestNum>all</QuestNum>  
+        <lunatic-xml-parameters>
+            <AddFilterResult>true</AddFilterResult>
+        </lunatic-xml-parameters>
+
+        <Numerotation>   
+             <QuestNum>no-number</QuestNum> 
         </Numerotation>
 
     </Parameters>

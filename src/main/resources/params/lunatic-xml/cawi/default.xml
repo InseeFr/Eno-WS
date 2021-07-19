@@ -18,6 +18,7 @@
     </Pipeline>
 
     <Parameters>
+
         <Context>household</Context>
 
         <Languages>
@@ -27,11 +28,17 @@
         <EndQuestion>
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
+        
+        <lunatic-xml-parameters>
+            <Pagination>question</Pagination>
+            <AddFilterResult>true</AddFilterResult>
+        </lunatic-xml-parameters>
 
         <Numerotation>
             <QuestNum>all</QuestNum>  
         </Numerotation>
 
     </Parameters>
+
 
 </ENOParameters>
