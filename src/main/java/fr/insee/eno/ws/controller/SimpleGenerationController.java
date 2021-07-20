@@ -24,9 +24,13 @@ import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.parameters.BeginQuestion;
 import fr.insee.eno.parameters.BrowsingEnum;
+import fr.insee.eno.parameters.Capture;
+import fr.insee.eno.parameters.CaptureEnum;
 import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.EndQuestion;
+import fr.insee.eno.parameters.FOParameters;
+import fr.insee.eno.parameters.Format;
 import fr.insee.eno.parameters.GlobalNumbering;
 import fr.insee.eno.parameters.LunaticXMLParameters;
 import fr.insee.eno.parameters.Mode;
@@ -75,10 +79,36 @@ public class SimpleGenerationController {
 			// Files
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-
+			@RequestParam(value="Format-column",required=false) Integer nbColumn,
+			@RequestParam(value="Capture",required=false) CaptureEnum capture,
 			@PathVariable Context context) throws Exception {
 		
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FO,null,in, specificTreatment);
+		
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.FO,null);
+		
+		FOParameters foParameters = enoParameters.getParameters().getFoParameters();
+	    if(capture!=null) {		
+	    	Capture capture2 = foParameters.getCapture();
+	    	capture2.setNumeric(capture);
+	    	foParameters.setCapture(capture2);;};
+	    		
+	    if(nbColumn!=null) {
+	    Format format = foParameters.getFormat();
+		format.setColumns(nbColumn);}
+	    
+	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+
+		FileUtils.forceDelete(enoInput);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
@@ -111,7 +141,7 @@ public class SimpleGenerationController {
 			description="It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
-	@PostMapping(value="{context}/{mode}/lunatic-xml", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{context}/lunatic-xml/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
 
 			// Files
@@ -134,12 +164,10 @@ public class SimpleGenerationController {
 					+ "See it using the end point : */parameter/{context}/default*"
 					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."
 			)
-	@PostMapping(value="{context}/{mode}/lunatic-json", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="{context}/lunatic-json/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 			
-			@RequestParam(value="pagination",required=false)  Pagination pagination,
-			// Files
 
 			@RequestPart(value="in",required=true) MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
@@ -152,11 +180,6 @@ public class SimpleGenerationController {
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.LUNATIC_XML,mode);
-		
-		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
-		
-	    Parameters parameters = enoParameters.getParameters();
-	    parameters.getLunaticXmlParameters().setPagination(pagination);
 		
 	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 

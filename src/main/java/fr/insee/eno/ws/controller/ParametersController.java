@@ -54,31 +54,31 @@ public class ParametersController {
 	@Operation(
 			summary="Get default xml parameters file for the given context according to the outFormat",
 			description="It returns parameters used by default according to the studyunit and the outFormat.")
-	@GetMapping(value="{context}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value="{context}/{outFormat}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@PathVariable Context context,
-			@RequestParam OutFormat outFormat,
-			@RequestParam Mode mode) throws Exception {
+			@PathVariable OutFormat outFormat,
+			@RequestParam(value="Mode",required=false) Mode mode) throws Exception {
 		File fileParam;
 
 		switch (outFormat) {
 		case XFORMS:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS,null);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS,mode);
 			break;
 		case FO:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO,null);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO,mode);
 			break;
 		case LUNATIC_XML:
 			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML,mode);
 			break;
 		case DDI:
-			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI,null);
+			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI,mode);
 			break;
 		case FODT:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT,null);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT,mode);
 			break;
 		default:
-			fileParam = File.createTempFile("default-param-"+ context +"-"+ (outFormat==OutFormat.LUNATIC_XML?mode.value():""), ".xml");
+			fileParam = File.createTempFile("default-param-"+ (outFormat==OutFormat.DDI?"default" :context.value().toLowerCase()) +"-"+ (outFormat==OutFormat.LUNATIC_XML?mode.value().toLowerCase():""), ".xml");
 			
 			FileUtils.copyInputStreamToFile(parameterService.getDefaultParametersIS(), fileParam);
 			break;
