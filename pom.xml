@@ -28,6 +28,15 @@
 		<commons-io.version>2.7</commons-io.version>
 		<fop.version>2.2</fop.version>
 
+			<!-- Configuration Sonar -->
+		<jacoco.version>0.8.5</jacoco.version>	
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.projectName>Eno-WS</sonar.projectName>
+        <sonar.language>java</sonar.language>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<argLine>-Xms256m -Xmx512m -XX:MaxPermSize=128m -ea -Dfile.encoding=UTF-8</argLine>
 	</properties>
 
 	<repositories>
@@ -205,6 +214,40 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+					 <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <!-- Prepare the property pointing to the JaCoCo runtime agent which is
+                         passed as VM argument when the Maven Surefire plugin is executed. -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Set the name of the property containing the settings for JaCoCo
+                                 runtime agent. -->
+                            <propertyName>surefireArgLine</propertyName>
+                            <append>true</append>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
+            </plugin>
 		</plugins>
 	</build>
 </project>
