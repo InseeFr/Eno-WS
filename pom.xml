@@ -24,7 +24,7 @@
 
 		<eno.version>2.2.10-dev-mode-parameters</eno.version>
 
-		<lunatic-model.version>2.2.2</lunatic-model.version>
+		<lunatic-model.version>2.2.3</lunatic-model.version>
 
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
