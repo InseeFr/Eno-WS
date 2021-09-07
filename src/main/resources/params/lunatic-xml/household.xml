@@ -5,7 +5,6 @@
         <OutFormat>lunatic-xml</OutFormat>
 
 		<PreProcessing>ddi-multimodal-selection</PreProcessing>
-        <PreProcessing>ddi-markdownToXhtml</PreProcessing>
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
@@ -34,6 +33,7 @@
         <lunatic-xml-parameters>
             <FilterDescription>false</FilterDescription>
             <AddFilterResult>true</AddFilterResult>
+            <MissingVar>false</MissingVar>
             <Pagination>none</Pagination>
         </lunatic-xml-parameters>
 
