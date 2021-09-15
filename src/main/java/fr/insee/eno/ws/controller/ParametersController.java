@@ -86,7 +86,7 @@ public class ParametersController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(fileParam.toPath()));
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+context+"-"+outFormat+ (mode!= null?mode:"") +"-default-params.xml\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+context+"-"+outFormat+ "-"+ (mode!= null?mode:"") +"-default-params.xml\"")
 				.body(stream);
 	}
 
