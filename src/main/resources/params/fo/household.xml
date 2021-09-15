@@ -41,7 +41,7 @@
         
         <Numerotation>   
              <QuestNum>all</QuestNum> 
-             <SeqNum>false</SeqNum> 
+             <SeqNum>true</SeqNum> 
              <PreQuestSymbol>true</PreQuestSymbol> 
         </Numerotation>
 
