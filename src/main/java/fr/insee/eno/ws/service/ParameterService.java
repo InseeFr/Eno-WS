@@ -46,7 +46,7 @@ public class ParameterService {
 
 		if (validation.isValid()) {
 
-			if (mode != null) {
+			if (mode != null && outFormat == OutFormat.LUNATIC_XML) {
 				parametersPath = String.format("/params/%s/%s/%s.xml", outFormat.value().toLowerCase(),
 						mode.value().toLowerCase(), context.value().toLowerCase());
 			} else {
