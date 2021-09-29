@@ -36,6 +36,7 @@
         </Numerotation>
         
         <lunatic-xml-parameters>
+        	<Tooltip>false</Tooltip>
             <MissingVar>true</MissingVar>
       </lunatic-xml-parameters>
         
