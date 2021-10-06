@@ -35,6 +35,11 @@
             <QuestNum>no-number</QuestNum>
         </Numerotation>
         
+       <lunatic-xml-parameters>
+        	<Tooltip>false</Tooltip>
+            <MissingVar>true</MissingVar>
+      </lunatic-xml-parameters>
+      
   </Parameters>
     
 </ENOParameters>

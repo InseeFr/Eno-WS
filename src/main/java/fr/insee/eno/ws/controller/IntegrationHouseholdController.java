@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -54,12 +55,14 @@ public class IntegrationHouseholdController {
 			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
 			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 			)
-	@PostMapping(value= {"ddi-2-lunatic-json"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value= {"ddi-2-lunatic-json/{mode}"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateLunatic(
+			@PathVariable Mode mode,
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
-
+		    
+ 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
@@ -68,13 +71,15 @@ public class IntegrationHouseholdController {
 
 		
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext();
-		Mode currentMode = currentEnoParams.getMode();
+		
 
-		ENOParameters defaultEnoParamsddi2Lunatic =  parameterService.getDefaultCustomParameters(currentContext,OutFormat.LUNATIC_XML, currentMode);
+		ENOParameters defaultEnoParamsddi2Lunatic = parameterService.getDefaultCustomParameters(Context.HOUSEHOLD,OutFormat.LUNATIC_XML,mode);
 		
 		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
+		currentEnoParams.setMode(mode);
+		currentEnoParams.getParameters().setContext(Context.HOUSEHOLD);
+
 		
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
 	    File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
