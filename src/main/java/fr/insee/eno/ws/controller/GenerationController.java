@@ -5,8 +5,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 
+import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -371,7 +373,15 @@ public class GenerationController {
 		
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
 
+		// Fix : deleting temp files created in PoguesXMLPreprocessorGoToTreatment and PoguesXmlInsertFilterLoopIntoQuestionTree
+		String tempSup = FilenameUtils.removeExtension(enoInput.getAbsolutePath()) + Constants.TEMP_EXTENSION;
+		String temptempSup = FilenameUtils.removeExtension(new File(tempSup).getAbsolutePath()) + Constants.TEMP_EXTENSION;
+		
+		FileUtils.forceDelete(new File(tempSup));
+		FileUtils.forceDelete(new File(temptempSup));	
+		
 		FileUtils.forceDelete(enoInput);
+
 		
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
