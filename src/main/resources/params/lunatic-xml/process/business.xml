@@ -2,28 +2,25 @@
 
     <Pipeline>
         <InFormat>ddi</InFormat>
-        <OutFormat>fo</OutFormat>
+        <OutFormat>lunatic-xml</OutFormat>
 
 		<PreProcessing>ddi-multimodal-selection</PreProcessing>
-        <PreProcessing>ddi-markdownToXhtml</PreProcessing>
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
 
-        <PostProcessing>fo-mailing</PostProcessing>
-        <PostProcessing>fo-tableColumn</PostProcessing>
-        <PostProcessing>fo-insertEndQuestion</PostProcessing>
-        <PostProcessing>fo-editStructurePages</PostProcessing>
-        <PostProcessing>fo-specificTreatment</PostProcessing>
-        <PostProcessing>fo-insertCoverPage</PostProcessing>
-        <PostProcessing>fo-insertAccompanyingMails</PostProcessing>
+        <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
+        <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
+        <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
+        <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
+        <PostProcessing>lunatic-xml-pagination</PostProcessing>
+        <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
+
     </Pipeline>
-    <Mode>papi</Mode>
+    <Mode>process</Mode>
     <Parameters>
 
         <Context>business</Context>
-        
-
 
         <Languages>
             <Language>fr</Language>
@@ -38,12 +35,10 @@
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
 
-        <fo-parameters>
-            <Capture>
-                <Numeric>manual</Numeric>
-            </Capture>
-        </fo-parameters>
-
+        <lunatic-xml-parameters>
+            <FilterDescription>true</FilterDescription>
+			<Pagination>none</Pagination>
+        </lunatic-xml-parameters>
 
     </Parameters>
 

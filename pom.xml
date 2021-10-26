@@ -6,7 +6,7 @@
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
 
-	<version>1.4</version>
+	<version>1.4.0</version>
 
 	<name>Eno-Web-Service</name>
 
@@ -23,6 +23,7 @@
 
 		<eno.version>2.3.0</eno.version>
 		<lunatic-model.version>2.2.6</lunatic-model.version>
+
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.1.48</springdoc-openapi-ui.version>
 		<commons-io.version>2.7</commons-io.version>
@@ -48,7 +49,7 @@
 		<repository>
 			<id>repository.spring.release</id>
 			<name>Spring GA Repository</name>
-			<url>http://repo.spring.io/release</url>
+			<url>https://repo.spring.io/release</url>
 		</repository>
 	</repositories>
 

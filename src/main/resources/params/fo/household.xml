@@ -18,9 +18,11 @@
         <PostProcessing>fo-insertCoverPage</PostProcessing>
         <PostProcessing>fo-insertAccompanyingMails</PostProcessing>
     </Pipeline>
-
+    
+    <Mode>papi</Mode>
+    
     <Parameters>
-
+               
         <Context>household</Context>
 
         <Languages>
@@ -39,7 +41,7 @@
         
         <Numerotation>   
              <QuestNum>all</QuestNum> 
-             <SeqNum>false</SeqNum> 
+             <SeqNum>true</SeqNum> 
              <PreQuestSymbol>true</PreQuestSymbol> 
         </Numerotation>
 

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Context;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,30 +54,31 @@ public class ParametersController {
 	@Operation(
 			summary="Get default xml parameters file for the given context according to the outFormat",
 			description="It returns parameters used by default according to the studyunit and the outFormat.")
-	@GetMapping(value="{context}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value="{context}/{outFormat}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@PathVariable Context context,
-			@RequestParam OutFormat outFormat) throws Exception {
+			@PathVariable OutFormat outFormat,
+			@RequestParam(value="Mode",required=false) Mode mode) throws Exception {
 		File fileParam;
 
 		switch (outFormat) {
 		case XFORMS:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.XFORMS,mode);
 			break;
 		case FO:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FO,mode);
 			break;
 		case LUNATIC_XML:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.LUNATIC_XML,mode);
 			break;
 		case DDI:
-			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI);
+			fileParam=parameterService.getDefaultCustomParametersFile(Context.DEFAULT, OutFormat.DDI,mode);
 			break;
 		case FODT:
-			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT);
+			fileParam=parameterService.getDefaultCustomParametersFile(context, OutFormat.FODT,mode);
 			break;
 		default:
-			fileParam = File.createTempFile("default-param", ".xml");
+			fileParam = File.createTempFile("default-param-"+ (outFormat==OutFormat.DDI?"default" :context.value().toLowerCase()) +"-"+ (outFormat==OutFormat.LUNATIC_XML?mode.value().toLowerCase():""), ".xml");
 			
 			FileUtils.copyInputStreamToFile(parameterService.getDefaultParametersIS(), fileParam);
 			break;
@@ -84,7 +86,7 @@ public class ParametersController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(fileParam.toPath()));
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+context+"-"+outFormat+"-default-params.xml\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+context+"-"+outFormat+ "-"+ (mode!= null?mode:"") +"-default-params.xml\"")
 				.body(stream);
 	}
 

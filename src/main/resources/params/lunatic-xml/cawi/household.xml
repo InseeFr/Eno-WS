@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ENOParameters>
 
     <Pipeline>
@@ -17,9 +18,8 @@
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
 
     </Pipeline>
-
+    <Mode>cawi</Mode>
     <Parameters>
-
         <Context>household</Context>
 
         <Languages>
@@ -31,17 +31,13 @@
         </EndQuestion>
 
         <lunatic-xml-parameters>
-            <FilterDescription>false</FilterDescription>
             <AddFilterResult>true</AddFilterResult>
-            <MissingVar>false</MissingVar>
-            <Pagination>none</Pagination>
         </lunatic-xml-parameters>
 
         <Numerotation>   
              <QuestNum>no-number</QuestNum> 
-             <SeqNum>true</SeqNum> 
-             <PreQuestSymbol>true</PreQuestSymbol> 
         </Numerotation>
+
     </Parameters>
 
 </ENOParameters>

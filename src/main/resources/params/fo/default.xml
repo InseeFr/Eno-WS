@@ -18,8 +18,9 @@
         <PostProcessing>fo-insertCoverPage</PostProcessing>
         <PostProcessing>fo-insertAccompanyingMails</PostProcessing>
     </Pipeline>
-
+    <Mode>papi</Mode>
     <Parameters>
+
 
         <Languages>
             <Language>fr</Language>

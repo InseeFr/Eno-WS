@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,7 +124,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.FO,null);
 		
 		Parameters parameters = enoParameters.getParameters();
 		
@@ -218,7 +219,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS);
+		ENOParameters enoParameters =  parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS,null);
 
 		Parameters parameters = enoParameters.getParameters();
 		parameters.setContext(context);
@@ -274,7 +275,7 @@ public class GenerationController {
 			summary="Generation of lunatic-json questionnaire according to the given js parameters and specificTreatment.",
 			description="It generates a lunatic-json (flat) questionnaire from a ddi questionnaire using the js parameters given."
 			)
-	@PostMapping(value="ddi-2-lunatic-json", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value="ddi-2-lunatic-json/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateJSQuestionnaire(
 
 			// Files
@@ -282,6 +283,7 @@ public class GenerationController {
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 
 			@RequestParam Context context,
+			@PathVariable Mode mode,
 
 			@RequestParam(value="IdentificationQuestion", required=false, defaultValue = "false") boolean IdentificationQuestion,
 			@RequestParam(value="ResponseTimeQuestion", required=false, defaultValue = "false") boolean EndQuestionResponseTime,
@@ -299,7 +301,7 @@ public class GenerationController {
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.LUNATIC_XML,mode);
 		
 		//If input files contains VTL language control --> it's not necessary to parse xpath into vtl (post-processing)
 		if(!parsingXpathVTL) {
@@ -409,7 +411,7 @@ public class GenerationController {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT);
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(Context.DEFAULT,OutFormat.FODT,null);
 		
 		Parameters parameters = enoParameters.getParameters();
 		

@@ -2,30 +2,25 @@
 
     <Pipeline>
         <InFormat>ddi</InFormat>
-        <OutFormat>xforms</OutFormat>
+        <OutFormat>lunatic-xml</OutFormat>
 
 		<PreProcessing>ddi-multimodal-selection</PreProcessing>
         <PreProcessing>ddi-markdownToXhtml</PreProcessing>
-        <PreProcessing>ddi-mapping</PreProcessing>
         <PreProcessing>ddi-dereferencing</PreProcessing>
         <PreProcessing>ddi-cleaning</PreProcessing>
         <PreProcessing>ddi-titling</PreProcessing>
 
-        <PostProcessing>xforms-insert-generic-questions</PostProcessing>
-        <PostProcessing>xforms-browsing</PostProcessing>
-        <PostProcessing>xforms-insee-model</PostProcessing>
-        <PostProcessing>xforms-insee-pattern</PostProcessing>
-        <PostProcessing>xforms-identification</PostProcessing>
-        <PostProcessing>xforms-insert-welcome</PostProcessing>
-        <PostProcessing>xforms-insert-end</PostProcessing>
-        <PostProcessing>xforms-specificTreatment</PostProcessing>
-        <PostProcessing>xforms-fix-adherence</PostProcessing>
+        <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
+        <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
+        <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
+        <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
+        <PostProcessing>lunatic-xml-pagination</PostProcessing>
+        <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
+
     </Pipeline>
-    <Mode>cawi</Mode>
+    <Mode>process</Mode>
     <Parameters>
 
-
-        
         <Context>business</Context>
 
         <Languages>
@@ -40,6 +35,12 @@
             <ResponseTimeQuestion>true</ResponseTimeQuestion>
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
+
+        <lunatic-xml-parameters>
+            <FilterDescription>true</FilterDescription>
+			<Pagination>none</Pagination>
+        </lunatic-xml-parameters>
+
     </Parameters>
 
 </ENOParameters>
