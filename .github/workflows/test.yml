@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      ENOBRANCH: dev-logement2
+      ENOBRANCH: main
       LUNATICBRANCH: develop
     steps:
       - uses: actions/checkout@v2
