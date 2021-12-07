@@ -37,6 +37,7 @@
         </EndQuestion>
 
         <lunatic-xml-parameters>
+            <Control>false</Control>
             <FilterDescription>true</FilterDescription>
 			<Pagination>none</Pagination>
         </lunatic-xml-parameters>
