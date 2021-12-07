@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          ref: master
+          ref: develop
           repository: InseeFr/Lunatic-model
           path: Lunatic-model
 
