@@ -6,7 +6,7 @@
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
 
-	<version>1.4.3</version>
+	<version>1.4.4</version>
 
 	<name>Eno-Web-Service</name>
 
@@ -21,8 +21,8 @@
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 
-		<eno.version>2.3.2</eno.version>
-
+		<eno.version>2.3.3</eno.version>
+		<log4j2.version>2.16.0</log4j2.version>
 		<lunatic-model.version>2.2.8</lunatic-model.version>
 
 		<jaxb.api.version>2.3.0</jaxb.api.version>
@@ -60,6 +60,35 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.9.RELEASE</version>
 	</parent>
+	
+	<dependencyManagement>
+	<dependencies>
+	<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-jul</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-sl4j-impl</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<!-- spring-web -->
