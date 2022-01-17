@@ -27,7 +27,7 @@
         </Languages>
 
         <EndQuestion>
-            <CommentQuestion>true</CommentQuestion>
+            <CommentQuestion>false</CommentQuestion>
         </EndQuestion>
 
         <lunatic-xml-parameters>
