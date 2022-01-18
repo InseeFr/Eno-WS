@@ -26,11 +26,7 @@
         <Languages>
             <Language>fr</Language>
         </Languages>
-        
-        <EndQuestion>
-            <CommentQuestion>true</CommentQuestion>
-        </EndQuestion>
-        
+               
         <Numerotation> 
             <QuestNum>no-number</QuestNum>
         </Numerotation>
