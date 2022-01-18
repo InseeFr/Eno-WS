@@ -27,15 +27,12 @@
             <Language>fr</Language>
         </Languages>
         
-        <EndQuestion>
-            <CommentQuestion>true</CommentQuestion>
-        </EndQuestion>
-        
         <Numerotation> 
             <QuestNum>no-number</QuestNum>
         </Numerotation>
         
         <lunatic-xml-parameters>
+            <Control>false</Control>
         	<Tooltip>false</Tooltip>
             <MissingVar>true</MissingVar>
       </lunatic-xml-parameters>
