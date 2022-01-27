@@ -25,6 +25,10 @@
         <Languages>
             <Language>fr</Language>
         </Languages>
+	    
+	<EndQuestion>
+            <CommentQuestion>true</CommentQuestion>
+        </EndQuestion>
 
         <lunatic-xml-parameters>
             <AddFilterResult>true</AddFilterResult>
