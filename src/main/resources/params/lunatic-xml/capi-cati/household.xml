@@ -30,6 +30,10 @@
         <Numerotation> 
             <QuestNum>no-number</QuestNum>
         </Numerotation>
+	
+	<EndQuestion>
+            <CommentQuestion>true</CommentQuestion>
+        </EndQuestion>    
         
         <lunatic-xml-parameters>
             <Control>false</Control>
