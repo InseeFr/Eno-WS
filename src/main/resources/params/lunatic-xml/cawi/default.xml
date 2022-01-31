@@ -26,6 +26,11 @@
         <Languages>
             <Language>fr</Language>
         </Languages>
+	    
+	    
+	<EndQuestion>
+            <CommentQuestion>true</CommentQuestion>
+        </EndQuestion>
         
         <lunatic-xml-parameters>
             <Pagination>question</Pagination>
