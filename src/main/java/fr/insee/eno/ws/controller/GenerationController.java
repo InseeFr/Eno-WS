@@ -290,6 +290,7 @@ public class GenerationController {
 			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
 			@RequestParam(value="parsingXpathVTL",required=false, defaultValue="true")  boolean parsingXpathVTL,
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
+			@RequestParam(value="control", defaultValue="false") boolean control,
 			@RequestParam(value="missingVar", defaultValue="false") boolean missingVar,
 			@RequestParam(value="AddFilterResult") boolean addFilterResult,
 			@RequestParam(value="QuestNum") BrowsingEnum questNum,
@@ -332,7 +333,7 @@ public class GenerationController {
 			lunaticXMLParameters.setMissingVar(missingVar);
 			lunaticXMLParameters.setPagination(pagination);
 			lunaticXMLParameters.setAddFilterResult(addFilterResult);
-		}
+			lunaticXMLParameters.setControl(control);		}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
