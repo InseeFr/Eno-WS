@@ -6,7 +6,7 @@
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
 
-	<version>1.4.10-hotfix-lunatic-param_varnotused</version>
+	<version>1.4.11</version>
 
 	<name>Eno-Web-Service</name>
 
