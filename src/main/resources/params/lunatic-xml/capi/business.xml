@@ -19,28 +19,23 @@
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
 
     </Pipeline>
-    <Mode>capi-cati</Mode>
+    <Mode>capi</Mode>
+
     <Parameters>
         <Context>household</Context>
         
         <Languages>
             <Language>fr</Language>
         </Languages>
-               
-        <Numerotation> 
-            <QuestNum>no-number</QuestNum>
-        </Numerotation>
-	    
-	<EndQuestion>
+        
+        <EndQuestion>
             <CommentQuestion>true</CommentQuestion>
         </EndQuestion>
         
-       <lunatic-xml-parameters>
-            <Control>false</Control>
-        	<Tooltip>false</Tooltip>
-            <MissingVar>true</MissingVar>
-      </lunatic-xml-parameters>
-      
+        <Numerotation> 
+            <QuestNum>no-number</QuestNum>
+        </Numerotation>
+        
   </Parameters>
     
 </ENOParameters>

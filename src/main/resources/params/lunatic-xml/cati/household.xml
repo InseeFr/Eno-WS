@@ -19,7 +19,7 @@
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
 
     </Pipeline>
-    <Mode>capi-cati</Mode>
+    <Mode>cati</Mode>
     <Parameters>
         <Context>household</Context>
         
