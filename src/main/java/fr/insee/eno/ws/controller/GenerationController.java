@@ -290,12 +290,14 @@ public class GenerationController {
 			@RequestParam(value="CommentQuestion", required=false, defaultValue = "false") boolean EndQuestionCommentQuestion,
 			@RequestParam(value="parsingXpathVTL",required=false, defaultValue="true")  boolean parsingXpathVTL,
 			@RequestParam(value="filterDescription", defaultValue="false") boolean filterDescription,
+			@RequestParam(value="control", defaultValue="false") boolean control,
 			@RequestParam(value="missingVar", defaultValue="false") boolean missingVar,
 			@RequestParam(value="AddFilterResult") boolean addFilterResult,
 			@RequestParam(value="QuestNum") BrowsingEnum questNum,
 			@RequestParam(value="SeqNum") boolean seqNum,
 			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol,
-			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination
+			@RequestParam(value="Pagination",required = false, defaultValue = "NONE" ) Pagination pagination,
+			@RequestParam(value="includeUnusedCalculatedVariables") boolean unusedVars
 			) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -332,7 +334,8 @@ public class GenerationController {
 			lunaticXMLParameters.setMissingVar(missingVar);
 			lunaticXMLParameters.setPagination(pagination);
 			lunaticXMLParameters.setAddFilterResult(addFilterResult);
-		}
+			lunaticXMLParameters.setControl(control);
+			lunaticXMLParameters.setUnusedVars(unusedVars);}
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
