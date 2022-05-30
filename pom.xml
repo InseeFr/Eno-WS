@@ -27,7 +27,7 @@
 		<lunatic-model.version>2.2.10</lunatic-model.version>
 
 		<jaxb.api.version>2.3.0</jaxb.api.version>
-		<springdoc-openapi-ui.version>1.6.2</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
 		<commons-io.version>2.7</commons-io.version>
 		<fop.version>2.2</fop.version>
 
