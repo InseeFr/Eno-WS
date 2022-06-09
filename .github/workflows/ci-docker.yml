@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 env:
   ENOBRANCH: main
-  LUNATICBRANCH: develop
+  LUNATICBRANCH: dev-lunatic-v2
 jobs:
   test:
     runs-on: ubuntu-latest
