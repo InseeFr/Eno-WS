@@ -6,7 +6,7 @@
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
 
-	<version>1.4.13-rc</version>
+	<version>1.4.14-rc</version>
 
 	<name>Eno-Web-Service</name>
 
