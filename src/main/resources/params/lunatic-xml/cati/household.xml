@@ -14,11 +14,12 @@
         <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
         <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
         <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
+        <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
         <PostProcessing>lunatic-xml-pagination</PostProcessing>
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
 
     </Pipeline>
-    <Mode>capi-cati</Mode>
+    <Mode>cati</Mode>
     <Parameters>
         <Context>household</Context>
         
