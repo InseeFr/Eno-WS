@@ -3,7 +3,7 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENOBRANCH: main
+  ENOBRANCH: dev-lunatic-v2
   LUNATICBRANCH: dev-lunatic-v2
 jobs:
   test:
@@ -115,6 +115,6 @@ jobs:
           name: inseefr/eno-ws
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          tags: ${{steps.version.outputs.prop}}
+          tags: dev-lunatic-v2
 
   
