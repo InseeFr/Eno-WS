@@ -115,6 +115,6 @@ jobs:
           name: inseefr/eno-ws
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          tags: dev-lunatic-v2
+          tags: dev-lunatic-v2-controls
 
   
