@@ -10,8 +10,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      ENOBRANCH: main
-      LUNATICBRANCH: develop
+      ENOBRANCH: dev-lunatic-v2-format-control
+      LUNATICBRANCH: dev-lunatic-v2
     steps:
       - uses: actions/checkout@v2
         with:
