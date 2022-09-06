@@ -6,7 +6,7 @@
 	<artifactId>eno-ws</artifactId>
 	<packaging>war</packaging>
 
-	<version>1.5.0</version>
+	<version>1.5.0-controls-type</version>
   
 	<name>Eno-Web-Service</name>
 
@@ -21,11 +21,11 @@
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 
-		<eno.version>2.3.10</eno.version>
+		<eno.version>2.3.10-controls-type</eno.version>
 
 		<log4j2.version>2.17.0</log4j2.version>
 
-		<lunatic-model.version>2.2.10</lunatic-model.version>
+		<lunatic-model.version>2.2.14-rc</lunatic-model.version>
 
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<springdoc-openapi-ui.version>1.6.2</springdoc-openapi-ui.version>
