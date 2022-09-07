@@ -5,6 +5,7 @@ on: workflow_dispatch
 env:
   ENOBRANCH: dev-lunatic-format-control-type
   LUNATICBRANCH: dev-lunatic-format-control-type
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -116,5 +117,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: dev-lunatic-v2-controls-typeOfControl
+
 
   

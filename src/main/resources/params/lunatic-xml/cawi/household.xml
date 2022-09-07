@@ -13,6 +13,8 @@
         <PostProcessing>lunatic-xml-sortComponents</PostProcessing>
         <PostProcessing>lunatic-xml-insert-generic-questions</PostProcessing>
         <PostProcessing>lunatic-xml-externalizeVariables</PostProcessing>
+        <PostProcessing>lunatic-xml-insertCleaningBlock</PostProcessing>
+        <PostProcessing>lunatic-xml-vtlParser</PostProcessing>
         <PostProcessing>lunatic-xml-pagination</PostProcessing>
         <PostProcessing>lunatic-xml-specificTreatment</PostProcessing>
 
