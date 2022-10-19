@@ -4,7 +4,8 @@ on: workflow_dispatch
 
 env:
   ENOBRANCH: main
-  LUNATICBRANCH: develop
+  LUNATICBRANCH: master
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -116,5 +117,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: ${{steps.version.outputs.prop}}
+
 
   
