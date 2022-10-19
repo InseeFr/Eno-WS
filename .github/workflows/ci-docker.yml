@@ -3,8 +3,8 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENOBRANCH: dev-lunatic-format-control-type
-  LUNATICBRANCH: dev-lunatic-format-control-type
+  ENOBRANCH: main
+  LUNATICBRANCH: master
 
 jobs:
   test:
@@ -116,7 +116,7 @@ jobs:
           name: inseefr/eno-ws
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          tags: dev-lunatic-v2-controls-typeOfControl
+          tags: ${{steps.version.outputs.prop}}
 
 
   
