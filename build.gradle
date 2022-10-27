@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fr.insee'
-version = '0.0.1-SNAPSHOT'
+version = '2.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
@@ -18,22 +18,30 @@ configurations {
 repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://nexus.insee.fr/repository/maven-releases' }
-	mavenLocal()
+	maven { url 'https://nexus.insee.fr/repository/maven-releases' } //TODO: externalize this
+	mavenLocal() // temp config since Eno library is not published
+}
 
+tasks.withType(GenerateModuleMetadata).configureEach {
+	// The value 'enforced-platform' is provided in the validation error message you got
+	suppressedValidationErrors.add('enforced-platform')
 }
 
 
 dependencies {
+	// Spring Web
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
+	// Spring devtools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	// Eno
 	implementation 'fr.insee.eno:eno-core:3.0.0-SNAPSHOT'
 }
-
 
 publishing {
     publications {
@@ -44,12 +52,9 @@ publishing {
 }
 
 tasks.withType(GenerateModuleMetadata).configureEach {
-    // The value 'enforced-platform' is provided in the validation
-// error message you got
-suppressedValidationErrors.add('enforced-platform')
+    // The value 'enforced-platform' is provided in the validation error message you got
+	suppressedValidationErrors.add('enforced-platform')
 }
-
-
 
 tasks.named('test') {
 	useJUnitPlatform()
