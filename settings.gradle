@@ -4,4 +4,12 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+dependencyResolutionManagement {
+	repositories{
+		mavenLocal()
+		mavenCentral()
+	}
+}
+
 rootProject.name = 'eno-ws'
