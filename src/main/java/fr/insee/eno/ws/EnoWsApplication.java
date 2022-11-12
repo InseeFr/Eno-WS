@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -27,7 +26,7 @@ public class EnoWsApplication {
         SpringApplication.run(EnoWsApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     public RouterFunction<ServerResponse> monoRouterFunction() {
         return route()
                 .GET(all(), this::passePlatGet)
@@ -42,7 +41,7 @@ public class EnoWsApplication {
                     httpHeaders.clear();
                     httpHeaders.addAll(serverRequest.headers().asHttpHeaders());
                 })
-                .retrieve()
+                .retrieve()//exchange() : to access to the full server respsonse
                 .toEntityFlux(DataBuffer.class)
                 .flatMap(r -> ServerResponse.status(r.getStatusCode())
                         .headers(httpHeaders -> {
