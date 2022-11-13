@@ -32,6 +32,7 @@ dependencies {
 	// Spring Web
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.0-RC1'
+	//implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2'
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

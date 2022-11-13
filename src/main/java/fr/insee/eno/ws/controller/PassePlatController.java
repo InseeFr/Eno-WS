@@ -1,9 +1,10 @@
 package fr.insee.eno.ws.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,11 +15,9 @@ import reactor.core.publisher.Mono;
 public class PassePlatController {
 
 
-    private final WebClient webClient;
+    @Autowired
+    private  WebClient webClient;
 
-    public PassePlatController(@Value("${test.url}") String baseUrl, WebClient.Builder builder) {
-        webClient = builder.baseUrl(baseUrl).build();
-    }
 
     @GetMapping("/**")
     public Mono<ResponseEntity<Flux<DataBuffer>>> passePlat(ServerHttpRequest serverRequest){
