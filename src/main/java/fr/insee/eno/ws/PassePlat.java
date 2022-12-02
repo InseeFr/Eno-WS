@@ -21,14 +21,11 @@ public class PassePlat {
                     httpHeaders.clear();
                     httpHeaders.addAll(serverRequest.getHeaders());
                 })
-                .retrieve()//exchange() : to access to the full server respsonse
-                .toEntityFlux(DataBuffer.class)
-                .flux()
-                .flatMap(r -> {
-                    response.setStatusCode(r.getStatusCode());
+                .exchangeToFlux(r -> {
+                    response.setStatusCode(r.statusCode());
                     response.getHeaders().clear();
-                    response.getHeaders().addAll(r.getHeaders());
-                    return r.getBody();
+                    response.getHeaders().addAll(r.headers().asHttpHeaders());
+                    return r.bodyToFlux(DataBuffer.class);
                 }));
     }
 
