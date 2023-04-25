@@ -22,6 +22,7 @@ import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pipeline;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.service.MultiModelService;
@@ -136,7 +137,7 @@ public class IntegrationController {
 			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 			)
 	@PostMapping(value= {"ddi-2-lunatic-json/{mode}"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<StreamingResponseBody> generateLunatic(
+	public ResponseEntity<StreamingResponseBody> generateLunaticBusiness(
 			@PathVariable Mode mode,
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
