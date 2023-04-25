@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -48,6 +49,8 @@ public class IntegrationController {
 	@Autowired
 	private ParameterService parameterService;
 	
+	@Autowired
+	private TransformService transformService;
 
 	@Operation(
 			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
