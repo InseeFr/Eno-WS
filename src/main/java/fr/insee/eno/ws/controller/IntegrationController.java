@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -22,11 +23,13 @@ import fr.insee.eno.parameters.Context;
 import fr.insee.eno.parameters.ENOParameters;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.parameters.Pipeline;
+import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -47,6 +50,8 @@ public class IntegrationController {
 	@Autowired
 	private ParameterService parameterService;
 	
+	@Autowired
+	private TransformService transformService;
 
 	@Operation(
 			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
@@ -131,6 +136,51 @@ public class IntegrationController {
 				.body(stream);
 	}
 	
+	@Operation(
+			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
+			description="It generates a questionnaire for intregation with default pipeline  : using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			)
+	@PostMapping(value= {"ddi-2-lunatic-json/{mode}"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<StreamingResponseBody> generateLunaticBusiness(
+			@PathVariable Mode mode,
+			@RequestPart(value="in",required=true) MultipartFile in, 
+			@RequestPart(value="params",required=true) MultipartFile params,
+			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
+		    
+ 
+		File enoInput = File.createTempFile("eno", ".xml");
+		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+
+		InputStream paramsIS = params!=null ? params.getInputStream():null;
+		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		
+		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
+		
+
+		ENOParameters defaultEnoParamsddi2Lunatic = parameterService.getDefaultCustomParameters(Context.BUSINESS,OutFormat.LUNATIC_XML,mode);
+		
+		Pipeline defaultPipeline = defaultEnoParamsddi2Lunatic.getPipeline();
+		currentEnoParams.setPipeline(defaultPipeline);
+		currentEnoParams.setMode(mode);
+		currentEnoParams.getParameters().setContext(Context.BUSINESS);
+
+		
+		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, currentEnoParams, null, specificTreatmentIS, null);
+	    File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+		
+		FileUtils.forceDelete(enoInput);
+
+		LOGGER.info("END of eno processing");
+		LOGGER.info("OutPut File :"+enoOutput.getName());
+
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+
+		return  ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.body(stream);
+	}
+
 
 
 }
