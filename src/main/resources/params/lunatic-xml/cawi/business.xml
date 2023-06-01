@@ -37,6 +37,7 @@
         
         <lunatic-xml-parameters>
             <Pagination>sequence</Pagination>
+            <UnusedVars>true</UnusedVars>
         </lunatic-xml-parameters>
     </Parameters>
 
