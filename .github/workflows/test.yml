@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENOBRANCH: main
-      LUNATICBRANCH: master
     steps:
       - uses: actions/checkout@v2
         with:
@@ -39,18 +38,6 @@ jobs:
       - name: Build with Maven Eno
         working-directory: ./Eno
         run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
-
-      - name: Checkout Lunatic model repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-          ref: ${{ env.LUNATICBRANCH }}
-          repository: InseeFr/Lunatic-model
-          path: Lunatic-model
-
-      - name: Build with Maven Lunatic model
-        working-directory: ./Lunatic-model
-        run: mvn install -Djar.finalName="lunatic-model" -B -V --file pom.xml
 
       - name: Test, package and analyze with maven & SonarCloud
         run: mvn -e verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
