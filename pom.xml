@@ -58,6 +58,17 @@
 			<name>Spring GA Repository</name>
 			<url>https://repo.spring.io/release</url>
 		</repository>
+		<!-- Maven central snapshot repository (espacially for Lunatic-Model snapshots) -->
+		<repository>
+			<id>oss.sonatype.org-snapshot</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<!-- spring-boot -->
