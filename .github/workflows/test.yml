@@ -1,9 +1,16 @@
-name: Tests 
+name: Tests
+
+# For now the Eno library is not published in a public maven repository.
+# This workflow checks out the Eno project on its main branch explicitely, 
+# so we want to trigger it on pushes or PR on the main branch here in Eno-WS.
 
 on:
   push:
     branches:
-      - "**"
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
 
