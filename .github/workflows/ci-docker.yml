@@ -29,10 +29,10 @@ jobs:
 
       - name: Build with Maven Eno
         working-directory: ./Eno
-        run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
+        run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
 
       - name: Test, package and analyze with maven & SonarCloud
-        run: mvn verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
+        run: mvn --no-transfer-progress verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -60,10 +60,10 @@ jobs:
 
       - name: Build with Maven Eno
         working-directory: ./Eno
-        run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
+        run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
 
       - name: Build with Maven Eno-WS
-        run: mvn clean install -DskipTests=true -B -V --file pom.xml   
+        run: mvn clean install --no-transfer-progress -DskipTests=true -B -V --file pom.xml   
 
       - name: Upload war
         uses: actions/upload-artifact@v3
