@@ -3,7 +3,7 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENOBRANCH: dev-add-sequence-to-loop
+  ENOBRANCH: develop
 
 jobs:
   
