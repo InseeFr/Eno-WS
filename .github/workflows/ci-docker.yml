@@ -3,7 +3,7 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENOBRANCH: main
+  ENOBRANCH: develop
 
 jobs:
   
