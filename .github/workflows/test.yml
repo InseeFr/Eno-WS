@@ -8,6 +8,10 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+      - '.gitignore'
   pull_request:
     branches:
       - 'main'
