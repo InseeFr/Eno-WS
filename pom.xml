@@ -2,41 +2,36 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<name>Eno-Web-Service</name>
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
+	<version>1.7.0</version>
+
 	<packaging>war</packaging>
 
-	<version>1.6.4</version>
-
-  
-	<name>Eno-Web-Service</name>
-
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
 		<final.war.name>eno-ws</final.war.name>
 
-		<javax.activation.version>1.2.0</javax.activation.version>
-
-
 		<eno.version>2.4.4</eno.version>
-
-
-		<log4j2.version>2.17.0</log4j2.version>
-
 		<lunatic-model.version>2.3.3</lunatic-model.version>
+		<fop.version>2.8</fop.version>
 
-
+		<javax.activation.version>1.2.0</javax.activation.version>
+		<log4j2.version>2.18.0</log4j2.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
-		<springdoc-openapi-ui.version>1.6.2</springdoc-openapi-ui.version>
 		<commons-io.version>2.11.0</commons-io.version>
-		<fop.version>2.2</fop.version>
+		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
+		<snakeyaml.version>2.0</snakeyaml.version>
 
-			<!-- Configuration Sonar -->
+		<!-- Sonar -->
 		<jacoco.version>0.8.7</jacoco.version>	
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -58,7 +53,7 @@
 			<name>Spring GA Repository</name>
 			<url>https://repo.spring.io/release</url>
 		</repository>
-		<!-- Maven central snapshot repository (espacially for Lunatic-Model snapshots) -->
+		<!-- Maven central snapshot repository (especially for Lunatic-Model snapshots) -->
 		<repository>
 			<id>oss.sonatype.org-snapshot</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -75,36 +70,39 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.9.RELEASE</version>
+		<version>2.7.14</version>
 	</parent>
 	
 	<dependencyManagement>
-	<dependencies>
-	<dependency>
+		<dependencies>
+			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-api</artifactId>
 				<version>${log4j2.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-core</artifactId>
 				<version>${log4j2.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-jul</artifactId>
 				<version>${log4j2.version}</version>
 			</dependency>
-
-
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-sl4j-impl</artifactId>
 				<version>${log4j2.version}</version>
 			</dependency>
-			</dependencies>
+
+			<!-- Temp config due to security issues in version used in springdoc-openapi-ui -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${snakeyaml.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
@@ -135,7 +133,7 @@
 			<version>${lunatic-model.version}</version>
 		</dependency>
 
-		<!-- apache fop -->
+		<!-- Apache FOP -->
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>fop</artifactId>
@@ -181,23 +179,17 @@
 			<artifactId>jaxb-core</artifactId>
 			<version>${jaxb.api.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
 			<version>${jaxb.api.version}</version>
 		</dependency>
 
-		<!-- test -->
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -208,7 +200,6 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test-autoconfigure</artifactId>
@@ -216,16 +207,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -257,8 +242,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-					 <plugin>
+			<plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
@@ -293,4 +277,5 @@
             </plugin>
 		</plugins>
 	</build>
+
 </project>
