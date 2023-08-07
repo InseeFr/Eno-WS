@@ -22,7 +22,8 @@ public class EnoWS extends SpringBootServletInitializer{
 	
 	
 	public static final String APP_NAME = "enows";
-	
+	public static final String PROPERTIES_FILE_NAME = "enows.properties";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(EnoWS.class);
 	
 	public static void main(String[] args) {
@@ -38,10 +39,9 @@ public class EnoWS extends SpringBootServletInitializer{
 	}
 	
 	public static void setProperty() {
-		String propertiesFileName = Constants.getPropertiesFileName();
 		System.setProperty("spring.config.location",
-				"classpath:"+APP_NAME+".properties,"
-				+ "file:${catalina.base}/webapps/"+propertiesFileName+".properties");
+				"classpath:"+PROPERTIES_FILE_NAME+","
+				+ "file:${catalina.base}/webapps/"+PROPERTIES_FILE_NAME);
 	}
 	
 	@EventListener
