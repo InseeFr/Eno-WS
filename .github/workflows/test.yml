@@ -1,9 +1,20 @@
-name: Tests 
+name: Tests
+
+# For now the Eno library is not published in a public maven repository.
+# This workflow checks out the Eno project on its main branch explicitely, 
+# so we want to trigger it on pushes or PR on the main branch here in Eno-WS.
 
 on:
   push:
     branches:
-      - "**"
+      - 'main'
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+      - '.gitignore'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
 
@@ -11,18 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENOBRANCH: main
-      LUNATICBRANCH: master
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: 11
+          distribution: 'temurin'
+          java-version: '11'
 
       - name: Checkout Eno repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
           ref: ${{ env.ENOBRANCH }}
@@ -31,22 +42,10 @@ jobs:
 
       - name: Build with Maven Eno
         working-directory: ./Eno
-        run: mvn clean process-classes package install -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
-
-      - name: Checkout Lunatic model repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-          ref: ${{ env.LUNATICBRANCH }}
-          repository: InseeFr/Lunatic-model
-          path: Lunatic-model
-
-      - name: Build with Maven Lunatic model
-        working-directory: ./Lunatic-model
-        run: mvn install -Djar.finalName="lunatic-model" -B -V --file pom.xml
+        run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
 
       - name: Test, package and analyze with maven & SonarCloud
-        run: mvn -e verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
+        run: mvn --no-transfer-progress -e verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
