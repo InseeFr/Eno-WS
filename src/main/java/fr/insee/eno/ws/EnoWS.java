@@ -41,7 +41,7 @@ public class EnoWS extends SpringBootServletInitializer{
 		String propertiesFileName = Constants.getPropertiesFileName();
 		System.setProperty("spring.config.location",
 				"classpath:"+APP_NAME+".properties,"
-				+ "file:///${catalina.base}/webapps/"+propertiesFileName+".properties");
+				+ "file:${catalina.base}/webapps/"+propertiesFileName+".properties");
 	}
 	
 	@EventListener
