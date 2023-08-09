@@ -1,4 +1,5 @@
-FROM tomcat:jre17-temurin
+FROM tomcat:9-jre17
+# Note: Tomcat 10 is not compatible with Spring Boot 2!!
 
 RUN rm -rf $CATALINA_HOME/webapps/*
 ADD src/main/resources/log4j2.xml $CATALINA_HOME/webapps/log4j2.xml
