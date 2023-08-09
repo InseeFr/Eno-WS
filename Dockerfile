@@ -1,4 +1,4 @@
-FROM tomcat:jre11-slim
+FROM tomcat:jre17-temurin
 
 RUN rm -rf $CATALINA_HOME/webapps/*
 ADD src/main/resources/log4j2.xml $CATALINA_HOME/webapps/log4j2.xml
