@@ -5,12 +5,12 @@
 	<name>Eno-Web-Service</name>
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<version>1.7.5</version>
+	<version>1.8.0</version>
 
 	<packaging>war</packaging>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
