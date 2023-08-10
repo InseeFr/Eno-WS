@@ -86,7 +86,7 @@ jobs:
 
       - name: Get current version
         id: version
-        run: echo "::set-output name=prop::$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
+        run: echo "prop=$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       - run: echo ${{steps.version.outputs.prop}}
 
       - name: Publish to Registry
@@ -96,6 +96,3 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: "latest,${{steps.version.outputs.prop}}"
-
-
-  
