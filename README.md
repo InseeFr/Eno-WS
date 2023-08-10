@@ -33,6 +33,11 @@ Others endpoints (working progress) :
 
 ## Getting Started
 
+### From Docker image
+
+Docker images of the application are published in [Docker Hub](https://hub.docker.com/r/inseefr/eno-ws/tags).
+
+You can pull it, run it on port `8080`, and you're all set!
 
 ### From war file : 
  
