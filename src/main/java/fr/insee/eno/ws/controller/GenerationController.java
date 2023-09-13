@@ -1,12 +1,13 @@
 package fr.insee.eno.ws.controller;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.Arrays;
-
 import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.*;
+import fr.insee.eno.service.MultiModelService;
+import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.service.ParameterService;
+import fr.insee.eno.ws.service.TransformService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -15,21 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.service.MultiModelService;
-import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.service.ParameterService;
-import fr.insee.eno.ws.service.TransformService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.File;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 @Tag(name="Generation of questionnaire")
 @RestController
@@ -38,15 +35,16 @@ public class GenerationController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
 
-	private ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
+	private final ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
 	
-	private MultiModelService multiModelService =  new MultiModelService();
+	private final MultiModelService multiModelService =  new MultiModelService();
 
 	@Autowired
 	private ParameterService parameterService;
 
 	@Autowired
 	private TransformService transformService;
+	private String generateXformsQuestionnaireInName;
 
 
 	@Operation(
@@ -216,6 +214,12 @@ public class GenerationController {
 			@RequestParam(value="PreQuestSymbol") boolean preQuestSymbol
 			) throws Exception {
 
+		if (in.getName().equals(generateXformsQuestionnaireInName)){
+			throw new IllegalStateException("POST /ddi-2-xforms yet in use with "+in.getOriginalFilename()+" on "+InetAddress.getLocalHost().getHostName());
+		}else{
+			generateXformsQuestionnaireInName=in.getName();
+		}
+
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
@@ -264,7 +268,21 @@ public class GenerationController {
 		LOGGER.info("END of eno processing");
 		LOGGER.info("OutPut File :"+enoOutput.getName());
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+		StreamingResponseBody stream = out -> {
+			LOGGER.info("Ecriture du contenu de "+enoOutput+" dans la response");
+			byte[] contenu;
+			Path cheminLu=null;
+			try{
+				cheminLu=enoOutput.toPath();
+				contenu=Files.readAllBytes(cheminLu);
+			}catch (Exception e){
+				LOGGER.error("Erreur lors de la lecture de "+cheminLu+" : ",e);
+				contenu=e.getMessage().getBytes(StandardCharsets.UTF_8);
+			}
+			out.write(contenu);
+		};
+
+		generateXformsQuestionnaireInName=null;
 
 		return  ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
