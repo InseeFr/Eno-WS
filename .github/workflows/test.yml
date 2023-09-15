@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  ENO_BRANCH: develop
+  ENO_BRANCH: main
 
 jobs:
 
