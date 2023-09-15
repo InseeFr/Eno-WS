@@ -25,17 +25,15 @@
         <Languages>
             <Language>fr</Language>
         </Languages>
-	    
-	<EndQuestion>
-            <CommentQuestion>true</CommentQuestion>
-        </EndQuestion>
 
         <lunatic-xml-parameters>
             <AddFilterResult>true</AddFilterResult>
+            <UnusedVars>true</UnusedVars>
         </lunatic-xml-parameters>
 
         <Numerotation>   
-             <QuestNum>no-number</QuestNum> 
+             <QuestNum>no-number</QuestNum>
+             <SeqNum>false</SeqNum>
         </Numerotation>
 
     </Parameters>
