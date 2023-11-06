@@ -118,6 +118,12 @@
 			<groupId>fr.insee.lunatic</groupId>
 			<artifactId>lunatic-model</artifactId>
 			<version>${lunatic-model.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xalan</groupId>
+					<artifactId>xalan</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- apache fop -->
