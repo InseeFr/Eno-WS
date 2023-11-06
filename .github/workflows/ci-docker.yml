@@ -3,8 +3,8 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENOBRANCH: main
-  LUNATICBRANCH: develop
+  ENO_BRANCH: 'lunatic-v1-main-last-version'
+  LUNATIC_MODEL_TAG: '2.2.10'
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          ref: ${{ env.ENOBRANCH }}
+          ref: ${{ env.ENO_BRANCH }}
           repository: InseeFr/Eno
           path: Eno
 
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-          ref: ${{ env.LUNATICBRANCH }}
+          ref: ${{ env.LUNATIC_MODEL_TAG }}
           repository: InseeFr/Lunatic-model
           path: Lunatic-model
 
