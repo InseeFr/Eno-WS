@@ -5,7 +5,7 @@
 	<name>Eno-Web-Service</name>
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<version>1.8.4-suggester</version>
+	<version>1.8.5-suggester</version>
 
 	<packaging>war</packaging>
 
