@@ -7,8 +7,8 @@ on:
       - labeled
 
 env:
-  ENO_BRANCH: 'dev-pogues2ddi-suggester'
-  LUNATIC_MODEL_BRANCH: 'dev-suggester'
+  ENO_BRANCH: 'next'
+  LUNATIC_MODEL_BRANCH: 'master'
 
 jobs:
 
