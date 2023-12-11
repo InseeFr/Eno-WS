@@ -20,7 +20,7 @@
 		<final.war.name>eno-ws</final.war.name>
 
 		<eno.version>2.4.10</eno.version>
-		<lunatic-model.version>2.3.4</lunatic-model.version>
+		<lunatic-model.version>3.2.5</lunatic-model.version>
 		<fop.version>2.9</fop.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
