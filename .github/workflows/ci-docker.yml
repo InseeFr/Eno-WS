@@ -66,7 +66,7 @@ jobs:
         run: mvn clean install --no-transfer-progress -DskipTests=true -B -V --file pom.xml   
 
       - name: Upload war
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: war
           path: target/*.war
