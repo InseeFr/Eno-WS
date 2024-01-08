@@ -25,17 +25,17 @@ import fr.insee.eno.service.ParameterizedGenerationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Util")
+@Tag(name = "Utils")
 @RestController
-@RequestMapping("/util")
+@RequestMapping("/utils")
 
 
-public class UtilController {
+public class UtilsController {
 	
 	@Autowired
 	private TransformService transformService;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(UtilController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UtilsController.class);
 	
 	private ParameterizedGenerationService parameterizedGenerationService = new ParameterizedGenerationService();
 
