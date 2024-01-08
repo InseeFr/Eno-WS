@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 
+import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,7 +101,7 @@ public class SimpleGenerationController {
 
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 		
-		return ResponseUtil.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 	
 
@@ -125,7 +126,7 @@ public class SimpleGenerationController {
 
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,null,in, specificTreatment);
 		
-		return ResponseUtil.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 	
 	
@@ -151,7 +152,7 @@ public class SimpleGenerationController {
 
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,mode,in, specificTreatment);
 		
-		return ResponseUtil.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 	
 	
@@ -195,7 +196,7 @@ public class SimpleGenerationController {
 
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 		
-		return ResponseUtil.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 	
 
@@ -218,7 +219,7 @@ public class SimpleGenerationController {
 
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,null,in,null);
 
-		return ResponseUtil.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 
 }
