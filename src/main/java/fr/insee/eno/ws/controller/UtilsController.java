@@ -1,13 +1,14 @@
 package fr.insee.eno.ws.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-
+import fr.insee.eno.parameters.*;
 import fr.insee.eno.postprocessing.lunaticxml.LunaticXMLVTLParserPostprocessor;
+import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.service.TransformService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import fr.insee.eno.parameters.ENOParameters;
-import fr.insee.eno.parameters.InFormat;
-import fr.insee.eno.parameters.OutFormat;
-import fr.insee.eno.parameters.Pipeline;
-import fr.insee.eno.parameters.PreProcessing;
-import fr.insee.eno.ws.service.TransformService;
-import fr.insee.eno.service.ParameterizedGenerationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.File;
+import java.nio.file.Files;
 
 @Tag(name = "Utils")
 @RestController
@@ -31,17 +25,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 public class UtilsController {
-	
-	@Autowired
-	private TransformService transformService;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilsController.class);
-	
-	private ParameterizedGenerationService parameterizedGenerationService = new ParameterizedGenerationService();
 
-	private LunaticXMLVTLParserPostprocessor parser = new LunaticXMLVTLParserPostprocessor();
+	private final TransformService transformService;
+	private final ParameterizedGenerationService parameterizedGenerationService;
+	private final LunaticXMLVTLParserPostprocessor parser;
 
-	@Operation(summary = "Generation of ddi33 questionnaire from ddi32 questionnaire.", description = "It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire.")
+    public UtilsController(TransformService transformService,
+						   ParameterizedGenerationService parameterizedGenerationService,
+						   LunaticXMLVTLParserPostprocessor parser) {
+        this.transformService = transformService;
+		this.parameterizedGenerationService = parameterizedGenerationService;
+		this.parser = parser;
+    }
+
+    @Operation(summary = "Generation of ddi33 questionnaire from ddi32 questionnaire.", description = "It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire.")
 	@PostMapping(value = "ddi32-2-ddi33", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateDDI33Questionnaire(
 			@RequestPart(value = "in", required = true) MultipartFile in) throws Exception {
