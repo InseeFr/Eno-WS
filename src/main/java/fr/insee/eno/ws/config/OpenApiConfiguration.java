@@ -38,7 +38,7 @@ public class OpenApiConfiguration {
 				.addServersItem(server)
 				.info(
 						new Info()
-						.title("Eno Web Services")
+						.title("Eno XML Web Service")
 						.description(
 								"<h2>Generator using :</h2>"
 							  + "<style>.cell{border: black 2px solid; text-align: center; font-weight: bold; font-size: 1.5em;} .version{color:darkred}</style>"
