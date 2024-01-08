@@ -35,16 +35,16 @@ import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name="Simple Generation of questionnaire")
+@Tag(name="Generation from DDI (standard parameters)")
 @RestController
 @RequestMapping("/questionnaire")
-public class SimpleGenerationController {
+public class GenerationStandardController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleGenerationController.class);
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationStandardController.class);
+
 
 	private ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
-	
+
 
 	@Autowired
 	private ParameterService parameterService;
@@ -52,10 +52,10 @@ public class SimpleGenerationController {
 
 	@Autowired
 	private TransformService transformService;
-	
+
 	@Autowired
 	private QuestionnaireGenerateService generateQuestionnaireService;
-	
+
 	@Operation(
 			summary="Generation of fo questionnaire according to the context.",
 			description="It generates a fo questionnaire from a ddi questionnaire using the default fo parameters according to the study unit. "
