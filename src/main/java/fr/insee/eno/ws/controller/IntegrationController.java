@@ -39,7 +39,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/integration-business")
 public class IntegrationController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationController.class);
 
 	private MultiModelService multiModelService =  new MultiModelService();
 	
@@ -63,6 +63,8 @@ public class IntegrationController {
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="metadata",required=true) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
+
+		LOGGER.info("Received request to transform DDI to a Xforms questionnaire (business context).");
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -106,6 +108,8 @@ public class IntegrationController {
 			@RequestPart(value="metadata",required=true) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
+		LOGGER.info("Received request to transform DDI to a FO questionnaire (business context).");
+
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
@@ -146,7 +150,8 @@ public class IntegrationController {
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
-		    
+
+		LOGGER.info("Received request to transform DDI to a Lunatic questionnaire (business context). Mode={}", mode);
  
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);

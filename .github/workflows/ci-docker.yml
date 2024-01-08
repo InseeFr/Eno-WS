@@ -95,4 +95,4 @@ jobs:
           name: inseefr/eno-ws
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          tags: "latest,${{steps.version.outputs.prop}}"
+          tags: ${{steps.version.outputs.prop}}
