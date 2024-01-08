@@ -112,12 +112,23 @@ public class GenerationStandardController {
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 
+	/**
+	 * Endpoint to generate a Lunatic XML hierarchical questionnaire from a DDI.
+	 * @param in DDI file.
+	 * @param specificTreatment Specific treatment file.
+	 * @param context Context.
+	 * @param mode Collection mode.
+	 * @return A response entity to download the output questionnaire.
+	 * @throws Exception if something wrong happens...
+	 * @deprecated Supported by Eno Java.
+	 */
 	@Operation(
-			summary="Generation of lunatic-xml questionnaire according  to the context.",
+			summary="Generation of lunatic-xml questionnaire according to the context.",
 			description="It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
 	@PostMapping(value="{context}/lunatic-xml/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Deprecated(since = "2.0.0")
 	public ResponseEntity<StreamingResponseBody> generateXMLLunaticQuestionnaire(
 			//
 			@RequestPart(value="in") MultipartFile in,
@@ -136,6 +147,16 @@ public class GenerationStandardController {
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 
+	/**
+	 * Endpoint to generate a Lunatic JSON flat questionnaire from a DDI.
+	 * @param in DDI file.
+	 * @param specificTreatment Specific treatment file.
+	 * @param context Context.
+	 * @param mode Collection mode.
+	 * @return A response entity to download the output questionnaire.
+	 * @throws Exception if something wrong happens...
+	 * @deprecated Supported by Eno Java.
+	 */
 	@Operation(
 			summary="Generation of pdf questionnaire according  to the context.",
 			description="It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
@@ -143,6 +164,7 @@ public class GenerationStandardController {
 					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."
 			)
 	@PostMapping(value="{context}/lunatic-json/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Deprecated(since = "2.0.0")
 	public ResponseEntity<StreamingResponseBody> generateJSONLunaticQuestionnaire(
 			//
 			@RequestPart(value="in") MultipartFile in,
