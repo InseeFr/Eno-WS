@@ -22,8 +22,6 @@ import java.nio.file.Files;
 @Tag(name = "Utils")
 @RestController
 @RequestMapping("/utils")
-
-
 public class UtilsController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilsController.class);
@@ -40,10 +38,11 @@ public class UtilsController {
 		this.parser = parser;
     }
 
-    @Operation(summary = "Generation of ddi33 questionnaire from ddi32 questionnaire.", description = "It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire.")
+    @Operation(summary = "Generation of ddi33 questionnaire from ddi32 questionnaire.",
+			description = "It generates a ddi in 3.3 version questionnaire from a a ddi in 3.2 version questionnaire.")
 	@PostMapping(value = "ddi32-2-ddi33", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateDDI33Questionnaire(
-			@RequestPart(value = "in", required = true) MultipartFile in) throws Exception {
+			@RequestPart(value = "in") MultipartFile in) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -60,7 +59,7 @@ public class UtilsController {
 		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File :" + enoOutput.getName());
+		LOGGER.info("OutPut File: {}", enoOutput.getName());
 
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath()));
 
@@ -69,38 +68,39 @@ public class UtilsController {
 				.body(stream);
 	}
 
-	@Operation(summary = "Generation of VTL formula from Xpath formula", description = "It generates a VTL in 2.0 version from a Xpath in 1.1 version.")
+	@Operation(summary = "Generation of VTL formula from Xpath formula",
+			description = "It generates a VTL in 2.0 version from a Xpath in 1.1 version.")
 	@PostMapping(value = "xpath-2-vtl")
 	public ResponseEntity<String> generateVTLFormula(
-			@RequestParam(value = "xpath", required = true) String xpath) throws Exception {
+			@RequestParam(value = "xpath") String xpath) {
 
 		String vtl = parser.parseToVTL(xpath);
-		LOGGER.info("Xpath parse to" + vtl);
+		LOGGER.info("Xpath expression parsed to VTL: {}", vtl);
 		return ResponseEntity.ok()
 				.body(vtl);
 	}
 	
-	@Operation(summary = "Generation of Lunatic Json from Lunatic XML", description = "It generates a Lunatic Json from a Lunatic XML, using the Lunatic-Model library.")
+	@Operation(summary = "Generation of Lunatic Json from Lunatic XML",
+			description = "It generates a Lunatic Json from a Lunatic XML, using the Lunatic-Model library.")
 	@PostMapping(value = "lunatic-model/xml-2-json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-
 	public ResponseEntity<StreamingResponseBody> generateLunaticJson(
-			@RequestPart(value = "in", required = true) MultipartFile in) throws Exception {
+			@RequestPart(value = "in") MultipartFile in) throws Exception {
 		
 		LOGGER.info("START of Lunatic XML -> Lunatic Json transforming");
 		File lunaticXMLInput = File.createTempFile("lunatic", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), lunaticXMLInput);
 
-		File lunaticJsonOnput = transformService.XMLLunaticToJSONLunaticFlat(lunaticXMLInput);
+		File lunaticJsonOutput = transformService.XMLLunaticToJSONLunaticFlat(lunaticXMLInput);
 
 		FileUtils.forceDelete(lunaticXMLInput);
 		
 		LOGGER.info("END of Lunatic XML -> Lunatic Json transforming");
-		LOGGER.info("OutPut File :"+lunaticJsonOnput.getName());
+		LOGGER.info("OutPut File: {}", lunaticJsonOutput.getName());
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(lunaticJsonOnput.toPath())) ;
+		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(lunaticJsonOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+lunaticJsonOnput.getName()+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+lunaticJsonOutput.getName()+"\"")
 				.body(stream);
 	}
 
