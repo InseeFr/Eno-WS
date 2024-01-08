@@ -42,19 +42,20 @@ public class GenerationStandardController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationStandardController.class);
 
+	private final ParameterService parameterService;
+	private final TransformService transformService;
+	private final QuestionnaireGenerateService generateQuestionnaireService;
+	private final ParameterizedGenerationService parametrizedGenerationService;
 
-	private ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
-
-
-	@Autowired
-	private ParameterService parameterService;
-
-
-	@Autowired
-	private TransformService transformService;
-
-	@Autowired
-	private QuestionnaireGenerateService generateQuestionnaireService;
+	public GenerationStandardController(ParameterService parameterService,
+										TransformService transformService,
+										QuestionnaireGenerateService generateQuestionnaireService,
+										ParameterizedGenerationService parametrizedGenerationService) {
+		this.parameterService = parameterService;
+		this.transformService = transformService;
+		this.generateQuestionnaireService = generateQuestionnaireService;
+		this.parametrizedGenerationService = parametrizedGenerationService;
+	}
 
 	@Operation(
 			summary="Generation of fo questionnaire according to the context.",
