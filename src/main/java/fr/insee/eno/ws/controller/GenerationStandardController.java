@@ -122,11 +122,13 @@ public class GenerationStandardController {
 	 * @param mode Collection mode.
 	 * @return A response entity to download the output questionnaire.
 	 * @throws Exception if something wrong happens...
-	 * @deprecated Supported by Eno Java.
+	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java
+	 * (which also makes the Lunatic XML format obsolete).
 	 */
 	@Operation(
 			summary="Generation of lunatic-xml questionnaire according to the context.",
-			description="It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
+			description="**This endpoint has been migrated in the Eno 'Java' web-service** " +
+					"It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
 	@PostMapping(value="{context}/lunatic-xml/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -157,11 +159,12 @@ public class GenerationStandardController {
 	 * @param mode Collection mode.
 	 * @return A response entity to download the output questionnaire.
 	 * @throws Exception if something wrong happens...
-	 * @deprecated Supported by Eno Java.
+	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java.
 	 */
 	@Operation(
 			summary="Generation of pdf questionnaire according  to the context.",
-			description="It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
+			description="**This endpoint has been migrated in the Eno 'Java' web-service** " +
+					"It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."
 			)
