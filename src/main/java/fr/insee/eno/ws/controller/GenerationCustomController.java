@@ -50,8 +50,10 @@ public class GenerationCustomController {
     }
 
     @Operation(
-			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
-			description="It generates a questionnaire for integration with default business pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			summary = "Generation of Xforms questionnaire from DDI.",
+			description = "Generation of a Xforms questionnaire from the given DDI with default business " +
+					"pipeline, using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
+					"specific treatment file _(optional)_."
 	)
 	@PostMapping(value = "ddi-2-xforms",
 			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -105,8 +107,10 @@ public class GenerationCustomController {
 	}
 
 	@Operation(
-			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
-			description="It generates a questionnaire for integration with default pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			summary = "Generation of FO questionnaire from DDI.",
+			description = "Generation of a FO questionnaire from the given DDI with default pipeline, " +
+					"using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
+					"specific treatment file _(optional)_."
 	)
 	@PostMapping(value = "ddi-2-fo",
 			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -157,12 +161,25 @@ public class GenerationCustomController {
 				.body(stream);
 	}
 
+	/**
+	 * Endpoint to generate a Lunatic JSON flat questionnaire from a DDI with a custom parameters file.
+	 * @param in DDI file.
+	 * @param params Eno XML parameters.
+	 * @param specificTreatment Specific treatment file.
+	 * @return A response entity to download the output questionnaire.
+	 * @throws Exception if generation fails.
+	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java.
+	 */
 	@Operation(
-			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
-			description="It generates a questionnaire for integration with default pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
+			summary = "Generation of Lunatic questionnaire from DDI.",
+			description = "**This endpoint has been migrated in the Eno 'Java' web-service** " +
+					"Generation of a FO questionnaire from the given DDI with default pipeline, " +
+					"using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
+					"specific treatment file _(optional)_."
 	)
 	@PostMapping(value = "ddi-2-lunatic-json",
 			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Deprecated(since = "2.0.0")
 	public ResponseEntity<StreamingResponseBody> generateLunatic(
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="params") MultipartFile params,
