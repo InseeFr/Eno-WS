@@ -33,10 +33,13 @@ public class ParametersController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParametersController.class);
 
-	@Autowired
-	private ParameterService parameterService;
-	
-	@Operation(
+	private final ParameterService parameterService;
+
+    public ParametersController(ParameterService parameterService) {
+        this.parameterService = parameterService;
+    }
+
+    @Operation(
 			summary="Get all default out format parameters.", 
 			description="It returns the default parameters file without Pipeline which is overloaded. This file don't be used directly : you have to fill Pipeline.")
 	@GetMapping(value="all", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -86,10 +89,13 @@ public class ParametersController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(fileParam.toPath()));
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+context+"-"+outFormat+ "-"+ (mode!= null?mode:"") +"-default-params.xml\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						"attachment;filename=\"" + parametersFileName(context, mode, outFormat) + "\"")
 				.body(stream);
 	}
 
-
+	public static String parametersFileName(Context context, Mode mode, OutFormat outFormat) {
+		return "eno-parameters-" + context + "-" + (mode != null ? mode + "-" : "") + outFormat + ".xml";
+	}
 
 }
