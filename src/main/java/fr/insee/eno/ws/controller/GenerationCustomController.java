@@ -1,5 +1,6 @@
 package fr.insee.eno.ws.controller;
 
+import fr.insee.eno.exception.EnoParametersException;
 import fr.insee.eno.parameters.*;
 import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
@@ -29,6 +30,7 @@ import java.nio.file.Files;
 @Tag(name="Generation from DDI (custom parameters)")
 @RestController
 @RequestMapping("/questionnaire")
+@SuppressWarnings("unused")
 public class GenerationCustomController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationCustomController.class);
@@ -47,22 +49,19 @@ public class GenerationCustomController {
         this.transformService = transformService;
     }
 
-	private static String headersAttachment(File enoOutput) {
-		return "attachment;filename=\"" + enoOutput.getName() + "\"";
-	}
-
     @Operation(
 			summary="Integration of business questionnaire according to params, metadata and specificTreatment (business default pipeline is used).",
 			description="It generates a questionnaire for integration with default business pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 	)
-	@PostMapping(value= {"ddi-2-xforms"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "ddi-2-xforms",
+			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXforms(
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="params") MultipartFile params,
 			@RequestPart(value="metadata") MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		LOGGER.info("Received request to transform DDI to a Xforms questionnaire (business context).");
+		LOGGER.info("Received request to transform DDI to a Xforms questionnaire.");
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -71,19 +70,27 @@ public class GenerationCustomController {
 		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
 		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
-		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext() != null ?
-				currentEnoParams.getParameters().getContext() :
-				Context.BUSINESS; // TODO: throw an exception here if the context is not business instead
+		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
+		Context context = enoParameters.getParameters().getContext();
+		Mode mode = enoParameters.getMode();
+
+		nonNullContextCheck(context);
+		if (Context.HOUSEHOLD.equals(context))
+			throw new EnoParametersException("Context 'HOUSEHOLD' is not compatible with Xforms format.");
+		nonNullModeCheck(mode);
+		if (Mode.CAPI.equals(mode) || Mode.CATI.equals(mode) || Mode.PAPI.equals(mode))
+			throw new EnoParametersException("Mode '" + mode + "' is not compatible with Xforms format.");
+
+		logModeAndContext(context, mode);
 
 		ENOParameters defaultEnoParamsDDI2Xforms =  parameterService.getDefaultCustomParameters(
-				currentContext, OutFormat.XFORMS, null);
+				context, OutFormat.XFORMS, null);
 		
 		Pipeline defaultPipeline = defaultEnoParamsDDI2Xforms.getPipeline();
-		currentEnoParams.setPipeline(defaultPipeline);
+		enoParameters.setPipeline(defaultPipeline);
 		
 		File enoOutput = multiModelService.generateQuestionnaire(
-				enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);
+				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 
@@ -101,32 +108,42 @@ public class GenerationCustomController {
 			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
 			description="It generates a questionnaire for integration with default pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 	)
-	@PostMapping(value= {"ddi-2-fo"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "ddi-2-fo",
+			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFo(
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="params") MultipartFile params,
 			@RequestPart(value="metadata") MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		LOGGER.info("Received request to transform DDI to a FO questionnaire (business context).");
+		LOGGER.info("Received request to transform DDI to a FO questionnaire.");
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		InputStream paramsIS = params!=null ? params.getInputStream():null;
-		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+		InputStream paramsIS = params != null ? params.getInputStream() : null;
+		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
+		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
-		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Context currentContext = currentEnoParams.getParameters().getContext();
+		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
+		Context context = enoParameters.getParameters().getContext();
+		Mode mode = enoParameters.getMode();
+
+		nonNullContextCheck(context);
+		nonNullModeCheck(mode);
+		if (Mode.CAPI.equals(mode) || Mode.CATI.equals(mode) || Mode.CAWI.equals(mode))
+			throw new EnoParametersException("Mode '" + mode + "' is not compatible with FO format.");
+
+		logModeAndContext(context, mode);
 
 		ENOParameters defaultEnoParamsDDI2Fo =  parameterService.getDefaultCustomParameters(
-				currentContext, OutFormat.FO, null);
+				context, OutFormat.FO, null);
 		
 		Pipeline defaultPipeline = defaultEnoParamsDDI2Fo.getPipeline();
-		currentEnoParams.setPipeline(defaultPipeline);
+		enoParameters.setPipeline(defaultPipeline);
 		
-		File enoOutput = multiModelService.generateQuestionnaire(enoInput, currentEnoParams, metadataIS, specificTreatmentIS, null);
+		File enoOutput = multiModelService.generateQuestionnaire(
+				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		
 		FileUtils.forceDelete(enoInput);
 
@@ -144,7 +161,8 @@ public class GenerationCustomController {
 			summary="Integration of questionnaire according to params, metadata and specificTreatment.",
 			description="It generates a questionnaire for integration with default pipeline: using the parameters file (required), metadata file (optional) and the specificTreatment file (optional). To use it, you have to upload all necessary files."
 	)
-	@PostMapping(value= {"ddi-2-lunatic-json"}, produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "ddi-2-lunatic-json",
+			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateLunatic(
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="params") MultipartFile params,
@@ -159,10 +177,15 @@ public class GenerationCustomController {
 		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
-		Mode mode = currentEnoParams.getMode();
 		Context context = currentEnoParams.getParameters().getContext();
+		Mode mode = currentEnoParams.getMode();
 
-		LOGGER.info("Mode defined in parameters file: {}", mode);
+		nonNullContextCheck(context);
+		nonNullModeCheck(mode);
+		if (Mode.PAPI.equals(mode))
+			throw new EnoParametersException("Mode 'PAPI' is not compatible with Lunatic format.");
+
+		logModeAndContext(context, mode);
 
 		ENOParameters defaultEnoParamsDDI2Lunatic = parameterService.getDefaultCustomParameters(
 				context, OutFormat.LUNATIC_XML, mode);
@@ -176,7 +199,7 @@ public class GenerationCustomController {
 
 		FileUtils.forceDelete(enoInput);
 
-		LOGGER.info("END of eno processing");
+		LOGGER.info("END of Eno Lunatic generation processing");
 		LOGGER.info("Output file: {}", enoOutput.getName());
 
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
@@ -184,6 +207,24 @@ public class GenerationCustomController {
 		return  ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, headersAttachment(enoOutput))
 				.body(stream);
+	}
+
+	private static String headersAttachment(File enoOutput) {
+		return "attachment;filename=\"" + enoOutput.getName() + "\"";
+	}
+
+	private static void nonNullContextCheck(Context context) {
+		if (context == null)
+			throw new EnoParametersException("No context defined in Eno parameters file given.");
+	}
+
+	private static void nonNullModeCheck(Mode mode) {
+		if (mode == null)
+			throw new EnoParametersException("No mode defined in Eno parameters file given.");
+	}
+
+	private static void logModeAndContext(Context context, Mode mode) {
+		LOGGER.info("Context={}, Mode={} defined in parameters file", context, mode);
 	}
 
 }
