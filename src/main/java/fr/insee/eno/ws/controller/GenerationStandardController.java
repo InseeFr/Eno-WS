@@ -111,8 +111,14 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",
 				context);
 
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,null,in, specificTreatment);
-		
+		File enoOutput;
+		if (! multiModel)
+			enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
+					context, OutFormat.XFORMS, null, in, specificTreatment);
+		else
+			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
+					context, OutFormat.XFORMS, null, in, specificTreatment);
+
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 
@@ -148,7 +154,8 @@ public class GenerationStandardController {
 						"using standard parameters.",
 				context, mode);
 
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,mode,in, specificTreatment);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
+				context, OutFormat.LUNATIC_XML, mode, in, specificTreatment);
 		
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
@@ -185,20 +192,15 @@ public class GenerationStandardController {
 						"using standard parameters.",
 				context, mode);
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+		File enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
+				context, OutFormat.LUNATIC_XML, mode, in, specificTreatment);
 
-		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.LUNATIC_XML,mode);
-		
-	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-
-		File enoTemp = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+		LOGGER.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
 		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
 
-		FileUtils.forceDelete(enoInput);
+		FileUtils.forceDelete(enoTemp);
 
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File: {}", enoOutput.getName());
+		LOGGER.info("Output Lunatic questionnaire json file: {}", enoOutput.getName());
 		
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
@@ -219,7 +221,8 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a fodt specification file with context '{}' using standard parameters.",
 				context);
 
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,null,in,null);
+		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
+				context, OutFormat.FODT, null, in, null);
 
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
