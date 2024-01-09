@@ -2,6 +2,7 @@ package fr.insee.eno.ws.controller;
 
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.controller.utils.HeaderUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.FileUtils;
@@ -75,7 +76,7 @@ public class GenerationWithMappingController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+enoOutput.getName()+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
 				.body(stream);
 	}
 

@@ -6,6 +6,7 @@ import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.controller.utils.HeaderUtils;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -102,7 +103,7 @@ public class GenerationCustomController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, headersAttachment(enoOutput))
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
 				.body(stream);
 	}
 
@@ -157,7 +158,7 @@ public class GenerationCustomController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, headersAttachment(enoOutput))
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
 				.body(stream);
 	}
 
@@ -222,12 +223,8 @@ public class GenerationCustomController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, headersAttachment(enoOutput))
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
 				.body(stream);
-	}
-
-	private static String headersAttachment(File enoOutput) {
-		return "attachment;filename=\"" + enoOutput.getName() + "\"";
 	}
 
 	private static void nonNullContextCheck(Context context) {

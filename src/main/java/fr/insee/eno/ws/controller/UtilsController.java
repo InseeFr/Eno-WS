@@ -3,6 +3,7 @@ package fr.insee.eno.ws.controller;
 import fr.insee.eno.parameters.*;
 import fr.insee.eno.postprocessing.lunaticxml.LunaticXMLVTLParserPostprocessor;
 import fr.insee.eno.service.ParameterizedGenerationService;
+import fr.insee.eno.ws.controller.utils.HeaderUtils;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -75,7 +76,7 @@ public class UtilsController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath()));
 
 		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + enoOutput.getName() + "\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
 				.body(stream);
 	}
 
@@ -129,7 +130,7 @@ public class UtilsController {
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(lunaticJsonOutput.toPath())) ;
 
 		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\""+lunaticJsonOutput.getName()+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(lunaticJsonOutput))
 				.body(stream);
 	}
 
