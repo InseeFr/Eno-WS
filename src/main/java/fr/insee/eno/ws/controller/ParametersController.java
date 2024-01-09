@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="Parameters")
 @RestController
-@RequestMapping("/parameter")
+@RequestMapping("/parameters/xml")
 public class ParametersController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParametersController.class);
@@ -39,7 +39,7 @@ public class ParametersController {
 	@Operation(
 			summary="Get all default out format parameters.", 
 			description="It returns the default parameters file without Pipeline which is overloaded. This file don't be used directly : you have to fill Pipeline.")
-	@GetMapping(value="default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value="all", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultParam() throws Exception {
 
 		InputStream paramsInputStream = parameterService.getDefaultParametersIS();
@@ -53,8 +53,8 @@ public class ParametersController {
 
 	@Operation(
 			summary="Get default xml parameters file for the given context according to the outFormat",
-			description="It returns parameters used by default according to the studyunit and the outFormat.")
-	@GetMapping(value="{context}/{outFormat}/default", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+			description="It returns parameters used by default according to the study unit and the outFormat.")
+	@GetMapping(value="{context}/{outFormat}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
 			@PathVariable Context context,
 			@PathVariable OutFormat outFormat,
