@@ -31,7 +31,6 @@ import java.nio.file.Files;
 @Tag(name="Generation from DDI (custom parameters)")
 @RestController
 @RequestMapping("/questionnaire")
-@SuppressWarnings("unused")
 public class GenerationCustomController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationCustomController.class);
