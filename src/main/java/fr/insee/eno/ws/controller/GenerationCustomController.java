@@ -173,8 +173,8 @@ public class GenerationCustomController {
 	 */
 	@Operation(
 			summary = "Generation of Lunatic questionnaire from DDI.",
-			description = "**This endpoint has been migrated in the Eno 'Java' web-service** " +
-					"Generation of a FO questionnaire from the given DDI with default pipeline, " +
+			description = "**This endpoint has been migrated in the Eno 'Java' web-service.** " +
+					"Generation of a Lunatic questionnaire from the given DDI with default pipeline, " +
 					"using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
 					"specific treatment file _(optional)_."
 	)

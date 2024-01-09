@@ -135,7 +135,7 @@ public class GenerationStandardController {
 	 */
 	@Operation(
 			summary="Generation of lunatic-xml questionnaire according to the context.",
-			description="**This endpoint has been migrated in the Eno 'Java' web-service** " +
+			description="**The Lunatic XML format is now deprecated.** " +
 					"It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 			)
@@ -172,7 +172,7 @@ public class GenerationStandardController {
 	 */
 	@Operation(
 			summary="Generation of pdf questionnaire according  to the context.",
-			description="**This endpoint has been migrated in the Eno 'Java' web-service** " +
+			description="**This endpoint has been migrated in the Eno 'Java' web-service.** " +
 					"It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
 					+ "See it using the end point : */parameter/{context}/default*"
 					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."

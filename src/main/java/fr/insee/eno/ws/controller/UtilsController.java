@@ -87,7 +87,7 @@ public class UtilsController {
 	 * @deprecated This endpoint and its logic class has been copied/pasted in the Eno Java web-service.
 	 */
 	@Operation(summary = "Generation of VTL formula from Xpath formula",
-			description = "**This endpoint has been migrated in the Eno 'Java' web-service** " +
+			description = "**This endpoint has been migrated in the Eno 'Java' web-service.** " +
 					"It generates a VTL in 2.0 version from a Xpath in 1.1 version.")
 	@PostMapping(value = "xpath-2-vtl")
 	@Deprecated(since = "2.0.0")
