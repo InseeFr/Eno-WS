@@ -26,16 +26,17 @@ public class UtilsController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilsController.class);
 
+	// Eno-WS service
 	private final TransformService transformService;
+
+	// Eno core services
 	private final ParameterizedGenerationService parameterizedGenerationService;
 	private final LunaticXMLVTLParserPostprocessor parser;
 
-    public UtilsController(TransformService transformService,
-						   ParameterizedGenerationService parameterizedGenerationService,
-						   LunaticXMLVTLParserPostprocessor parser) {
+    public UtilsController(TransformService transformService) {
         this.transformService = transformService;
-		this.parameterizedGenerationService = parameterizedGenerationService;
-		this.parser = parser;
+		this.parameterizedGenerationService = new ParameterizedGenerationService();
+		this.parser = new LunaticXMLVTLParserPostprocessor();
     }
 
 	/**

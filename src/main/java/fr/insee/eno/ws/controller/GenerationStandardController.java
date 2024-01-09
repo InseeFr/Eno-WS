@@ -27,19 +27,21 @@ public class GenerationStandardController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationStandardController.class);
 
+	// Eno-WS services
 	private final ParameterService parameterService;
 	private final TransformService transformService;
 	private final QuestionnaireGenerateService generateQuestionnaireService;
+
+	// Eno core service
 	private final ParameterizedGenerationService parametrizedGenerationService;
 
 	public GenerationStandardController(ParameterService parameterService,
 										TransformService transformService,
-										QuestionnaireGenerateService generateQuestionnaireService,
-										ParameterizedGenerationService parametrizedGenerationService) {
+										QuestionnaireGenerateService generateQuestionnaireService) {
 		this.parameterService = parameterService;
 		this.transformService = transformService;
 		this.generateQuestionnaireService = generateQuestionnaireService;
-		this.parametrizedGenerationService = parametrizedGenerationService;
+		this.parametrizedGenerationService = new ParameterizedGenerationService();
 	}
 
 	@Operation(
