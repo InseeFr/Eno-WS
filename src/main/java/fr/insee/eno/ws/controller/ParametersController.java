@@ -36,7 +36,7 @@ public class ParametersController {
 			summary="Get all default out format parameters.", 
 			description="It returns the default parameters file without Pipeline which is overloaded. This file don't be used directly : you have to fill Pipeline.")
 	@GetMapping(value="all", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<StreamingResponseBody> getDefaultParam() throws Exception {
+	public ResponseEntity<StreamingResponseBody> getAllParameters() throws Exception {
 
 		LOGGER.info("Get request for parameters file with all params.");
 
@@ -53,7 +53,7 @@ public class ParametersController {
 			summary="Get default xml parameters file for the given context according to the outFormat",
 			description="It returns parameters used by default according to the study unit and the outFormat.")
 	@GetMapping(value="{context}/{outFormat}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<StreamingResponseBody> getDefaultOutParam(
+	public ResponseEntity<StreamingResponseBody> getParameters(
 			@PathVariable Context context,
 			@PathVariable OutFormat outFormat,
 			@RequestParam(value="Mode",required=false) Mode mode) throws Exception {

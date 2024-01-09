@@ -53,7 +53,7 @@ public class UtilsController {
 	@PostMapping(value = "ddi32-2-ddi33",
 			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Deprecated(since = "2.0.0")
-	public ResponseEntity<StreamingResponseBody> generateDDI33Questionnaire(
+	public ResponseEntity<StreamingResponseBody> convertDDI32ToDDI33(
 			@RequestPart(value = "in") MultipartFile in) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
@@ -91,7 +91,7 @@ public class UtilsController {
 					"It generates a VTL in 2.0 version from a Xpath in 1.1 version.")
 	@PostMapping(value = "xpath-2-vtl")
 	@Deprecated(since = "2.0.0")
-	public ResponseEntity<String> generateVTLFormula(
+	public ResponseEntity<String> convertXpathToVTL(
 			@RequestParam(value = "xpath") String xpath) {
 
 		String vtl = parser.parseToVTL(xpath);
@@ -113,7 +113,7 @@ public class UtilsController {
 	@PostMapping(value = "lunatic-model/xml-2-json",
 			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Deprecated(since = "2.0.0")
-	public ResponseEntity<StreamingResponseBody> generateLunaticJson(
+	public ResponseEntity<StreamingResponseBody> convertLunaticXmlToJson(
 			@RequestPart(value = "in") MultipartFile in) throws Exception {
 		
 		LOGGER.info("START of Lunatic XML -> Lunatic Json transforming");
