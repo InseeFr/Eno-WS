@@ -32,17 +32,20 @@ public class QuestionnaireGenerateService {
 	}
 
 	public File generateQuestionnaireFile(Context context, OutFormat outFormat, Mode mode,
-										  MultipartFile in, MultipartFile specificTreatment) throws Exception {
+										  MultipartFile in,
+										  MultipartFile metadata,
+										  MultipartFile specificTreatment) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
 
+		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
 		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
 		File enoOutput= generationService.generateQuestionnaire(
-				enoInput, enoParameters, null, specificTreatmentIS, null);
+				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 
@@ -53,17 +56,20 @@ public class QuestionnaireGenerateService {
 	}
 
 	public File generateMultiModelQuestionnaires(Context context, OutFormat outFormat, Mode mode,
-												 MultipartFile in, MultipartFile specificTreatment) throws Exception {
+												 MultipartFile in,
+												 MultipartFile metadata,
+												 MultipartFile specificTreatment) throws Exception {
 
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
 
+		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
 		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
 		File enoOutput= multiModelService.generateQuestionnaire(
-				enoInput, enoParameters, null, specificTreatmentIS, null);
+				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 

@@ -53,6 +53,7 @@ public class GenerationStandardController {
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
 			//
 			@RequestPart(value="in") MultipartFile in,
+			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 			//
 			@RequestParam(value="Format-column",required=false) Integer nbColumn,
@@ -79,11 +80,12 @@ public class GenerationStandardController {
 	    if(nbColumn!=null) {
 	    Format format = foParameters.getFormat();
 		format.setColumns(nbColumn);}
-	    
-	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+
+		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
+		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
 		File enoOutput = parametrizedGenerationService.generateQuestionnaire(
-				enoInput, enoParameters, null, specificTreatmentIS, null);
+				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 
@@ -102,6 +104,7 @@ public class GenerationStandardController {
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
 			//
 			@RequestPart(value="in") MultipartFile in,
+			@RequestPart(value="metadata",required=false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 			//
 			@PathVariable Context context,
@@ -115,10 +118,10 @@ public class GenerationStandardController {
 		File enoOutput;
 		if (! multiModel)
 			enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
-					context, OutFormat.XFORMS, null, in, specificTreatment);
+					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 		else
 			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
-					context, OutFormat.XFORMS, null, in, specificTreatment);
+					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
@@ -156,7 +159,7 @@ public class GenerationStandardController {
 				context, mode);
 
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
-				context, OutFormat.LUNATIC_XML, mode, in, specificTreatment);
+				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 		
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
@@ -193,7 +196,7 @@ public class GenerationStandardController {
 				context, mode);
 
 		File enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
-				context, OutFormat.LUNATIC_XML, mode, in, specificTreatment);
+				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
 		LOGGER.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
 		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
@@ -221,7 +224,7 @@ public class GenerationStandardController {
 				context);
 
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
-				context, OutFormat.FODT, null, in, null);
+				context, OutFormat.FODT, null, in, null, null);
 
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
