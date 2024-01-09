@@ -103,7 +103,9 @@ public class GenerationStandardController {
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
 			//
-			@PathVariable Context context) throws Exception {
+			@PathVariable Context context,
+			//
+			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
 		LOGGER.info(
 				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",

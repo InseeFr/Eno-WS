@@ -152,7 +152,7 @@ public class GenerationCustomController {
 		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of Eno FO generation processing");
-		LOGGER.info("Output file: {}", enoOutput.getName());
+		LOGGER.info("Output FO questionnaire file: {}", enoOutput.getName());
 
 		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
 
