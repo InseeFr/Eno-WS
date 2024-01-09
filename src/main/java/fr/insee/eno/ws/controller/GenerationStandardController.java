@@ -45,9 +45,9 @@ public class GenerationStandardController {
 	}
 
 	@Operation(
-			summary="Generation of fo questionnaire according to the context.",
-			description="It generates a fo questionnaire from a ddi questionnaire using the default fo parameters according to the study unit. "
-					+ "See it using the end point : */parameter/{context}/default*"
+			summary="Generation of FO questionnaire from DDI.",
+			description="Generation of a FO questionnaire from the given DDI with standard parameters. " +
+					"Custom values can be passed for format of columns and capture mode."
 			)
 	@PostMapping(value="{context}/fo", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFOQuestionnaire(
@@ -82,20 +82,21 @@ public class GenerationStandardController {
 	    
 	    InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = parametrizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, specificTreatmentIS, null);
+		File enoOutput = parametrizedGenerationService.generateQuestionnaire(
+				enoInput, enoParameters, null, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 
-		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File: {}", enoOutput.getName());
+		LOGGER.info("END of Eno FO questionnaire processing");
+		LOGGER.info("Output file: {}", enoOutput.getName());
 		
 		return ResponseUtils.generateResponseFromFile(enoOutput);
 	}
 
 	@Operation(
-			summary="Generation of xforms questionnaire according to the context.",
-			description="It generates a xforms questionnaire from a ddi questionnaire using the default xforms parameters according to the study unit. "
-					+ "See it using the end point : */parameter/{context}/default*"
+			summary="Generation of Xforms questionnaire from DDI.",
+			description="Generation of one or multiple Xforms questionnaires from given DDI with standard parameters. " +
+					"If the multi-model option is set to true, the output questionnaire(s) are put in a zip file."
 			)
 	@PostMapping(value="{context}/xforms", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateXformsQuestionnaire(
@@ -134,10 +135,10 @@ public class GenerationStandardController {
 	 * (which also makes the Lunatic XML format obsolete).
 	 */
 	@Operation(
-			summary="Generation of lunatic-xml questionnaire according to the context.",
-			description="**The Lunatic XML format is now deprecated.** " +
-					"It generates a lunatic-xml questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
-					+ "See it using the end point : */parameter/{context}/default*"
+			summary = "Generation of Lunatic XML questionnaire from DDI.",
+			description = "**The Lunatic XML format is now deprecated.** " +
+					"Generation of a Lunatic XML hierarchical questionnaire from the given DDI " +
+					"with standard parameters."
 			)
 	@PostMapping(value="{context}/lunatic-xml/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Deprecated(since = "2.0.0")
@@ -171,11 +172,10 @@ public class GenerationStandardController {
 	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java.
 	 */
 	@Operation(
-			summary="Generation of pdf questionnaire according  to the context.",
-			description="**This endpoint has been migrated in the Eno 'Java' web-service.** " +
-					"It generates a lunatic-json-flat questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
-					+ "See it using the end point : */parameter/{context}/default*"
-					+ "The params *parsingXpathVTL* must be 'true' (default value) if controls language is pseudo-xpath."
+			summary = "Generation of Lunatic questionnaire from DDI.",
+			description = "**This endpoint has been migrated in the Eno 'Java' web-service.** " +
+					"Generation of a Lunatic questionnaire from the given DDI with standard parameters. " +
+					"The parameter `parsingXpathVTL` must be `true` if expressions are written in Xpath in the DDI."
 			)
 	@PostMapping(value="{context}/lunatic-json/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Deprecated(since = "2.0.0")
@@ -206,9 +206,8 @@ public class GenerationStandardController {
 	}
 
 	@Operation(
-			summary="Generation of fodt questionnaire according  to the context.",
-			description="It generates a odt questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
-					+ "See it using the end point : */parameter/{context}/default*"
+			summary="Generation of FODT specifications from DDI.",
+			description="Generation of a FODT description of the questionnaire from the given DDI."
 			)
 	@PostMapping(value="{context}/fodt", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<StreamingResponseBody> generateFodtQuestionnaire(
