@@ -5,7 +5,7 @@
 	<name>Eno-Web-Service</name>
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<version>1.9.2</version>
+	<version>1.9.3</version>
 
 	<packaging>war</packaging>
 
@@ -27,12 +27,12 @@
 		<log4j2.version>2.18.0</log4j2.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
 		<commons-io.version>2.15.1</commons-io.version>
-		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
-		<snakeyaml.version>2.0</snakeyaml.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
 
 		<!-- Sonar -->
-		<jacoco.version>0.8.7</jacoco.version>	
+		<jacoco.version>0.8.11</jacoco.version>	
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
