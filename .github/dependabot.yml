@@ -10,7 +10,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    target-branch: "main"
+    target-branch: "next"
     ignore:
       - dependency-name: "org.springframework.boot:spring-boot-starter-parent"
         update-types: ["version-update:semver-major"] # ignore spring-boot 3.+ for now
@@ -21,3 +21,4 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    target-branch: "next"
