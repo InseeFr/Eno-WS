@@ -5,7 +5,7 @@
 	<name>Eno-Web-Service</name>
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<version>1.8.4</version>
+	<version>1.9.2</version>
 
 	<packaging>war</packaging>
 
@@ -19,17 +19,17 @@
 
 		<final.war.name>eno-ws</final.war.name>
 
-		<eno.version>2.4.10</eno.version>
-		<lunatic-model.version>2.3.4</lunatic-model.version>
+		<eno.version>2.7.1</eno.version>
+		<lunatic-model.version>2.5.0</lunatic-model.version>
 		<fop.version>2.9</fop.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<log4j2.version>2.18.0</log4j2.version>
 		<jaxb.api.version>2.3.0</jaxb.api.version>
-		<commons-io.version>2.14.0</commons-io.version>
-		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+		<commons-io.version>2.15.1</commons-io.version>
+		<springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
-		<snakeyaml.version>2.0</snakeyaml.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
 
 		<!-- Sonar -->
 		<jacoco.version>0.8.11</jacoco.version>	
@@ -70,7 +70,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.16</version>
+		<version>2.7.18</version>
 	</parent>
 	
 	<dependencyManagement>
