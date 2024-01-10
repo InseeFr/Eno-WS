@@ -69,7 +69,10 @@ public class SimpleGenerationController {
 			@RequestParam(value="Format-column",required=false) Integer nbColumn,
 			@RequestParam(value="Capture",required=false) CaptureEnum capture,
 			@PathVariable Context context) throws Exception {
-		
+
+		LOGGER.info(
+				"Received request to transform DDI to a FO questionnaire with context '{}' using standard parameters.",
+				context);
 		
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
@@ -116,7 +119,10 @@ public class SimpleGenerationController {
 
 			@PathVariable Context context) throws Exception {
 
-		
+		LOGGER.info(
+				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",
+				context);
+
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.XFORMS,null,in, specificTreatment);
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
@@ -137,7 +143,12 @@ public class SimpleGenerationController {
 
 			@PathVariable Context context,
 			@PathVariable Mode mode) throws Exception {
-		
+
+		LOGGER.info(
+				"Received request to transform DDI to a Lunatic XML questionnaire with context '{}' and mode '{}' " +
+						"using standard parameters.",
+				context, mode);
+
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.LUNATIC_XML,mode,in, specificTreatment);
 		
 		return ResponseUtil.generateResponseFromFile(enoOutput);
@@ -161,8 +172,12 @@ public class SimpleGenerationController {
 
 			@PathVariable Context context,
 			@PathVariable Mode mode) throws Exception {
-		
-		
+
+		LOGGER.info(
+				"Received request to transform DDI to a Lunatic (json) questionnaire with context '{}' and mode '{}' " +
+						"using standard parameters.",
+				context, mode);
+
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
@@ -183,8 +198,7 @@ public class SimpleGenerationController {
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 	
-	
-	
+
 	@Operation(
 			summary="Generation of fodt questionnaire according  to the context.",
 			description="It generates a odt questionnaire from a ddi questionnaire using the default js parameters according to the study unit. "
@@ -198,14 +212,13 @@ public class SimpleGenerationController {
 		
 			@PathVariable Context context) throws Exception {
 
-		
+		LOGGER.info(
+				"Received request to transform DDI to a fodt specification file with context '{}' using standard parameters.",
+				context);
+
 		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(context, OutFormat.FODT,null,in,null);
-		
-		
+
 		return ResponseUtil.generateResponseFromFile(enoOutput);
 	}
 
-
-	
-	
 }
