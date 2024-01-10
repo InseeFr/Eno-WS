@@ -15,7 +15,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review, labeled]
 
 env:
-  ENO_BRANCH: main
+  ENO_BRANCH: next
 
 jobs:
 
@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'

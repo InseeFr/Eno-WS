@@ -38,7 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/integration-household")
 public class IntegrationHouseholdController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationHouseholdController.class);
 	
 	private ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
 	
@@ -61,7 +61,8 @@ public class IntegrationHouseholdController {
 			@RequestPart(value="in",required=true) MultipartFile in, 
 			@RequestPart(value="params",required=true) MultipartFile params,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
-		    
+
+		LOGGER.info("Received request to transform DDI to a Lunatic questionnaire (household context). Mode={}", mode);
  
 		File enoInput = File.createTempFile("eno", ".xml");
 		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
