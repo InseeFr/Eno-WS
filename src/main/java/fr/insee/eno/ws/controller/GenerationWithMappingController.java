@@ -34,7 +34,7 @@ public class GenerationWithMappingController {
 	@Operation(
 			summary = "Questionnaire generation according to params, metadata, specific treatment and mapping.",
 			description = "Generation of one or multiple questionnaires from the input file given, " +
-					"using a parameters file _(required)_, a metadata file _(optional)_, a specificTreatment file " +
+					"using a parameters file _(required)_, a metadata file _(optional)_, a specific treatment file " +
 					"_(optional)_ and a mapping file _(optional)_. " +
 					"If the multi-model option is set to true, the output questionnaire(s) are put in a zip file."
 	)
