@@ -1,6 +1,7 @@
 package fr.insee.eno.ws.controller;
 
 import fr.insee.eno.parameters.*;
+import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.ParameterService;
