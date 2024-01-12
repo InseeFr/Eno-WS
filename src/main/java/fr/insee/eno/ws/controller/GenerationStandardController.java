@@ -32,8 +32,10 @@ public class GenerationStandardController {
 	private final TransformService transformService;
 	private final QuestionnaireGenerateService generateQuestionnaireService;
 
-	// Eno core service
+	// Eno core services
 	private final ParameterizedGenerationService parametrizedGenerationService;
+	private final MultiModelService multiModelService = new MultiModelService();
+
 
 	public GenerationStandardController(ParameterService parameterService,
 										TransformService transformService,
@@ -172,7 +174,9 @@ public class GenerationStandardController {
 			@RequestParam(value="Format-column",required=false) Integer nbColumn,
 			@RequestParam(value="Capture",required=false) CaptureEnum capture,
 			//
-			@PathVariable Context context) throws Exception {
+			@PathVariable Context context,
+			//
+			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
 		LOGGER.info(
 				"Received request to transform DDI to a FO questionnaire with context '{}' using standard parameters.",
@@ -197,8 +201,13 @@ public class GenerationStandardController {
 		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput = parametrizedGenerationService.generateQuestionnaire(
-				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		File enoOutput;
+		if (! multiModel)
+			enoOutput = parametrizedGenerationService.generateQuestionnaire(
+					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		else
+			enoOutput = multiModelService.generateQuestionnaire(
+					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 		FileUtils.forceDelete(enoInput);
 
