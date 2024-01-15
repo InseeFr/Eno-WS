@@ -7,7 +7,7 @@ on:
       - labeled
 
 env:
-  ENO_BRANCH: 'next'
+  ENO_BRANCH: 'main'
   LUNATIC_MODEL_BRANCH: 'master'
 
 jobs:
