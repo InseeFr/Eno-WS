@@ -1,5 +1,6 @@
 package fr.insee.eno.ws.transform ;
 
+import fr.insee.eno.parameters.Mode;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -20,6 +21,10 @@ public class TestXpath2VTLParser {
         Assert.assertEquals(expectedVTL,vtl);
     }
 
-
+    @Test
+    public void foo() {
+        Mode mode = null;
+        Assert.assertEquals("foo-null-foo", "foo-"+mode.toString()+"-foo");
+    }
 
 }
