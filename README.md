@@ -1,91 +1,39 @@
-# Eno-WS : Questionnaire Generator REST Web Service
+# Eno XML Web-Service
 
+_This project contains the legacy REST API for Eno ("XML" version). See the other repo for details: https://github.com/InseeFr/Eno_
 
-## Introduction
+---
 
-Eno is a tool that generates survey questionnaires starting from their formal description in [DDI](http://ddialliance.org/).
+## Summary
 
-Due to its modular design, Eno can create questionnaires in different formats from the same DDI description. Currently, Eno generates XForms web questionnaires that can be executed on [Orbeon Forms Runner](http://www.orbeon.com/). PDF questionnaires is under development.
+[Eno](https://github.com/InseeFr/Eno) is a tool that generates survey questionnaires starting from their formal description in [DDI](https://ddialliance.org/Specification/DDI-Lifecycle/3.3/).
 
-This project uses the prior Eno architecture of folders from the [ENO GitHub Project](https://github.com/InseeFr/Eno) v1.0.0 and performs the same actions within a REST Web Service.
+Eno can create questionnaires in different formats from the same DDI description.
 
-## Principles: 
- 
-The generation of XForms forms is performed using a number of XSLT transformations from a DDI input file that is sent to the main URL of the service.
+Eno generates:
 
-The main URL to call (POST) is **http://localhost:8080/eno-ws/api/eno/ddi2xforms**
-and takes one arguments in the body :
+- [Lunatic](https://github.com/InseeFr/Lunatic) questionnaires.
+- XForms web questionnaires that can be executed on [Orbeon Forms Runner](http://www.orbeon.com/).
+- XSL-FO questionnaires that can be converted to PDF files.
 
-- ***ddi*** : the input DDI description to be processed.
-
-The response element will contain the result of the process, which can be:
-
--  Success case: The output Xforms result 
--  Error case: The error message
-
-
-Others endpoints (working progress) :
-
- http://localhost:8080/eno-ws/api/eno/ddi2fo
- 
- http://localhost:8080/eno-ws/api/eno/ddi2pdf
- 
-
-## Getting Started
-
-### From Docker image
+## Docker image
 
 Docker images of the application are published in [Docker Hub](https://hub.docker.com/r/inseefr/eno-ws/tags).
 
 You can pull it, run it on port `8080`, and you're all set!
 
-### From war file : 
+## Usage example
  
- * Java 8
- * Any compatible container for the WAR file (Tomcat, Glassfish)
- * War file from last release [ENO-WS last Release on GitHub](https://github.com/InseeFr/Eno-WS/releases/tag/v1.0.0)
- 
+You can find DDI example files in the test resources of the project.
 
-### From code source : 
+## Developer requirements
 
-A dependency to eno-core is required from maven central or from a local build of eno-core.
+- JDK 17+
+- Maven 3
+- Tomcat 9
 
-Subsequently, those additional steps are required in order to build eno:
+## Swagger UI
 
-```bash
-git pull https://github.com/InseeFr/Eno.git 
-pushd Eno
-mvn install && mvn install -DskipTests && mvn install:install-file -Dfile=target/eno-core-1.0.0.jar -DgroupId=fr.insee -DartifactId=eno-core -Dversion=1.0.0 -Dpackaging=jar
-popd
+The swagger-ui API documentation is mapped on the root url.
 
-```  
- 
-The first build of the project **must** be a maven clean install skipping tests. This will download the pom.xml dependencies to initialize the project: 
-
-* Saxon HE 9.X or higher (The XSLT and XQuery Processor), see also : [Saxon](https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE)
-* [RestAssured](http://rest-assured.io/) : used in the JUnit tests
-* [Log4j](http://logging.apache.org/log4j/2.x/) : used to log the service
-	* The log directory has to be defined in log4j.properties in src/main/resources.
-* All [Jersey](https://jersey.java.net/) related dependencies
-
-After this first build and having the application running on your container, you should be able to perform unit tests by building the project without skipping tests.
-
-### Usage : 
-
-
-```curl -X POST "http://localhost:8080/api/eno/ddi2xforms" -H "accept: application/xml" -H "content-type: application/xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DDIInstance .... </DDIInstance>"```
-
-
-### Swagger UI : 
-
-The main URL to call is **http://localhost:8080/eno-ws**
-
-
-### Example : 
- 
-In the Eno project resources, you can find an example of a questionnaire (specified in the DDI format) named simpsons.xml
-
-
-DDI example : [DDI Simpsons Questionnaire](https://github.com/InseeFr/Eno/blob/master/questionnaires/simpsons/ddi/simpsons.xml)
-XForms expected : [XForms Simpsons Questionnaire] (https://github.com/InseeFr/Eno/blob/master/questionnaires/simpsons/xforms/v1/simpsons-form.xhtml)
-
+Locally, you can get it at `http://localhost:8080`
