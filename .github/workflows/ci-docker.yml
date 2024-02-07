@@ -3,7 +3,7 @@ name: Build docker
 on: workflow_dispatch
 
 env:
-  ENO_BRANCH: main
+  ENO_BRANCH: v2-main
 
 jobs:
   
