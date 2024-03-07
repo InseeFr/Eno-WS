@@ -63,11 +63,12 @@ public class ParameterService {
 		return xmlParameters;
 	}
 
-	public String getFileNameFromEnoParameters(ENOParameters enoParameters){
-		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat());
+	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
+		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat(), multiModel);
 	}
 
-	public String getFileNameFromEnoParameters(OutFormat outFormat){
+	public String getFileNameFromEnoParameters(OutFormat outFormat, boolean multiModel){
+		if(multiModel) return "questionnaires.zip";
 		return switch (outFormat){
 			case FO -> "questionnaire.fo";
 			case FODT -> "questionnaire.fodt";

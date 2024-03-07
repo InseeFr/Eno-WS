@@ -83,7 +83,7 @@ public class GenerationWithMappingController {
 			LOGGER.info("END of Eno 'in to out' processing");
 		}
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));
 	}
 
 }

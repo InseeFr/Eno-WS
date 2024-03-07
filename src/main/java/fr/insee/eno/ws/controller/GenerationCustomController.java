@@ -102,7 +102,7 @@ public class GenerationCustomController {
 		}
 
 		LOGGER.info("END of Eno Lunatic generation processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(currentEnoParams));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(currentEnoParams, false));
 	}
 
     @Operation(
@@ -151,7 +151,7 @@ public class GenerationCustomController {
 		}
 		LOGGER.info("END of Eno Xforms generation processing");
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 	}
 
 	@Operation(
@@ -199,7 +199,7 @@ public class GenerationCustomController {
 			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		}
 		LOGGER.info("END of Eno FO generation processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 
 	}
 

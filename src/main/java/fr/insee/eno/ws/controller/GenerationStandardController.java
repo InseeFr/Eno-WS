@@ -83,7 +83,7 @@ public class GenerationStandardController {
 		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.xml");
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.LUNATIC_XML, false));
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class GenerationStandardController {
 			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
 					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.XFORMS));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.XFORMS, multiModel));
 	}
 
 	@Operation(
@@ -209,7 +209,7 @@ public class GenerationStandardController {
 
 
 		LOGGER.info("END of Eno FO questionnaire processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromEnoParameters(enoParameters));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));
 	}
 
 	@Operation(
@@ -230,7 +230,7 @@ public class GenerationStandardController {
 		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.FODT, null, in, null, null);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.FODT));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.FODT, false));
 	}
 
 }
