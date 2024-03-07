@@ -19,13 +19,14 @@
 
 		<final.war.name>eno-ws</final.war.name>
 
-		<eno.version>2.7.3</eno.version>
+		<eno.version>2.8.0</eno.version>
 		<lunatic-model.version>2.5.1</lunatic-model.version>
 		<fop.version>2.9</fop.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<log4j2.version>2.18.0</log4j2.version>
-		<jaxb.api.version>2.3.0</jaxb.api.version>
+		<jaxb.api.impl.version>2.3.1</jaxb.api.impl.version>
+		<jaxb.api.core.version>2.3.0</jaxb.api.core.version>
 		<commons-io.version>2.15.1</commons-io.version>
 		<springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
@@ -171,18 +172,18 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.api.version}</version>
+			<version>${jaxb.api.impl.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb.api.version}</version>
+			<version>${jaxb.api.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb.api.version}</version>
+			<version>${jaxb.api.impl.version}</version>
 		</dependency>
 
 		<dependency>
