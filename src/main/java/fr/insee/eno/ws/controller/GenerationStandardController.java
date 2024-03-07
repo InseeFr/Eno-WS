@@ -9,7 +9,6 @@ import fr.insee.eno.ws.service.QuestionnaireGenerateService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -18,13 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 @Tag(name="Generation from DDI (standard parameters)")
 @RestController
 @RequestMapping("/questionnaire")
 public class GenerationStandardController {
+
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationStandardController.class);
 
@@ -79,10 +80,10 @@ public class GenerationStandardController {
 						"using standard parameters.",
 				context, mode);
 
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
+		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
-		return ResponseUtils.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.xml");
 	}
 
 	/**
@@ -116,17 +117,14 @@ public class GenerationStandardController {
 						"using standard parameters.",
 				context, mode);
 
-		File enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
+		ByteArrayOutputStream enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
 		LOGGER.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
-		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+		ByteArrayOutputStream enoOutput = transformService.XMLLunaticToJSONLunaticFlat(new ByteArrayInputStream(enoTemp.toByteArray()));
+		enoTemp.close();
 
-		FileUtils.forceDelete(enoTemp);
-
-		LOGGER.info("Output Lunatic questionnaire json file: {}", enoOutput.getName());
-
-		return ResponseUtils.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.json");
 	}
 
 	@Operation(
@@ -149,15 +147,15 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",
 				context);
 
-		File enoOutput;
-		if (! multiModel)
+		ByteArrayOutputStream enoOutput;
+		if (!multiModel)
 			enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 		else
 			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
 					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 
-		return ResponseUtils.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.XFORMS));
 	}
 
 	@Operation(
@@ -183,8 +181,7 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a FO questionnaire with context '{}' using standard parameters.",
 				context);
 		
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+		InputStream enoInput = in.getInputStream();
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.FO,null);
 		
@@ -202,7 +199,7 @@ public class GenerationStandardController {
 		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
 		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
 
-		File enoOutput;
+		ByteArrayOutputStream enoOutput;
 		if (! multiModel)
 			enoOutput = parametrizedGenerationService.generateQuestionnaire(
 					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
@@ -210,12 +207,9 @@ public class GenerationStandardController {
 			enoOutput = multiModelService.generateQuestionnaire(
 					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of Eno FO questionnaire processing");
-		LOGGER.info("Output file: {}", enoOutput.getName());
-		
-		return ResponseUtils.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromEnoParameters(enoParameters));
 	}
 
 	@Operation(
@@ -233,10 +227,10 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a fodt specification file with context '{}' using standard parameters.",
 				context);
 
-		File enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
+		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.FODT, null, in, null, null);
 
-		return ResponseUtils.generateResponseFromFile(enoOutput);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.FODT));
 	}
 
 }

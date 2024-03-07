@@ -1,34 +1,43 @@
 package fr.insee.eno.ws.controller;
 
+import fr.insee.eno.parameters.ENOParameters;
+import fr.insee.eno.params.ValorizatorParameters;
+import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.controller.utils.HeaderUtils;
+import fr.insee.eno.ws.controller.utils.ResponseUtils;
+import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 @Tag(name="Generation with custom mapping")
 @RestController
 @RequestMapping("/questionnaire")
 public class GenerationWithMappingController {
 
+	private final ParameterService parameterService;
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationWithMappingController.class);
 
 	// Eno core services
 	private final ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
+
+	private ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 	private final MultiModelService multiModelService =  new MultiModelService();
+
+	public GenerationWithMappingController(ParameterService parameterService) {
+		this.parameterService = parameterService;
+	}
 
 	// Weird endpoint to do weird things
 	@Operation(
@@ -50,34 +59,31 @@ public class GenerationWithMappingController {
 			//
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
-		InputStream paramsIS = params!=null ? params.getInputStream():null;
-		InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
-		InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
-		InputStream mappingIS = mapping!=null ? mapping.getInputStream():null;
+		byte[] paramsBytes = params.getBytes();
 
-		File enoOutput;
-		if(multiModel) {
-			enoOutput = multiModelService.generateQuestionnaire(
-					enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
+		ENOParameters enoParameters = valorizatorParameters.getParameters(new ByteArrayInputStream(paramsBytes));
+		ByteArrayOutputStream enoOutput;
+
+		try(
+				InputStream inputIS = in.getInputStream();
+				InputStream paramIS = new ByteArrayInputStream(paramsBytes);
+				InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
+				InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null;
+				InputStream mappingIS = mapping!=null ? mapping.getInputStream():null){
+			if(multiModel) {
+				enoOutput = multiModelService.generateQuestionnaire(
+						inputIS, paramIS, metadataIS, specificTreatmentIS, mappingIS);
+			}
+			else {
+				enoOutput = parametrizedGenerationService.generateQuestionnaire(
+						inputIS, paramIS, metadataIS, specificTreatmentIS, mappingIS);
+			}
+
+			LOGGER.info("END of Eno 'in to out' processing");
 		}
-		else {
-			enoOutput = parametrizedGenerationService.generateQuestionnaire(
-					enoInput, paramsIS, metadataIS, specificTreatmentIS, mappingIS);
-		}
 
-		FileUtils.forceDelete(enoInput);
-
-		LOGGER.info("END of Eno 'in to out' processing");
-		LOGGER.info("Output questionnaire file: {}", enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters));
 	}
 
 }

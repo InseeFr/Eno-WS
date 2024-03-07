@@ -3,22 +3,19 @@ package fr.insee.eno.ws.controller;
 import fr.insee.eno.parameters.*;
 import fr.insee.eno.postprocessing.lunaticxml.LunaticXMLVTLParserPostprocessor;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.controller.utils.HeaderUtils;
+import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.File;
-import java.nio.file.Files;
+import java.io.ByteArrayOutputStream;
 
 @Tag(name = "Utils")
 @RestController
@@ -56,8 +53,6 @@ public class UtilsController {
 	public ResponseEntity<StreamingResponseBody> convertDDI32ToDDI33(
 			@RequestPart(value = "in") MultipartFile in) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		ENOParameters enoParameters = new ENOParameters();
 		Pipeline pipeline = new Pipeline();
@@ -66,18 +61,10 @@ public class UtilsController {
 		pipeline.getPreProcessing().add(PreProcessing.DDI_32_TO_DDI_33);
 		enoParameters.setPipeline(pipeline);
 
-		File enoOutput = parameterizedGenerationService.generateQuestionnaire(enoInput, enoParameters, null, null, null);
-
-		FileUtils.forceDelete(enoInput);
+		ByteArrayOutputStream enoOutput = parameterizedGenerationService.generateQuestionnaire(in.getInputStream(), enoParameters, null, null, null);
 
 		LOGGER.info("END of eno processing");
-		LOGGER.info("OutPut File: {}", enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath()));
-
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "ddi33.xml");
 	}
 
 	/**
@@ -96,8 +83,7 @@ public class UtilsController {
 
 		String vtl = parser.parseToVTL(xpath);
 		LOGGER.info("Xpath expression parsed to VTL: {}", vtl);
-		return ResponseEntity.ok()
-				.body(vtl);
+		return ResponseEntity.ok().body(vtl);
 	}
 
 	/**
@@ -117,21 +103,12 @@ public class UtilsController {
 			@RequestPart(value = "in") MultipartFile in) throws Exception {
 		
 		LOGGER.info("START of Lunatic XML -> Lunatic Json transforming");
-		File lunaticXMLInput = File.createTempFile("lunatic", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), lunaticXMLInput);
 
-		File lunaticJsonOutput = transformService.XMLLunaticToJSONLunaticFlat(lunaticXMLInput);
-
-		FileUtils.forceDelete(lunaticXMLInput);
+		ByteArrayOutputStream lunaticJsonOutput = transformService.XMLLunaticToJSONLunaticFlat(in.getInputStream());
 		
 		LOGGER.info("END of Lunatic XML -> Lunatic Json transforming");
-		LOGGER.info("OutPut File: {}", lunaticJsonOutput.getName());
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(lunaticJsonOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(lunaticJsonOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(lunaticJsonOutput, "questionnaire.json");
 	}
 
 }
