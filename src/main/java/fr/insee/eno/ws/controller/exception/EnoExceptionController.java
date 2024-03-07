@@ -1,12 +1,11 @@
 package fr.insee.eno.ws.controller.exception;
 
+import fr.insee.eno.exception.EnoGenerationException;
+import fr.insee.eno.exception.EnoParametersException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import fr.insee.eno.exception.EnoGenerationException;
-import fr.insee.eno.exception.EnoParametersException;
 
 @ControllerAdvice
 public class EnoExceptionController {

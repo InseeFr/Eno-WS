@@ -1,8 +1,5 @@
 package fr.insee.eno.ws;
 
-import java.util.Arrays;
-import java.util.stream.StreamSupport;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +13,9 @@ import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
+
+import java.util.Arrays;
+import java.util.stream.StreamSupport;
 
 @SpringBootApplication(scanBasePackages = "fr.insee.eno.ws")
 public class EnoWS extends SpringBootServletInitializer{
