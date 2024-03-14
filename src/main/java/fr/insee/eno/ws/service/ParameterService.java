@@ -1,13 +1,5 @@
 package fr.insee.eno.ws.service;
 
-import java.io.File;
-import java.io.InputStream;
-
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import fr.insee.eno.Constants;
 import fr.insee.eno.exception.EnoParametersException;
 import fr.insee.eno.parameters.Context;
@@ -19,6 +11,13 @@ import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.params.validation.ValidationMessage;
 import fr.insee.eno.params.validation.Validator;
 import fr.insee.eno.params.validation.ValidatorImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 @Service
 public class ParameterService {
@@ -29,22 +28,18 @@ public class ParameterService {
 	private Validator validatorImp = new ValidatorImpl();
 	
 	public ENOParameters getDefaultCustomParameters(Context context, OutFormat outFormat, Mode mode) throws Exception  {
-		File mergedParams = getDefaultCustomParametersFile(context, outFormat, mode);
-		InputStream mergedParamsInputStream = FileUtils.openInputStream(mergedParams);
+		InputStream mergedParamsInputStream = getDefaultCustomParametersFile(context, outFormat, mode);
 		ENOParameters finalParams = valorizatorParameters.getParameters(mergedParamsInputStream);
-		mergedParamsInputStream.close();
 		return finalParams;
 	}
-	
 		
-	public File getDefaultCustomParametersFile(Context context, OutFormat outFormat, Mode mode) throws Exception {
+	public InputStream getDefaultCustomParametersFile(Context context, OutFormat outFormat, Mode mode) throws Exception {
 		context = context != null ? context : Context.DEFAULT;
 		String parametersPath = "";
 
 		ValidationMessage validation = validatorImp.validateMode(outFormat, mode);
 
 		if (validation.isValid()) {
-
 			if (mode != null && outFormat == OutFormat.LUNATIC_XML) {
 				parametersPath = String.format("/params/%s/%s/%s.xml", outFormat.value().toLowerCase(),
 						mode.value().toLowerCase(), context.value().toLowerCase());
@@ -52,21 +47,35 @@ public class ParameterService {
 				parametersPath = String.format("/params/%s/%s.xml", outFormat.value().toLowerCase(),
 						context.value().toLowerCase());
 			}
-			File fileParam = new File(TransformService.class.getResource(parametersPath).toURI());
-
-			return valorizatorParameters.mergeParameters(fileParam);
+			try(InputStream fileParam = Constants.getInputStreamFromPath(parametersPath)){
+				ByteArrayOutputStream mergedParams = valorizatorParameters.mergeParameters(fileParam);
+				InputStream params =  new ByteArrayInputStream(mergedParams.toByteArray());
+				mergedParams.close();
+				return params;
+			}
 		} else	{
 			LOGGER.error(validation.getMessage());
 			throw new EnoParametersException(validation.getMessage());
 		}
-
 	}
-
-
-	
-	public InputStream getDefaultParametersIS() throws Exception  {
+	public InputStream getDefaultParametersIS()  {
 		InputStream xmlParameters = Constants.getInputStreamFromPath(Constants.PARAMETERS_DEFAULT_XML);
 		return xmlParameters;
+	}
+
+	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
+		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat(), multiModel);
+	}
+
+	public String getFileNameFromEnoParameters(OutFormat outFormat, boolean multiModel){
+		if(multiModel) return "questionnaires.zip";
+		return switch (outFormat){
+			case FO -> "questionnaire.fo";
+			case FODT -> "questionnaire.fodt";
+			case DDI -> "ddi-questionnaire.xml";
+			case LUNATIC_XML -> "lunatic-questionnaire.xml";
+			case XFORMS -> "questionnaire.xhtml";
+		};
 	}
 	
 

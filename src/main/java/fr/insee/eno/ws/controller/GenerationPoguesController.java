@@ -1,16 +1,13 @@
 package fr.insee.eno.ws.controller;
 
-import fr.insee.eno.Constants;
 import fr.insee.eno.parameters.*;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.controller.utils.HeaderUtils;
+import fr.insee.eno.ws.controller.utils.ResponseUtils;
+import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.File;
-import java.nio.file.Files;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 @Tag(name="Generation from Pogues")
 @RestController
@@ -30,8 +27,14 @@ public class GenerationPoguesController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationPoguesController.class);
 
+	private final ParameterService parameterService;
+
 	// Eno core service
 	private final ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
+
+	public GenerationPoguesController(ParameterService parameterService) {
+		this.parameterService = parameterService;
+	}
 
 	@Operation(
 			summary = "Generation DDI from Pogues XML questionnaire.",
@@ -41,8 +44,7 @@ public class GenerationPoguesController {
 	public ResponseEntity<StreamingResponseBody> generateDDIQuestionnaire(
 			@RequestPart(value="in") MultipartFile in) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+		InputStream enoInput = in.getInputStream();
 		ENOParameters enoParameters = new ENOParameters();
 		Pipeline pipeline = new Pipeline();
 		pipeline.setInFormat(InFormat.POGUES_XML);
@@ -52,26 +54,16 @@ public class GenerationPoguesController {
 
 		enoParameters.setPipeline(pipeline);
 		
-		File enoOutput = parametrizedGenerationService.generateQuestionnaire(
+		ByteArrayOutputStream enoOutput = parametrizedGenerationService.generateQuestionnaire(
 				enoInput, enoParameters, null, null, null);
 
-		// Fix: deleting temp files created in PoguesXMLPreprocessorGoToTreatment and PoguesXmlInsertFilterLoopIntoQuestionTree
-		String tempSup = FilenameUtils.removeExtension(enoInput.getAbsolutePath()) + Constants.TEMP_EXTENSION;
-		String tempTempSup = FilenameUtils.removeExtension(new File(tempSup).getAbsolutePath()) + Constants.TEMP_EXTENSION;
-		
-		FileUtils.forceDelete(new File(tempSup));
-		FileUtils.forceDelete(new File(tempTempSup));
-		
-		FileUtils.forceDelete(enoInput);
 
 		LOGGER.info("END of Eno DDI generation processing");
-		LOGGER.info("Output DDI file: {}", enoOutput.getName());
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
+		StreamingResponseBody stream = out -> out.write(enoOutput.toByteArray());
+		enoOutput.close();
 
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, false));
 	}
 
 }

@@ -6,15 +6,13 @@ import fr.insee.eno.params.ValorizatorParameters;
 import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import fr.insee.eno.ws.controller.utils.HeaderUtils;
+import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 @Tag(name="Generation from DDI (custom parameters)")
 @RestController
@@ -75,12 +73,7 @@ public class GenerationCustomController {
 
 		LOGGER.info("Received request to transform DDI to a Lunatic questionnaire.");
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
-		InputStream paramsIS = params != null ? params.getInputStream() : null;
-		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
-
+		InputStream paramsIS = params.getInputStream();
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
 		Context context = currentEnoParams.getParameters().getContext();
 		Mode mode = currentEnoParams.getMode();
@@ -98,20 +91,18 @@ public class GenerationCustomController {
 		Pipeline defaultPipeline = defaultEnoParamsDDI2Lunatic.getPipeline();
 		currentEnoParams.setPipeline(defaultPipeline);
 
-		File enoTemp = parametrizedGenerationService.generateQuestionnaire(
-				enoInput, currentEnoParams, null, specificTreatmentIS, null);
-		File enoOutput = transformService.XMLLunaticToJSONLunaticFlat(enoTemp);
+		ByteArrayOutputStream enoOutput;
+		try(
+				InputStream input = in.getInputStream();
+				InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null){
 
-		FileUtils.forceDelete(enoInput);
+			ByteArrayOutputStream enoTemp = parametrizedGenerationService.generateQuestionnaire(input, currentEnoParams, null, specificTreatmentIS, null);
+			enoOutput = transformService.XMLLunaticToJSONLunaticFlat(new ByteArrayInputStream(enoTemp.toByteArray()));
+			enoTemp.close();
+		}
 
 		LOGGER.info("END of Eno Lunatic generation processing");
-		LOGGER.info("Output file: {}", enoOutput.getName());
-
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(currentEnoParams, false));
 	}
 
     @Operation(
@@ -130,13 +121,7 @@ public class GenerationCustomController {
 
 		LOGGER.info("Received request to transform DDI to a Xforms questionnaire.");
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
-		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
-		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
-
 		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
 		Context context = enoParameters.getParameters().getContext();
 		Mode mode = enoParameters.getMode();
@@ -155,20 +140,18 @@ public class GenerationCustomController {
 		
 		Pipeline defaultPipeline = defaultEnoParamsDDI2Xforms.getPipeline();
 		enoParameters.setPipeline(defaultPipeline);
-		
-		File enoOutput = multiModelService.generateQuestionnaire(
-				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-		FileUtils.forceDelete(enoInput);
+		ByteArrayOutputStream enoOutput;
+		try(
+				InputStream enoInput = in.getInputStream();
+				InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
+				InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null){
 
+			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		}
 		LOGGER.info("END of Eno Xforms generation processing");
-		LOGGER.info("Output Xforms questionnaire file: {}", enoOutput.getName());
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 	}
 
 	@Operation(
@@ -187,12 +170,8 @@ public class GenerationCustomController {
 
 		LOGGER.info("Received request to transform DDI to a FO questionnaire.");
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
 
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
-		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
-		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
 
 		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
 		Context context = enoParameters.getParameters().getContext();
@@ -210,20 +189,18 @@ public class GenerationCustomController {
 		
 		Pipeline defaultPipeline = defaultEnoParamsDDI2Fo.getPipeline();
 		enoParameters.setPipeline(defaultPipeline);
-		
-		File enoOutput = multiModelService.generateQuestionnaire(
-				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
-		
-		FileUtils.forceDelete(enoInput);
 
+		ByteArrayOutputStream enoOutput;
+		try(
+				InputStream enoInput = in.getInputStream();
+				InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
+				InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null) {
+
+			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+		}
 		LOGGER.info("END of Eno FO generation processing");
-		LOGGER.info("Output FO questionnaire file: {}", enoOutput.getName());
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 
-		StreamingResponseBody stream = out -> out.write(Files.readAllBytes(enoOutput.toPath())) ;
-
-		return  ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, HeaderUtils.headersAttachment(enoOutput))
-				.body(stream);
 	}
 
 	private static void nonNullContextCheck(Context context) {

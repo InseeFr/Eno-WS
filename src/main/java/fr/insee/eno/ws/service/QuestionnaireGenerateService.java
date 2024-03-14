@@ -6,13 +6,12 @@ import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 @Service
@@ -31,51 +30,47 @@ public class QuestionnaireGenerateService {
 		this.parameterService = parameterService;
 	}
 
-	public File generateQuestionnaireFile(Context context, OutFormat outFormat, Mode mode,
-										  MultipartFile in,
-										  MultipartFile metadata,
-										  MultipartFile specificTreatment) throws Exception {
-
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
+	public ByteArrayOutputStream generateQuestionnaireFile(Context context, OutFormat outFormat, Mode mode,
+														   MultipartFile in,
+														   MultipartFile metadata,
+														   MultipartFile specificTreatment) throws Exception {
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
+		ByteArrayOutputStream enoOutput;
 
-		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
-		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
+		try(
+				InputStream enoInput = in.getInputStream();
+				InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
+				InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null
+		){
 
-		File enoOutput= generationService.generateQuestionnaire(
-				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+			enoOutput= generationService.generateQuestionnaire(
+					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-		FileUtils.forceDelete(enoInput);
-
-		LOGGER.info("END of Eno questionnaire processing");
-		LOGGER.info("Output file: {}", enoOutput.getName());
-
+			LOGGER.info("END of Eno 'in to out' processing");
+		}
 		return enoOutput;
 	}
 
-	public File generateMultiModelQuestionnaires(Context context, OutFormat outFormat, Mode mode,
+	public ByteArrayOutputStream generateMultiModelQuestionnaires(Context context, OutFormat outFormat, Mode mode,
 												 MultipartFile in,
 												 MultipartFile metadata,
 												 MultipartFile specificTreatment) throws Exception {
 
-		File enoInput = File.createTempFile("eno", ".xml");
-		FileUtils.copyInputStreamToFile(in.getInputStream(), enoInput);
-
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
+		ByteArrayOutputStream enoOutput;
 
-		InputStream metadataIS = metadata != null ? metadata.getInputStream() : null;
-		InputStream specificTreatmentIS = specificTreatment != null ? specificTreatment.getInputStream() : null;
+		try(
+				InputStream enoInput = in.getInputStream();
+				InputStream metadataIS = metadata!=null ? metadata.getInputStream():null;
+				InputStream specificTreatmentIS = specificTreatment!=null ? specificTreatment.getInputStream():null
+		){
 
-		File enoOutput= multiModelService.generateQuestionnaire(
-				enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
+			enoOutput= multiModelService.generateQuestionnaire(
+					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-		FileUtils.forceDelete(enoInput);
-
-		LOGGER.info("END of Eno multi-model questionnaires processing");
-		LOGGER.info("Output file: {}", enoOutput.getName());
-
+			LOGGER.info("END of Eno multi-model questionnaires processing");
+		}
 		return enoOutput;
 	}
 
