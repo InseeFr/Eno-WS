@@ -83,7 +83,7 @@ public class GenerationStandardController {
 		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.LUNATIC_XML, false));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.xml");
 	}
 
 	/**

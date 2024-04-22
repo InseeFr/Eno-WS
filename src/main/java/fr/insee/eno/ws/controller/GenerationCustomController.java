@@ -102,7 +102,7 @@ public class GenerationCustomController {
 		}
 
 		LOGGER.info("END of Eno Lunatic generation processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(currentEnoParams, false));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.json");
 	}
 
     @Operation(
