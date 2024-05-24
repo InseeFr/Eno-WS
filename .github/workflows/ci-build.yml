@@ -8,7 +8,6 @@ on:
 
 env:
   ENO_BRANCH: 'v2-main'
-  LUNATIC_MODEL_BRANCH: 'master'
 
 jobs:
 
@@ -32,18 +31,6 @@ jobs:
           repository: InseeFr/Eno
           path: Eno
 
-      - name: Checkout Lunatic-Model repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          ref: ${{ env.LUNATIC_MODEL_BRANCH }}
-          repository: InseeFr/Lunatic-Model
-          path: Lunatic-Model
-
-      - name: Build Lunatic-Model with maven
-        working-directory: ./Lunatic-Model
-        run: mvn install --no-transfer-progress -Djar.finalName="lunatic-model" -B -V --file pom.xml
-
       - name: Build Eno with maven
         working-directory: ./Eno
         run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
@@ -51,11 +38,11 @@ jobs:
       - name: Build Eno-WS with maven
         run: mvn clean install --no-transfer-progress -DskipTests=true -B -V --file pom.xml
 
-      - name: Upload war
+      - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: war
-          path: target/eno-ws.war
+          name: jar
+          path: target/eno-ws.jar
 
   remove-deploy-label:
     runs-on: ubuntu-latest
