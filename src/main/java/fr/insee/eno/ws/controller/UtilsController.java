@@ -7,8 +7,7 @@ import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,9 @@ import java.io.ByteArrayOutputStream;
 @Tag(name = "Utils")
 @RestController
 @RequestMapping("/utils")
+@Slf4j
 public class UtilsController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UtilsController.class);
 
 	// Eno-WS service
 	private final TransformService transformService;
@@ -63,7 +62,7 @@ public class UtilsController {
 
 		ByteArrayOutputStream enoOutput = parameterizedGenerationService.generateQuestionnaire(in.getInputStream(), enoParameters, null, null, null);
 
-		LOGGER.info("END of eno processing");
+		log.info("END of eno processing");
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "ddi33.xml");
 	}
 
@@ -82,7 +81,7 @@ public class UtilsController {
 			@RequestParam(value = "xpath") String xpath) {
 
 		String vtl = parser.parseToVTL(xpath);
-		LOGGER.info("Xpath expression parsed to VTL: {}", vtl);
+		log.info("Xpath expression parsed to VTL: {}", vtl);
 		return ResponseEntity.ok().body(vtl);
 	}
 
@@ -102,11 +101,11 @@ public class UtilsController {
 	public ResponseEntity<StreamingResponseBody> convertLunaticXmlToJson(
 			@RequestPart(value = "in") MultipartFile in) throws Exception {
 		
-		LOGGER.info("START of Lunatic XML -> Lunatic Json transforming");
+		log.info("START of Lunatic XML -> Lunatic Json transforming");
 
 		ByteArrayOutputStream lunaticJsonOutput = transformService.XMLLunaticToJSONLunaticFlat(in.getInputStream());
 		
-		LOGGER.info("END of Lunatic XML -> Lunatic Json transforming");
+		log.info("END of Lunatic XML -> Lunatic Json transforming");
 
 		return ResponseUtils.generateResponseFromOutputStream(lunaticJsonOutput, "questionnaire.json");
 	}

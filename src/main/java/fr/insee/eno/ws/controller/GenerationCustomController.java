@@ -11,8 +11,7 @@ import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,10 +28,8 @@ import java.io.InputStream;
 @Tag(name="Generation from DDI (custom parameters)")
 @RestController
 @RequestMapping("/questionnaire")
+@Slf4j
 public class GenerationCustomController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationCustomController.class);
-
 	// Eno-WS services
 	private final ParameterService parameterService;
 	private final TransformService transformService;
@@ -71,7 +68,7 @@ public class GenerationCustomController {
 			@RequestPart(value="params") MultipartFile params,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		LOGGER.info("Received request to transform DDI to a Lunatic questionnaire.");
+		log.info("Received request to transform DDI to a Lunatic questionnaire.");
 
 		InputStream paramsIS = params.getInputStream();
 		ENOParameters currentEnoParams = valorizatorParameters.getParameters(paramsIS);
@@ -101,7 +98,7 @@ public class GenerationCustomController {
 			enoTemp.close();
 		}
 
-		LOGGER.info("END of Eno Lunatic generation processing");
+		log.info("END of Eno Lunatic generation processing");
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.json");
 	}
 
@@ -119,7 +116,7 @@ public class GenerationCustomController {
 			@RequestPart(value="metadata") MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		LOGGER.info("Received request to transform DDI to a Xforms questionnaire.");
+		log.info("Received request to transform DDI to a Xforms questionnaire.");
 
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
 		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
@@ -149,7 +146,7 @@ public class GenerationCustomController {
 
 			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		}
-		LOGGER.info("END of Eno Xforms generation processing");
+		log.info("END of Eno Xforms generation processing");
 
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 	}
@@ -168,7 +165,7 @@ public class GenerationCustomController {
 			@RequestPart(value="metadata") MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
-		LOGGER.info("Received request to transform DDI to a FO questionnaire.");
+		log.info("Received request to transform DDI to a FO questionnaire.");
 
 
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
@@ -198,7 +195,7 @@ public class GenerationCustomController {
 
 			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		}
-		LOGGER.info("END of Eno FO generation processing");
+		log.info("END of Eno FO generation processing");
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
 
 	}
@@ -214,7 +211,7 @@ public class GenerationCustomController {
 	}
 
 	private static void logModeAndContext(Context context, Mode mode) {
-		LOGGER.info("Context={}, Mode={} defined in parameters file", context, mode);
+		log.info("Context={}, Mode={} defined in parameters file", context, mode);
 	}
 
 }
