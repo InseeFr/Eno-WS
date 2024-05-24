@@ -51,11 +51,11 @@ jobs:
       - name: Build Eno-WS with maven
         run: mvn clean install --no-transfer-progress -DskipTests=true -B -V --file pom.xml
 
-      - name: Upload war
+      - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: war
-          path: target/eno-ws.war
+          name: jar
+          path: target/eno-ws.jar
 
   remove-deploy-label:
     runs-on: ubuntu-latest

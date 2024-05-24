@@ -66,11 +66,11 @@ jobs:
       - name: Build with Maven Eno-WS
         run: mvn clean install --no-transfer-progress -DskipTests=true -B -V --file pom.xml   
 
-      - name: Upload war
+      - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: war
-          path: target/*.war
+          name: jar
+          path: target/*.jar
 
   docker:
     needs: build
@@ -82,7 +82,7 @@ jobs:
         id: download
         uses: actions/download-artifact@v4
         with:
-          name: war
+          name: jar
           path: target/
 
       - name: Get current version
