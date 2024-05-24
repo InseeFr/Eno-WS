@@ -8,7 +8,6 @@ on:
 
 env:
   ENO_BRANCH: 'v2-main'
-  LUNATIC_MODEL_BRANCH: 'master'
 
 jobs:
 
@@ -31,18 +30,6 @@ jobs:
           ref: ${{ env.ENO_BRANCH }}
           repository: InseeFr/Eno
           path: Eno
-
-      - name: Checkout Lunatic-Model repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          ref: ${{ env.LUNATIC_MODEL_BRANCH }}
-          repository: InseeFr/Lunatic-Model
-          path: Lunatic-Model
-
-      - name: Build Lunatic-Model with maven
-        working-directory: ./Lunatic-Model
-        run: mvn install --no-transfer-progress -Djar.finalName="lunatic-model" -B -V --file pom.xml
 
       - name: Build Eno with maven
         working-directory: ./Eno
