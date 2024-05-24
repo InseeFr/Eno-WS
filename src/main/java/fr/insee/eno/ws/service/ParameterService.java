@@ -11,8 +11,7 @@ import fr.insee.eno.params.ValorizatorParametersImpl;
 import fr.insee.eno.params.validation.ValidationMessage;
 import fr.insee.eno.params.validation.Validator;
 import fr.insee.eno.params.validation.ValidatorImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -20,10 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 @Service
+@Slf4j
 public class ParameterService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ParameterService.class);
-	
 	private ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 	private Validator validatorImp = new ValidatorImpl();
 	
@@ -54,7 +52,7 @@ public class ParameterService {
 				return params;
 			}
 		} else	{
-			LOGGER.error(validation.getMessage());
+			log.error(validation.getMessage());
 			throw new EnoParametersException(validation.getMessage());
 		}
 	}
