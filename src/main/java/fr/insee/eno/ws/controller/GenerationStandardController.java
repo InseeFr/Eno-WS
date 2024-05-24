@@ -9,8 +9,7 @@ import fr.insee.eno.ws.service.QuestionnaireGenerateService;
 import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +23,8 @@ import java.io.InputStream;
 @Tag(name="Generation from DDI (standard parameters)")
 @RestController
 @RequestMapping("/questionnaire")
+@Slf4j
 public class GenerationStandardController {
-
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationStandardController.class);
 
 	// Eno-WS services
 	private final ParameterService parameterService;
@@ -75,7 +72,7 @@ public class GenerationStandardController {
 			@PathVariable Context context,
 			@PathVariable Mode mode) throws Exception {
 
-		LOGGER.info(
+		log.info(
 				"Received request to transform DDI to a Lunatic XML questionnaire with context '{}' and mode '{}' " +
 						"using standard parameters.",
 				context, mode);
@@ -112,7 +109,7 @@ public class GenerationStandardController {
 			@PathVariable Context context,
 			@PathVariable Mode mode) throws Exception {
 
-		LOGGER.info(
+		log.info(
 				"Received request to transform DDI to a Lunatic (json) questionnaire with context '{}' and mode '{}' " +
 						"using standard parameters.",
 				context, mode);
@@ -120,7 +117,7 @@ public class GenerationStandardController {
 		ByteArrayOutputStream enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
 
-		LOGGER.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
+		log.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
 		ByteArrayOutputStream enoOutput = transformService.XMLLunaticToJSONLunaticFlat(new ByteArrayInputStream(enoTemp.toByteArray()));
 		enoTemp.close();
 
@@ -143,7 +140,7 @@ public class GenerationStandardController {
 			//
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
-		LOGGER.info(
+		log.info(
 				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",
 				context);
 
@@ -177,7 +174,7 @@ public class GenerationStandardController {
 			//
 			@RequestParam(value="multi-model",required=false,defaultValue="false") boolean multiModel) throws Exception {
 
-		LOGGER.info(
+		log.info(
 				"Received request to transform DDI to a FO questionnaire with context '{}' using standard parameters.",
 				context);
 		
@@ -208,7 +205,7 @@ public class GenerationStandardController {
 					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
 
-		LOGGER.info("END of Eno FO questionnaire processing");
+		log.info("END of Eno FO questionnaire processing");
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));
 	}
 
@@ -223,7 +220,7 @@ public class GenerationStandardController {
 			//
 			@PathVariable Context context) throws Exception {
 
-		LOGGER.info(
+		log.info(
 				"Received request to transform DDI to a fodt specification file with context '{}' using standard parameters.",
 				context);
 

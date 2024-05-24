@@ -2,12 +2,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>Eno-Web-Service</name>
+	<!-- spring-boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.5</version>
+	</parent>
+
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
-	<version>2.3.0</version>
-
 	<packaging>jar</packaging>
+	<version>2.3.1</version>
+	<name>Eno-Web-Service</name>
 
 	<properties>
 		<java.version>17</java.version>
@@ -21,14 +27,12 @@
 
 		<eno.version>2.9.2</eno.version>
 		<lunatic-model.version>2.5.1</lunatic-model.version>
-		<fop.version>2.9</fop.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<log4j2.version>2.18.0</log4j2.version>
 		<jaxb.api.impl.version>2.3.1</jaxb.api.impl.version>
 		<jaxb.api.core.version>4.0.5</jaxb.api.core.version>
-		<commons-io.version>2.16.1</commons-io.version>
-		<springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>2.0.4</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
 		<snakeyaml.version>2.2</snakeyaml.version>
 
@@ -56,56 +60,15 @@
 		</repository>
 	</repositories>
 
-	<!-- spring-boot -->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.18</version>
-	</parent>
-	
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-api</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-jul</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-sl4j-impl</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-
-			<!-- Temp config due to security issues in version used in springdoc-openapi-ui -->
-			<dependency>
-				<groupId>org.yaml</groupId>
-				<artifactId>snakeyaml</artifactId>
-				<version>${snakeyaml.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<dependencies>
-		<!-- spring-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<!-- swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc-openapi-ui.version}</version>
 		</dependency>
 
@@ -114,6 +77,12 @@
 			<groupId>fr.insee.eno</groupId>
 			<artifactId>eno-core</artifactId>
 			<version>${eno.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Lunatic-Model -->
@@ -121,35 +90,6 @@
 			<groupId>fr.insee.lunatic</groupId>
 			<artifactId>lunatic-model</artifactId>
 			<version>${lunatic-model.version}</version>
-		</dependency>
-
-		<!-- Apache FOP -->
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>fop</artifactId>
-			<version>${fop.version}</version>
-		</dependency>
-
-		<!-- log4j -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
 		</dependency>
 
 		<dependency>
@@ -201,36 +141,39 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- compile, annotation like @Getter -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${final.jar.name}</finalName>
-
 		<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
 				<executions>
-					<!-- Prepare the property pointing to the JaCoCo runtime agent which is
-						passed as VM argument when the Maven Surefire plugin is executed. -->
 					<execution>
-						<id>pre-unit-test</id>
+						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<!-- Set the name of the property containing the settings for JaCoCo runtime agent. -->
-							<propertyName>surefireArgLine</propertyName>
-							<append>true</append>
-						</configuration>
 					</execution>
 					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
+						<id>report</id>
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<formats>
+								<format>XML</format>
+							</formats>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -240,22 +183,22 @@
 				<version>3.11.0.3922</version>
 			</plugin>
 			<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>build-info</id>
-					<goals>
-						<goal>build-info</goal>
-					</goals>
-					<configuration>
-						<additionalProperties>
-							<description>${project.description}</description>
-						</additionalProperties>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>build-info</id>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<description>${project.description}</description>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
