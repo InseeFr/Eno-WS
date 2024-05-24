@@ -7,7 +7,7 @@
 	<artifactId>eno-ws</artifactId>
 	<version>2.2.0</version>
 
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>17</java.version>
@@ -17,7 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<final.war.name>eno-ws</final.war.name>
+		<final.jar.name>eno-ws</final.jar.name>
 
 		<eno.version>2.9.2</eno.version>
 		<lunatic-model.version>2.5.1</lunatic-model.version>
@@ -43,17 +43,6 @@
 	</properties>
 
 	<repositories>
-		<repository>
-			<id>maven2-repository.java.net</id>
-			<name>Java.net Repository for Maven</name>
-			<url>https://maven.java.net/content/groups/public/</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>repository.spring.release</id>
-			<name>Spring GA Repository</name>
-			<url>https://repo.spring.io/release</url>
-		</repository>
 		<!-- Maven central snapshot repository (especially for Lunatic-Model snapshots) -->
 		<repository>
 			<id>oss.sonatype.org-snapshot</id>
@@ -215,42 +204,9 @@
 	</dependencies>
 
 	<build>
-		<finalName>${final.war.name}</finalName>
-		<resources>
-			<resource>
-				<filtering>true</filtering>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/**</include>
-				</includes>
-			</resource>
-		</resources>
+		<finalName>${final.jar.name}</finalName>
+
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<!-- Fix: Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.2.0:resources
-					(default-resources) on project eno-ws: Input length = 1 
-					https://stackoverflow.com/a/65933628/13425151 -->
-				<configuration>
-					<nonFilteredFileExtensions>
-						<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-					</nonFilteredFileExtensions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -283,6 +239,23 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.11.0.3922</version>
 			</plugin>
+			<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>build-info</id>
+					<goals>
+						<goal>build-info</goal>
+					</goals>
+					<configuration>
+						<additionalProperties>
+							<description>${project.description}</description>
+						</additionalProperties>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
 		</plugins>
 	</build>
 
