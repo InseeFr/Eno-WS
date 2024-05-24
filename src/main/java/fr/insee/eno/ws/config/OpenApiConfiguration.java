@@ -2,17 +2,18 @@ package fr.insee.eno.ws.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+import java.util.ArrayList;
 
 @Configuration
-@ConditionalOnExpression("'${spring.profiles.active}'!='prod'")
 public class OpenApiConfiguration {
-	
 
 	@Value("${fr.insee.enows.api.scheme}")
 	private String apiScheme;
@@ -28,25 +29,26 @@ public class OpenApiConfiguration {
 	
 	@Value("${fr.insee.enows.version}")
 	private String projectVersion;
-	
+
+	@Autowired
+	private BuildProperties buildProperties;
+
 	@Bean
-	public OpenAPI customOpenAPI() {
-		Server server = new Server();
-		server.setUrl(apiScheme+"://"+apiHost);
-		return new OpenAPI()
-				.addServersItem(server)
-				.info(
-						new Info()
-						.title("Eno XML Web Service")
-						.description(
-								"<h2>Generator using :</h2>"
-							  + "<style>.cell{border: black 2px solid; text-align: center; font-weight: bold; font-size: 1.5em;} .version{color:darkred}</style>"
-							  + "<table style=\"width:40%\">"
-							  + "<tr><td class=\"cell\">Eno version</td><td class=\"cell version\">"+enoVersion+"</td></tr>"
-							  + "<tr><td class=\"cell\">Lunatic Model version</td><td class=\"cell version\">"+lunaticModelVersion+"</td></tr>"
-							  + "</table>")
-						.version(projectVersion)
-						.license(new License().name("Apache 2.0").url("http://springdoc.org"))
-						);
+	protected OpenAPI noAuthOpenAPI() {
+		return new OpenAPI().info(
+			new Info()
+					.title(buildProperties.getName())
+					.description(String.format("""
+                                        <h2>Generator using :</h2>
+                                        <div><b>Eno version version : </b><i>%s</i></div>
+                                        <div><b>Lunatic-Model version version : </b><i>%s</i></div>
+                                        """,enoVersion,lunaticModelVersion))
+					.version(buildProperties.getVersion())
+	); }
+
+	public OpenApiConfiguration(MappingJackson2HttpMessageConverter converter) {
+		var supportedMediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
+		supportedMediaTypes.add(new MediaType("application", "octet-stream"));
+		converter.setSupportedMediaTypes(supportedMediaTypes);
 	}
 }
