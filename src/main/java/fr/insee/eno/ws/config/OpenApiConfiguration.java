@@ -40,8 +40,8 @@ public class OpenApiConfiguration {
 					.title(buildProperties.getName())
 					.description(String.format("""
                                         <h2>Generator using :</h2>
-                                        <div><b>Eno version version : </b><i>%s</i></div>
-                                        <div><b>Lunatic-Model version version : </b><i>%s</i></div>
+                                        <div><b>Eno version : </b><i>%s</i></div>
+                                        <div><b>Lunatic-Model version : </b><i>%s</i></div>
                                         """,enoVersion,lunaticModelVersion))
 					.version(buildProperties.getVersion())
 	); }
