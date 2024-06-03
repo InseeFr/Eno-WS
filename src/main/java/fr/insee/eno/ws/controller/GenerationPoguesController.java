@@ -6,8 +6,7 @@ import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +22,8 @@ import java.io.InputStream;
 @Tag(name="Generation from Pogues")
 @RestController
 @RequestMapping("/questionnaire")
+@Slf4j
 public class GenerationPoguesController {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationPoguesController.class);
-
 	private final ParameterService parameterService;
 
 	// Eno core service
@@ -58,7 +55,7 @@ public class GenerationPoguesController {
 				enoInput, enoParameters, null, null, null);
 
 
-		LOGGER.info("END of Eno DDI generation processing");
+		log.info("END of Eno DDI generation processing");
 
 		StreamingResponseBody stream = out -> out.write(enoOutput.toByteArray());
 		enoOutput.close();

@@ -9,8 +9,7 @@ import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.ParameterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +23,10 @@ import java.io.InputStream;
 @Tag(name="Generation with custom mapping")
 @RestController
 @RequestMapping("/questionnaire")
+@Slf4j
 public class GenerationWithMappingController {
 
 	private final ParameterService parameterService;
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerationWithMappingController.class);
-
 	// Eno core services
 	private final ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
 
@@ -80,7 +78,7 @@ public class GenerationWithMappingController {
 						inputIS, paramIS, metadataIS, specificTreatmentIS, mappingIS);
 			}
 
-			LOGGER.info("END of Eno 'in to out' processing");
+			log.info("END of Eno 'in to out' processing");
 		}
 
 		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));

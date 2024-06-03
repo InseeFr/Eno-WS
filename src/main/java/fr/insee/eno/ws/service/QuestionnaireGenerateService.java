@@ -6,8 +6,7 @@ import fr.insee.eno.parameters.Mode;
 import fr.insee.eno.parameters.OutFormat;
 import fr.insee.eno.service.MultiModelService;
 import fr.insee.eno.service.ParameterizedGenerationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,9 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 @Service
+@Slf4j
 public class QuestionnaireGenerateService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(QuestionnaireGenerateService.class);
 
 	// Eno core service
 	private final ParameterizedGenerationService generationService = new ParameterizedGenerationService();
@@ -47,7 +45,7 @@ public class QuestionnaireGenerateService {
 			enoOutput= generationService.generateQuestionnaire(
 					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-			LOGGER.info("END of Eno 'in to out' processing");
+			log.info("END of Eno 'in to out' processing");
 		}
 		return enoOutput;
 	}
@@ -69,7 +67,7 @@ public class QuestionnaireGenerateService {
 			enoOutput= multiModelService.generateQuestionnaire(
 					enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 
-			LOGGER.info("END of Eno multi-model questionnaires processing");
+			log.info("END of Eno multi-model questionnaires processing");
 		}
 		return enoOutput;
 	}

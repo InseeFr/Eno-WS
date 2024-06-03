@@ -3,9 +3,7 @@ package fr.insee.eno.ws.service;
 import fr.insee.lunatic.conversion.JSONCleaner;
 import fr.insee.lunatic.conversion.XMLLunaticFlatToJSONLunaticFlatTranslator;
 import fr.insee.lunatic.conversion.XMLLunaticToXMLLunaticFlatTranslator;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -14,11 +12,9 @@ import java.nio.charset.StandardCharsets;
 
 
 @Service
+@Slf4j
 public class TransformService {
-	
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TransformService.class);
-	
 	private XMLLunaticToXMLLunaticFlatTranslator translatorXML2XMLF = new XMLLunaticToXMLLunaticFlatTranslator();
 	private XMLLunaticFlatToJSONLunaticFlatTranslator translatorXMLF2JSONF = new XMLLunaticFlatToJSONLunaticFlatTranslator();
 	private JSONCleaner jsonCleaner = new JSONCleaner();
@@ -28,7 +24,7 @@ public class TransformService {
 	}
 
 	public ByteArrayOutputStream XMLLunaticToJSONLunaticFlat(InputStream xmlLunatic) throws Exception {
-		String xmlLunaticString = IOUtils.toString(xmlLunatic, StandardCharsets.UTF_8);
+		String xmlLunaticString = new String(xmlLunatic.readAllBytes(), StandardCharsets.UTF_8);
 		xmlLunatic.close();
 		String jsonLunaticString = XMLLunaticToJSONLunaticFlat(xmlLunaticString);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
