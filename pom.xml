@@ -25,7 +25,7 @@
 
 		<final.jar.name>eno-ws</final.jar.name>
 
-		<eno.version>2.9.2</eno.version>
+		<eno.version>2.9.3</eno.version>
 		<lunatic-model.version>2.5.1</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
