@@ -12,7 +12,7 @@
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>jar</packaging>
-	<version>2.3.3</version>
+	<version>2.3.4</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
@@ -25,7 +25,7 @@
 
 		<final.jar.name>eno-ws</final.jar.name>
 
-		<eno.version>2.9.4</eno.version>
+		<eno.version>2.9.5</eno.version>
 		<lunatic-model.version>2.5.1</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
