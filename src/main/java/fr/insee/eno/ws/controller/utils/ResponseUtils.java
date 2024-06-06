@@ -1,6 +1,5 @@
 package fr.insee.eno.ws.controller.utils;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -26,7 +25,7 @@ public class ResponseUtils {
 
 	public static ResponseEntity<StreamingResponseBody> generateResponseFromInputStream(InputStream inputStream, String fileName) throws IOException {
 
-		byte[] output = IOUtils.toByteArray(inputStream);
+		byte[] output = inputStream.readAllBytes();
 		inputStream.close();
 
 		StreamingResponseBody stream = out -> out.write(output);
