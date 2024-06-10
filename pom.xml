@@ -37,7 +37,7 @@
 		<snakeyaml.version>2.2</snakeyaml.version>
 
 		<!-- Sonar -->
-		<jacoco.version>0.8.11</jacoco.version>	
+		<jacoco.version>0.8.12</jacoco.version>	
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
