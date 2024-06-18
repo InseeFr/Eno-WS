@@ -1,18 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 
 	<!-- spring-boot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.0</version>
 	</parent>
 
 	<groupId>fr.insee</groupId>
 	<artifactId>eno-ws</artifactId>
 	<packaging>jar</packaging>
-	<version>2.4.1-SNAPSHOT</version>
+	<version>2.4.1</version>
 	<name>Eno-Web-Service</name>
 
 	<properties>
@@ -24,20 +25,19 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<final.jar.name>eno-ws</final.jar.name>
-
 		<eno.version>2.9.8</eno.version>
-		<lunatic-model.version>2.5.1</lunatic-model.version>
+		<lunatic-model.version>2.6.3</lunatic-model.version>
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<log4j2.version>2.18.0</log4j2.version>
 		<jaxb.api.impl.version>2.3.1</jaxb.api.impl.version>
 		<jaxb.api.core.version>4.0.5</jaxb.api.core.version>
-		<springdoc-openapi-ui.version>2.0.4</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>2.5.0</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
 		<snakeyaml.version>2.2</snakeyaml.version>
 
 		<!-- Sonar -->
-		<jacoco.version>0.8.11</jacoco.version>	
+		<jacoco.version>0.8.12</jacoco.version>	
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -180,7 +180,7 @@
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.11.0.3922</version>
+				<version>4.0.0.4121</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
