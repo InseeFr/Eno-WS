@@ -52,7 +52,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+        run: echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
 
       - name: Check Eno WS tag ${{ steps.version.outputs.version }} existence
         id: check-tag-exists
