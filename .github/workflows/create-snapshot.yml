@@ -25,6 +25,8 @@ jobs:
     outputs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
+      - uses: actions/checkout@v4
+
       - name: Get Eno Version
         id: get-version
         run: echo "version=$(mvn help:evaluate -Dexpression=eno.version -q -DforceStdout)" >> $GITHUB_OUTPUT
