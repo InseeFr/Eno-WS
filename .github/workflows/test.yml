@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Get Eno Version
         id: get-version
-        run: echo "version=$(mvn help:evaluate -Dexpression=eno.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+        run: echo "version=$(mvn -f pom.xml help:evaluate -Dexpression=eno.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       
       - name: Check Eno lib tag v${{ steps.get-version.outputs.version }} existence
         id: check-tag-exists
