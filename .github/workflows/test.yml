@@ -4,16 +4,6 @@ name: Eno-WS XML tests
 # This workflow checks out the Eno project on a specific branch.
 
 on:
-  push:
-    branches:
-      - 'main'
-    paths-ignore:
-      - 'docs/**'
-      - 'README**.md'
-      - 'LICENSE'
-      - 'Dockerfile'
-      - '.github/**'
-      - 'renovate.json'
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 

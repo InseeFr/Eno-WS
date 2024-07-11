@@ -100,7 +100,7 @@ jobs:
         run: mvn --batch-mode clean process-classes install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true
 
       - name: Build Eno-WS
-        run: mvn --batch-mode clean package --no-transfer-progress -DskipTests=true
+        run: mvn --batch-mode clean package --no-transfer-progress
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
