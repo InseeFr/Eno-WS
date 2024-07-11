@@ -1,4 +1,4 @@
-name: Tests
+name: Eno-WS XML tests
 
 # For now the Eno library is not published in a public maven repository.
 # This workflow checks out the Eno project on a specific branch.
@@ -7,42 +7,70 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'src/**'
-      - 'pom.xml'
-      - '.gitignore'
+    paths-ignore:
+      - 'docs/**'
+      - 'README**.md'
+      - 'LICENSE'
+      - 'Dockerfile'
+      - '.github/**'
+      - 'renovate.json'
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, labeled]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 env:
-  ENO_BRANCH: 'v2.9.8'
+  JAVA_VERSION: '17'
 
 jobs:
 
+  eno-lib:
+    if: github.event.pull_request.draft == false
+    name: Check Eno lib version exists
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Get Eno Version
+        id: get-version
+        run: echo "version=$(mvn help:evaluate -Dexpression=docker.registry -q -DforceStdout)" >> $GITHUB_OUTPUT
+      
+      - name: Check Eno lib tag v${{ steps.get-version.outputs.version }} existence
+        id: check-tag-exists
+        uses: mukunku/tag-exists-action@v1.6.0
+        with:
+          repo: InseeFr/Eno
+          tag: "v${{ steps.get-version.outputs.version }}"
+
+      - name: Eno lib tag verification
+        id: check-tag
+        run: |
+          if [[ "${{ steps.check-tag-exists.outputs.exists }}" == "false" ]]; then
+            echo "The tag v${{ steps.get-version.outputs.version }} doesn't exist in Eno lib repo."
+            exit 1
+          fi
+
   test:
-    if: ${{ !contains(github.event.pull_request.labels.*.name, 'ci-build') }}
+    needs: eno-lib
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up JDK 17
+
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Checkout Eno repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          ref: ${{ env.ENO_BRANCH }}
+          ref: "v${{ needs.eno-lib.outputs.version }}"
           repository: InseeFr/Eno
           path: Eno
 
-      - name: Build with Maven Eno
+      - name: Build Eno lib
         working-directory: ./Eno
-        run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -Djar.finalName="eno-core" -B -V --file pom.xml
+        run: mvn --batch-mode clean process-classes install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true
 
       - name: Test, package and analyze with maven & SonarCloud
         run: mvn --no-transfer-progress -e verify sonar:sonar -Dsonar.projectKey=InseeFr_Eno-WS -Dsonar.organization=inseefr -Dsonar.host.url=https://sonarcloud.io
