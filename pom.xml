@@ -30,8 +30,9 @@
 
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<log4j2.version>2.18.0</log4j2.version>
-		<jaxb.api.impl.version>2.3.9</jaxb.api.impl.version>
-		<jaxb.api.core.version>4.0.5</jaxb.api.core.version>
+		<jaxb.api.version>2.3.1</jaxb.api.version>
+		<jaxb.core.version>4.0.5</jaxb.core.version>
+		<jaxb.impl.version>4.0.5</jaxb.impl.version>
 		<springdoc-openapi-ui.version>2.6.0</springdoc-openapi-ui.version>
 		<!-- Temp version due to security issues in version used in springdoc-openapi-ui: -->
 		<snakeyaml.version>2.2</snakeyaml.version>
@@ -101,18 +102,18 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.api.impl.version}</version>
+			<version>${jaxb.api.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb.api.core.version}</version>
+			<version>${jaxb.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb.api.impl.version}</version>
+			<version>${jaxb.impl.version}</version>
 		</dependency>
 
 		<dependency>
