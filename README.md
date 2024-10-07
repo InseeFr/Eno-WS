@@ -37,3 +37,13 @@ You can find DDI example files in the test resources of the project.
 The swagger-ui API documentation is mapped on the root url.
 
 Locally, you can get it at `http://localhost:8080`
+
+Note if you have trouble starting the application on IntelliJ with the error:
+
+```
+Field buildProperties in fr.insee.eno.ws.config.OpenApiConfiguration required a bean of type 
+'org.springframework.boot.info.BuildProperties' that could not be found.
+```
+
+you can configure the spring-boot:build-info plugin to "Execute After Rebuild" 
+(https://stackoverflow.com/a/77218232/13425151).
