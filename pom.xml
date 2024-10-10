@@ -1,20 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
 
-	<!-- spring-boot -->
+	<groupId>fr.insee</groupId>
+	<artifactId>eno-ws</artifactId>
+	<packaging>jar</packaging>
+	<version>2.5.1</version>
+	<name>Eno-Web-Service</name>
+
+	<!-- Spring Boot parent -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.4</version>
 	</parent>
-
-	<groupId>fr.insee</groupId>
-	<artifactId>eno-ws</artifactId>
-	<packaging>jar</packaging>
-	<version>2.5.1-SNAPSHOT.2</version>
-	<name>Eno-Web-Service</name>
 
 	<properties>
 		<!-- Project -->
@@ -28,7 +27,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<!-- Dependencies -->
-		<eno.version>2.10.2-SNAPSHOT.1</eno.version>
+		<eno.version>2.10.2</eno.version>
 		<lunatic-model.version>2.6.4</lunatic-model.version>
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb-api.version>2.3.1</jaxb-api.version>
