@@ -62,11 +62,22 @@ public class ParameterService {
 	}
 
 	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
-		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat(), multiModel);
+		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat(), multiModel, enoParameters.getParameters().getCampagne());
 	}
 
-	public String getFileNameFromEnoParameters(OutFormat outFormat, boolean multiModel){
-		if(multiModel) return "questionnaires.zip";
+	public String getFileNameFromEnoParameters(OutFormat outFormat, boolean multiModel, String campagne){
+		if(multiModel) return campagne + ".zip";
+		return switch (outFormat){
+			case FO -> campagne + ".fo";
+			case FODT -> "questionnaire.fodt";
+			case DDI -> "ddi-questionnaire.xml";
+			case LUNATIC_XML -> "lunatic-questionnaire.xml";
+			case XFORMS -> campagne + ".xhtml";
+		};
+	}
+
+	public String getFileNameWithoutEnoParameters(OutFormat outFormat, boolean multiModel){
+		if(multiModel) return "questionnaire.zip";
 		return switch (outFormat){
 			case FO -> "questionnaire.fo";
 			case FODT -> "questionnaire.fodt";
@@ -75,6 +86,5 @@ public class ParameterService {
 			case XFORMS -> "questionnaire.xhtml";
 		};
 	}
-	
 
 }
