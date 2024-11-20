@@ -77,7 +77,7 @@ public class ParameterService {
 	}
 
 	public String getFileNameWithoutEnoParameters(OutFormat outFormat, boolean multiModel){
-		if(multiModel) return "questionnaire.zip";
+		if(multiModel) return "questionnaires.zip";
 		return switch (outFormat){
 			case FO -> "questionnaire.fo";
 			case FODT -> "questionnaire.fodt";
