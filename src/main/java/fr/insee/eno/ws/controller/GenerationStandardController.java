@@ -144,6 +144,8 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a Xforms questionnaire with context '{}' using standard parameters.",
 				context);
 
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.XFORMS,null);
+
 		ByteArrayOutputStream enoOutput;
 		if (!multiModel)
 			enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
@@ -152,7 +154,7 @@ public class GenerationStandardController {
 			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
 					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameWithoutEnoParameters(OutFormat.XFORMS, multiModel));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));
 	}
 
 	@Operation(
@@ -224,10 +226,12 @@ public class GenerationStandardController {
 				"Received request to transform DDI to a fodt specification file with context '{}' using standard parameters.",
 				context);
 
+		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context,OutFormat.FODT,null);
+
 		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.FODT, null, in, null, null);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameWithoutEnoParameters(OutFormat.FODT, false));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, false));
 	}
 
 }
