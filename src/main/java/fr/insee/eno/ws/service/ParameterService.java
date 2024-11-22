@@ -62,6 +62,9 @@ public class ParameterService {
 	}
 
 	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
+		if (enoParameters.getParameters().getCampagne() == null || enoParameters.getParameters().getCampagne().isEmpty()) {
+			throw new EnoParametersException("The 'campagne' tag is null or empty.");
+		}
 		return getFileNameFromParameters(enoParameters.getPipeline().getOutFormat(), multiModel, enoParameters.getParameters().getCampagne());
 	}
 
