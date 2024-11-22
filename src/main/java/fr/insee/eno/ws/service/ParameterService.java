@@ -62,19 +62,21 @@ public class ParameterService {
 	}
 
 	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
-		return getFileNameFromEnoParameters(enoParameters.getPipeline().getOutFormat(), multiModel);
+		if (enoParameters.getParameters().getCampagne() == null || enoParameters.getParameters().getCampagne().isEmpty()) {
+			throw new EnoParametersException("The 'campagne' tag is null or empty.");
+		}
+		return getFileNameFromParameters(enoParameters.getPipeline().getOutFormat(), multiModel, enoParameters.getParameters().getCampagne());
 	}
 
-	public String getFileNameFromEnoParameters(OutFormat outFormat, boolean multiModel){
-		if(multiModel) return "questionnaires.zip";
+	public String getFileNameFromParameters(OutFormat outFormat, boolean multiModel, String campagne){
+		if(multiModel) return campagne + ".zip";
 		return switch (outFormat){
-			case FO -> "questionnaire.fo";
-			case FODT -> "questionnaire.fodt";
+			case FO -> campagne + ".fo";
+			case FODT -> campagne + ".fodt";
 			case DDI -> "ddi-questionnaire.xml";
 			case LUNATIC_XML -> "lunatic-questionnaire.xml";
-			case XFORMS -> "questionnaire.xhtml";
+			case XFORMS -> campagne + ".xhtml";
 		};
 	}
-	
 
 }
