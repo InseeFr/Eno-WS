@@ -61,22 +61,30 @@ public class ParameterService {
 		return xmlParameters;
 	}
 
-	public String getFileNameFromEnoParameters(ENOParameters enoParameters, boolean multiModel){
-		if (enoParameters.getParameters().getCampagne() == null || enoParameters.getParameters().getCampagne().isEmpty()) {
-			throw new EnoParametersException("The 'campagne' tag is null or empty.");
+	public String getFileNameFromCampagneName(ENOParameters enoParameters) {
+		if (enoParameters == null || enoParameters.getParameters() == null || enoParameters.getParameters().getCampagne() == null ||
+				enoParameters.getParameters().getCampagne().isEmpty()) {
+				throw new EnoParametersException("The 'campagne' tag is null or empty.");
+			}
+		return enoParameters.getParameters().getCampagne() + ".zip";
+	}
+
+	public String getFileNameFromParameters(ENOParameters enoParameters, boolean multiModel){
+		return getFileNameFromParameters(enoParameters.getPipeline().getOutFormat(), multiModel);
+	}
+
+	public String getFileNameFromParameters (OutFormat outFormat,boolean multiModel){
+		if (multiModel) return "questionnaires.zip";
+		return switch (outFormat) {
+				case FO -> "questionnaire.fo";
+				case FODT -> "questionnaire.fodt";
+				case DDI -> "ddi-questionnaire.xml";
+				case LUNATIC_XML -> "lunatic-questionnaire.xml";
+				case XFORMS -> "questionnaire.xhtml";
+			};
 		}
-		return getFileNameFromParameters(enoParameters.getPipeline().getOutFormat(), multiModel, enoParameters.getParameters().getCampagne());
 	}
 
-	public String getFileNameFromParameters(OutFormat outFormat, boolean multiModel, String campagne){
-		if(multiModel) return campagne + ".zip";
-		return switch (outFormat){
-			case FO -> campagne + ".fo";
-			case FODT -> campagne + ".fodt";
-			case DDI -> "ddi-questionnaire.xml";
-			case LUNATIC_XML -> "lunatic-questionnaire.xml";
-			case XFORMS -> campagne + ".xhtml";
-		};
-	}
 
-}
+
+

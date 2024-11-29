@@ -148,7 +148,7 @@ public class GenerationCustomController {
 		}
 		log.info("END of Eno Xforms generation processing");
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromCampagneName(enoParameters));
 	}
 
 	@Operation(
@@ -196,7 +196,7 @@ public class GenerationCustomController {
 			enoOutput = multiModelService.generateQuestionnaire(enoInput, enoParameters, metadataIS, specificTreatmentIS, null);
 		}
 		log.info("END of Eno FO generation processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, true));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromCampagneName(enoParameters));
 
 	}
 
