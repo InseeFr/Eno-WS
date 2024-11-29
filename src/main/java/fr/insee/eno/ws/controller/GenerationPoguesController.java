@@ -60,7 +60,7 @@ public class GenerationPoguesController {
 		StreamingResponseBody stream = out -> out.write(enoOutput.toByteArray());
 		enoOutput.close();
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(enoParameters, false));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromParameters(enoParameters, false));
 	}
 
 }
