@@ -152,7 +152,7 @@ public class GenerationStandardController {
 			enoOutput = generateQuestionnaireService.generateMultiModelQuestionnaires(
 					context, OutFormat.XFORMS, null, in, metadata, specificTreatment);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.XFORMS, multiModel));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromParameters(OutFormat.XFORMS, multiModel));
 	}
 
 	@Operation(
@@ -206,7 +206,7 @@ public class GenerationStandardController {
 
 
 		log.info("END of Eno FO questionnaire processing");
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromEnoParameters(enoParameters, multiModel));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput,parameterService.getFileNameFromParameters(enoParameters, multiModel));
 	}
 
 	@Operation(
@@ -227,7 +227,7 @@ public class GenerationStandardController {
 		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
 				context, OutFormat.FODT, null, in, null, null);
 
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromEnoParameters(OutFormat.FODT, false));
+		return ResponseUtils.generateResponseFromOutputStream(enoOutput, parameterService.getFileNameFromParameters(OutFormat.FODT, false));
 	}
 
 }

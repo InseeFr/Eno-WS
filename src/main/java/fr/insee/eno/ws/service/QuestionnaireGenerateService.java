@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.zip.ZipOutputStream;
 
 @Service
 @Slf4j
@@ -51,9 +52,9 @@ public class QuestionnaireGenerateService {
 	}
 
 	public ByteArrayOutputStream generateMultiModelQuestionnaires(Context context, OutFormat outFormat, Mode mode,
-												 MultipartFile in,
-												 MultipartFile metadata,
-												 MultipartFile specificTreatment) throws Exception {
+																 MultipartFile in,
+																 MultipartFile metadata,
+																 MultipartFile specificTreatment) throws Exception {
 
 		ENOParameters enoParameters = parameterService.getDefaultCustomParameters(context, outFormat, mode);
 		ByteArrayOutputStream enoOutput;
