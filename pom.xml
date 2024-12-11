@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
+		<version>3.4.0</version>
 	</parent>
 
 	<properties>
@@ -28,12 +28,12 @@
 
 		<!-- Dependencies -->
 		<eno.version>2.11.0</eno.version>
-		<lunatic-model.version>2.6.4</lunatic-model.version>
+		<lunatic-model.version>2.7.1</lunatic-model.version>
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<jaxb-impl.version>2.3.9</jaxb-impl.version>
 		<jaxb-core.version>4.0.5</jaxb-core.version>
-		<springdoc-openapi-ui.version>2.6.0</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>2.7.0</springdoc-openapi-ui.version>
 
 		<!-- Sonar -->
 		<jacoco.version>0.8.12</jacoco.version>	
