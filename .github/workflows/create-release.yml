@@ -111,7 +111,7 @@ jobs:
           tags: ${{ needs.check-version.outputs.release-version }}
 
   create-release:
-    needs: [ check-version, publish-docker ]
+    needs: [ eno-lib, check-version, publish-docker ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -122,6 +122,6 @@ jobs:
           tag_name: ${{ needs.check-version.outputs.release-version }}
           target_commitish: ${{ github.head_ref || github.ref }}
           name: ${{ needs.check-version.outputs.release-version }}
-          body: "Eno-WS XML version ${{ needs.check-version.outputs.release-version }}"
+          body: "Eno-WS XML version ${{ needs.check-version.outputs.release-version }} (Eno lib version ${{ needs.eno-lib.outputs.version }})"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
