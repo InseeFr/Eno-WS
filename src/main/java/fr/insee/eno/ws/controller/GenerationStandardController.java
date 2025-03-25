@@ -6,7 +6,6 @@ import fr.insee.eno.service.ParameterizedGenerationService;
 import fr.insee.eno.ws.controller.utils.ResponseUtils;
 import fr.insee.eno.ws.service.ParameterService;
 import fr.insee.eno.ws.service.QuestionnaireGenerateService;
-import fr.insee.eno.ws.service.TransformService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
@@ -28,7 +26,6 @@ public class GenerationStandardController {
 
 	// Eno-WS services
 	private final ParameterService parameterService;
-	private final TransformService transformService;
 	private final QuestionnaireGenerateService generateQuestionnaireService;
 
 	// Eno core services
@@ -37,91 +34,10 @@ public class GenerationStandardController {
 
 
 	public GenerationStandardController(ParameterService parameterService,
-										TransformService transformService,
 										QuestionnaireGenerateService generateQuestionnaireService) {
 		this.parameterService = parameterService;
-		this.transformService = transformService;
 		this.generateQuestionnaireService = generateQuestionnaireService;
 		this.parametrizedGenerationService = new ParameterizedGenerationService();
-	}
-
-	/**
-	 * Endpoint to generate a Lunatic XML hierarchical questionnaire from a DDI.
-	 * @param in DDI file.
-	 * @param specificTreatment Specific treatment file.
-	 * @param context Context.
-	 * @param mode Collection mode.
-	 * @return A response entity to download the output questionnaire.
-	 * @throws Exception if something wrong happens...
-	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java
-	 * (which also makes the Lunatic XML format obsolete).
-	 */
-	@Operation(
-			summary = "Generation of Lunatic XML questionnaire from DDI.",
-			description = "**The Lunatic XML format is now deprecated.** " +
-					"Generation of a Lunatic XML hierarchical questionnaire from the given DDI " +
-					"with standard parameters."
-	)
-	@PostMapping(value="{context}/lunatic-xml/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Deprecated(since = "2.0.0")
-	public ResponseEntity<StreamingResponseBody> generateLunaticXML(
-			//
-			@RequestPart(value="in") MultipartFile in,
-			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			//
-			@PathVariable Context context,
-			@PathVariable Mode mode) throws Exception {
-
-		log.info(
-				"Received request to transform DDI to a Lunatic XML questionnaire with context '{}' and mode '{}' " +
-						"using standard parameters.",
-				context, mode);
-
-		ByteArrayOutputStream enoOutput = generateQuestionnaireService.generateQuestionnaireFile(
-				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
-
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.xml");
-	}
-
-	/**
-	 * Endpoint to generate a Lunatic JSON flat questionnaire from a DDI.
-	 * @param in DDI file.
-	 * @param specificTreatment Specific treatment file.
-	 * @param context Context.
-	 * @param mode Collection mode.
-	 * @return A response entity to download the output questionnaire.
-	 * @throws Exception if something wrong happens...
-	 * @deprecated Lunatic questionnaire generation is now supported by Eno Java.
-	 */
-	@Operation(
-			summary = "Generation of Lunatic questionnaire from DDI.",
-			description = "**This endpoint has been migrated in the Eno 'Java' web-service.** " +
-					"Generation of a Lunatic questionnaire from the given DDI with standard parameters. " +
-					"The parameter `parsingXpathVTL` must be `true` if expressions are written in Xpath in the DDI."
-	)
-	@PostMapping(value="{context}/lunatic-json/{mode}", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Deprecated(since = "2.0.0")
-	public ResponseEntity<StreamingResponseBody> generateLunatic(
-			//
-			@RequestPart(value="in") MultipartFile in,
-			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment,
-			//
-			@PathVariable Context context,
-			@PathVariable Mode mode) throws Exception {
-
-		log.info(
-				"Received request to transform DDI to a Lunatic (json) questionnaire with context '{}' and mode '{}' " +
-						"using standard parameters.",
-				context, mode);
-
-		ByteArrayOutputStream enoTemp = generateQuestionnaireService.generateQuestionnaireFile(
-				context, OutFormat.LUNATIC_XML, mode, in, null, specificTreatment);
-
-		log.info("Transform Lunatic XML hierarchical to Lunatic JSON flat");
-		ByteArrayOutputStream enoOutput = transformService.XMLLunaticToJSONLunaticFlat(new ByteArrayInputStream(enoTemp.toByteArray()));
-		enoTemp.close();
-
-		return ResponseUtils.generateResponseFromOutputStream(enoOutput, "lunatic-questionnaire.json");
 	}
 
 	@Operation(
