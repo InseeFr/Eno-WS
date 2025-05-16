@@ -33,7 +33,6 @@ public class GenerationCustomController {
 
 	// Eno core service
 	private final MultiModelService multiModelService = new MultiModelService();
-	private final ParameterizedGenerationService parametrizedGenerationService = new ParameterizedGenerationService();
 	private final ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 
     public GenerationCustomController(ParameterService parameterService) {
