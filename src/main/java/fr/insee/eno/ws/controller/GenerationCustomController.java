@@ -35,11 +35,11 @@ public class GenerationCustomController {
 	private final MultiModelService multiModelService = new MultiModelService();
 	private final ValorizatorParameters valorizatorParameters = new ValorizatorParametersImpl();
 
-    public GenerationCustomController(ParameterService parameterService) {
+	public GenerationCustomController(ParameterService parameterService) {
         this.parameterService = parameterService;
     }
 
-    @Operation(
+	@Operation(
 			summary = "Generation of Xforms questionnaire from DDI.",
 			description = "Generation of a Xforms questionnaire from the given DDI with default business " +
 					"pipeline, using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
@@ -103,7 +103,6 @@ public class GenerationCustomController {
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
 		log.info("Received request to transform DDI to a FO questionnaire.");
-
 
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
 
