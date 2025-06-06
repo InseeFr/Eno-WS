@@ -22,6 +22,6 @@ public class EnoExceptionController {
 
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Object> exception(Exception exception) {
-		return new ResponseEntity<>("Unknown error during generation: "+exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("Unknown error during generation ("+exception.getClass()+") : "+exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

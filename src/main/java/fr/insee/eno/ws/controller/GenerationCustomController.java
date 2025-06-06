@@ -105,8 +105,12 @@ public class GenerationCustomController {
 		log.info("Received request to transform DDI to a FO questionnaire.");
 
 		InputStream paramsIS = params != null ? params.getInputStream() : null;
+		if (paramsIS == null)
+			throw new EnoParametersException("Parameters file's content is null.");
 
+		log.debug("Parsing XML parameters file...");
 		ENOParameters enoParameters = valorizatorParameters.getParameters(paramsIS);
+		log.debug("XML parameters parsed.");
 		Context context = enoParameters.getParameters().getContext();
 		Mode mode = enoParameters.getMode();
 
