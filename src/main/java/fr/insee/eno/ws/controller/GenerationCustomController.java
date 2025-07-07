@@ -91,7 +91,7 @@ public class GenerationCustomController {
 	@Operation(
 			summary = "Generation of FO questionnaire from DDI.",
 			description = "Generation of a FO questionnaire from the given DDI with default pipeline, " +
-					"using a custom parameters file _(required)_, a metadata file _(required)_ and a " +
+					"using a custom parameters file _(required)_, a metadata file _(optional)_ and a " +
 					"specific treatment file _(optional)_."
 	)
 	@PostMapping(value = "ddi-2-fo",
@@ -99,7 +99,7 @@ public class GenerationCustomController {
 	public ResponseEntity<StreamingResponseBody> generateFOCustomParams(
 			@RequestPart(value="in") MultipartFile in,
 			@RequestPart(value="params") MultipartFile params,
-			@RequestPart(value="metadata") MultipartFile metadata,
+			@RequestPart(value="metadata", required = false) MultipartFile metadata,
 			@RequestPart(value="specificTreatment",required=false) MultipartFile specificTreatment) throws Exception {
 
 		log.info("Received request to transform DDI to a FO questionnaire.");
