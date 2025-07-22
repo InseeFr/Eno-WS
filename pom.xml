@@ -27,7 +27,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<!-- Dependencies -->
-		<eno.version>2.16.1</eno.version>
+		<eno.version>2.18.0</eno.version>
 		<lunatic-model.version>2.7.2</lunatic-model.version>
 		<javax.activation.version>1.2.0</javax.activation.version>
 		<jaxb-api.version>2.3.1</jaxb-api.version>
