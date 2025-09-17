@@ -53,7 +53,7 @@ jobs:
         id: check-tag
         run: |
           if ! [[ "${{ steps.version.outputs.version }}" =~ ^2.[0-9]+.[0-9]+$ ]]; then
-            echo "Version on v2-main ${{ steps.version.outputs.version }} branch does not match the format 2.Y.Z"
+            echo "Version on main ${{ steps.version.outputs.version }} branch does not match the format 2.Y.Z"
             exit 1
           fi
 
@@ -75,7 +75,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Build Eno-WS
-        run: mvn --batch-mode clean package --no-transfer-progress
+        run: mvn clean process-classes package install --no-transfer-progress -DskipTests=true
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
@@ -99,7 +99,7 @@ jobs:
 
       - name: Get previous v2 release tag
         id: previousTag
-        run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^v2\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
+        run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^2\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
 
       - name: Print previous tag version
         run: echo ${{ steps.previousTag.outputs.previousTag }}
@@ -107,7 +107,7 @@ jobs:
       - name: Create tag
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: "v${{ needs.check-version.outputs.release-version }}"
+          tag: "${{ needs.check-version.outputs.release-version }}"
 
       - name: Print new tag version
         run: echo ${{ needs.check-version.outputs.release-version }}
@@ -126,15 +126,15 @@ jobs:
       - name: Create release
         uses: ncipollo/release-action@v1 # This action allows to publish non 'latest' releases
         with:
-          tag: "v${{ needs.check-version.outputs.release-version }}"
+          tag: "${{ needs.check-version.outputs.release-version }}"
           commit: ${{ github.head_ref || github.ref }}
-          name: "v${{ needs.check-version.outputs.release-version }}"
+          name: "${{ needs.check-version.outputs.release-version }}"
           body: ${{steps.changelog.outputs.changes}}
           makeLatest: "false"
 
       - name: Commit changelog file
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: "v2-main"
+          branch: "main"
           commit_message: "docs(changelog): ${{ needs.check-version.outputs.release-version }} update [skip ci]"
           file_pattern: "doc/releases.md"
