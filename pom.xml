@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <eno.version>2.20.1-SNAPSHOT.0</eno.version>
+   <eno.version>2.20.2</eno.version>
     <java.version>17</java.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>  

@@ -482,7 +482,12 @@
 		<xsl:variable name="is-dynamic-array-static" select="$maximum-lines-number != '' and not(enofo:get-external-variables($source-context)//*)"/>
 		<xsl:variable name="roster-minimum-lines" as="xs:integer">
 			<xsl:choose>
-				<xsl:when test="$maximum-lines-number != ''">
+				<xsl:when test="$is-dynamic-array-static">
+				<!-- Prise en compte du cas esa-2025-a00 :
+				Un maximum est indiqué pour les tableaux dynamiques personnalisés, mais il ne faut pas en tenir compte.
+				Moralité : le maximum indiqué dans le DDI n'est à utiliser que lorsque le tableau dynamique n'a pas de variable externe associée 
+				(les 2 tableaux liés aux restructurations l'utilisent bien, eux)
+				-->
 					<xsl:value-of select="$maximum-lines-number"/>
 				</xsl:when>
 				<xsl:when test="number(enofo:get-minimum-lines($source-context)) &gt; $roster-defaultsize">
