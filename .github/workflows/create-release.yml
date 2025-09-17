@@ -47,7 +47,7 @@ jobs:
         id: check-tag-exists
         uses: mukunku/tag-exists-action@v1.6.0
         with:
-          tag: "v${{ steps.version.outputs.version }}"
+          tag: "${{ steps.version.outputs.version }}"
 
       - name: Tag verification
         id: check-tag
@@ -58,7 +58,7 @@ jobs:
           fi
 
           if [[ "${{ steps.check-tag-exists.outputs.exists }}" == "true" ]]; then
-            echo "Nothing to tag/release, the tag v${{ steps.version.outputs.version }} already exists"
+            echo "Nothing to tag/release, the tag ${{ steps.version.outputs.version }} already exists"
             exit 1
           fi
 
@@ -116,7 +116,7 @@ jobs:
         id: changelog
         uses: requarks/changelog-action@v1
         with:
-          fromTag: "v${{ needs.check-version.outputs.release-version }}"
+          fromTag: "${{ needs.check-version.outputs.release-version }}"
           toTag: ${{ steps.previousTag.outputs.previousTag }}
           excludeTypes: docs,style,chore,other
           token: ${{ secrets.GITHUB_TOKEN }}
