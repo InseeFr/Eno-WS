@@ -20,12 +20,12 @@
     </Pipeline>
     <Mode>papi</Mode>
     <Parameters>
-
-
         <Languages>
             <Language>fr</Language>
         </Languages>
-
+        <fo-parameters>
+            <InitializeAllVariables>false</InitializeAllVariables>
+        </fo-parameters>
     </Parameters>
 
 </ENOParameters>
