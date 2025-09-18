@@ -138,7 +138,7 @@ jobs:
           commit: ${{ github.head_ref || github.ref }}
           name: "${{ needs.check-version.outputs.release-version }}"
           body: ${{steps.changelog.outputs.changes}}
-          makeLatest: "false"
+          makeLatest: "true"
 
       - name: Commit changelog file
         uses: stefanzweifel/git-auto-commit-action@v5
