@@ -8,7 +8,6 @@ on:
       - "docs/**"
       - "doc/**"
       - "README.md"
-      - ".github/**"
 
 env:
   JAVA_VERSION: "17"
@@ -29,12 +28,21 @@ jobs:
         run: mvn test --no-transfer-progress
 
   check-version:
-    needs: test
     runs-on: ubuntu-latest
     outputs:
       release-version: ${{ steps.version.outputs.version }}
+      previous-version: ${{ steps.previousTag.outputs.previousTag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0 # needed to get previous tag
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Get version
         id: version
@@ -42,6 +50,13 @@ jobs:
 
       - name: Print version
         run: echo ${{ steps.version.outputs.version }}
+
+      - name: Get previous release tag
+        id: previousTag
+        run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^2\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
+
+      - name: Print previous tag version
+        run: echo ${{ steps.previousTag.outputs.previousTag }}
 
       - name: Check tag existence
         id: check-tag-exists
@@ -63,7 +78,7 @@ jobs:
           fi
 
   publish-docker:
-    needs: [check-version]
+    needs: [test, check-version]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -95,29 +110,22 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get previous v2 release tag
-        id: previousTag
-        run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^2\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
-
-      - name: Print previous tag version
-        run: echo ${{ steps.previousTag.outputs.previousTag }}
+          fetch-tags: true
 
       - name: Create tag
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ needs.check-version.outputs.release-version }}"
 
-      - name: Print new tag version
-        run: echo ${{ needs.check-version.outputs.release-version }}
+      - name: Print tag upgrade
+        run: echo "From ${{ needs.check-version.outputs.previous-version }} to ${{ needs.check-version.outputs.release-version }}"
 
       - name: Create release note
         id: changelog
         uses: requarks/changelog-action@v1
         with:
           fromTag: "${{ needs.check-version.outputs.release-version }}"
-          toTag: ${{ steps.previousTag.outputs.previousTag }}
+          toTag: "${{ needs.check-version.outputs.previous-version }}"
           excludeTypes: docs,style,chore,other
           token: ${{ secrets.GITHUB_TOKEN }}
           writeToFile: true
