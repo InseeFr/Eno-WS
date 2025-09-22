@@ -336,6 +336,19 @@
         <xsl:sequence select="$tempLabel"/>
     </xsl:function>
 
+    <xsl:function name="enofo:get-flowcontrol-label">
+        <xsl:param name="context" as="item()"/>
+        <xsl:param name="language"/>
+        <xsl:param name="loop-navigation" as="node()"/>
+        <xsl:variable name="tempLabel">
+            <xsl:apply-templates select="enoddi:get-flowcontrol-label($context,$language)" mode="enofo:format-label">
+                <xsl:with-param name="label-variables" select="enoddi:get-flowcontrol-label-conditioning-variables($context,$language)" tunnel="yes"/>
+                <xsl:with-param name="loop-navigation" select="$loop-navigation" as="node()" tunnel="yes"/>
+            </xsl:apply-templates>
+        </xsl:variable>
+        <xsl:sequence select="$tempLabel"/>
+    </xsl:function>    
+
     <xsl:template match="*" mode="enofo:format-label" priority="-1">
         <xsl:copy>
             <xsl:apply-templates select="node()|@*" mode="enofo:format-label"/>

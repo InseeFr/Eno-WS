@@ -121,7 +121,7 @@
 				<xsl:text>&#xd;#end&#xd;</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:variable name="label" select="enofo:get-flowcontrol-label($source-context,$languages[1])"/>
+				<xsl:variable name="label" select="enofo:get-flowcontrol-label($source-context, $languages[1],$loop-navigation)"/>
 				<xsl:if test="$label != ''">
 					<fo:block page-break-inside="avoid" keep-with-previous="always">
 						<xsl:copy-of select="$style-parameters/filter-block/@*"/>
@@ -485,7 +485,7 @@
 				<xsl:when test="$is-dynamic-array-static">
 				<!-- Prise en compte du cas esa-2025-a00 :
 				Un maximum est indiqué pour les tableaux dynamiques personnalisés, mais il ne faut pas en tenir compte.
-				Moralité : le maximum indiqué dans le DDI n'est à utiliser que lorsque le tableau dynamique n'a pas de variable externe associée 
+				Moralité : le maximum indiqué dans le DDI n'est à utiliser que lorsque le tableau dynamique n'a pas de variable externe associée
 				(les 2 tableaux liés aux restructurations l'utilisent bien, eux)
 				-->
 					<xsl:value-of select="$maximum-lines-number"/>
@@ -955,6 +955,7 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<xsl:variable name="variable-personalization-begin" select="concat('#{if}(',$variable-name,')',$variable-name,'#{else}')"/>
+		<xsl:variable name="suffix" select="enofo:get-suffix($source-context, $languages[1])"/>
 
 		<xsl:if test="$label != ''">
 			<xsl:choose>
@@ -1023,7 +1024,9 @@
 										<xsl:copy-of select="$optical-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<xsl:if test="$suffix != ''">
+									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+								</xsl:if>
 							</fo:block>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1039,7 +1042,9 @@
 										<xsl:copy-of select="$optical-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<xsl:if test="$suffix != ''">
+									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+								</xsl:if>
 							</fo:block>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -1084,7 +1089,9 @@
 										<xsl:copy-of select="$manual-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<xsl:if test="$suffix != ''">
+									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+								</xsl:if>
 							</fo:block>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1100,7 +1107,9 @@
 										<xsl:copy-of select="$manual-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<xsl:if test="$suffix != ''">
+									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+								</xsl:if>
 							</fo:block>
 						</xsl:otherwise>
 					</xsl:choose>
