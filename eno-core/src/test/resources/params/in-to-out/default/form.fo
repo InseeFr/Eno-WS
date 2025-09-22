@@ -349,7 +349,7 @@
                          font-size="10pt"
                          padding="1mm"
                          text-align="justify">#{if}($!{SEASON_NUMBER})$!{SEASON_NUMBER}#{else}<fo:external-graphic src="mask_number.png"/>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                  <fo:external-graphic src="mask_number.png"/>#{end}
                </fo:block>
             </fo:block>
          </fo:block>
@@ -398,7 +398,7 @@
                          text-align="justify">#{if}($!{AUDIENCE_SHARE})$!{AUDIENCE_SHARE}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                  <fo:external-graphic src="mask_number.png"/>#{end}
                </fo:block>
             </fo:block>
          </fo:block>
@@ -1451,7 +1451,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1486,7 +1486,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1534,7 +1534,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1569,7 +1569,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1604,7 +1604,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1652,7 +1652,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -1687,7 +1687,7 @@
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
                                  <fo:inline> , </fo:inline>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>%</fo:inline>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">%</fo:inline>
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2715,7 +2715,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2745,7 +2745,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2775,7 +2775,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2805,7 +2805,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2835,7 +2835,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2865,7 +2865,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2895,7 +2895,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2925,7 +2925,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2955,7 +2955,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -2985,7 +2985,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3015,7 +3015,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3045,7 +3045,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3075,7 +3075,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3105,7 +3105,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3135,7 +3135,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3165,7 +3165,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3195,7 +3195,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3225,7 +3225,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3255,7 +3255,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3285,7 +3285,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3315,7 +3315,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3345,7 +3345,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3375,7 +3375,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3405,7 +3405,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3435,7 +3435,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3465,7 +3465,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3495,7 +3495,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3525,7 +3525,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3555,7 +3555,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3585,7 +3585,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3615,7 +3615,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3645,7 +3645,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3675,7 +3675,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3705,7 +3705,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3735,7 +3735,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3765,7 +3765,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3795,7 +3795,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3825,7 +3825,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3855,7 +3855,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3885,7 +3885,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3915,7 +3915,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3945,7 +3945,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -3975,7 +3975,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4005,7 +4005,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4035,7 +4035,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4065,7 +4065,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4095,7 +4095,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4125,7 +4125,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4155,7 +4155,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4185,7 +4185,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4215,7 +4215,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4245,7 +4245,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4275,7 +4275,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4305,7 +4305,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4335,7 +4335,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4365,7 +4365,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4395,7 +4395,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4425,7 +4425,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4455,7 +4455,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4485,7 +4485,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4515,7 +4515,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4545,7 +4545,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4575,7 +4575,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4605,7 +4605,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4635,7 +4635,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4665,7 +4665,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4695,7 +4695,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4725,7 +4725,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4755,7 +4755,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4785,7 +4785,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4815,7 +4815,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4845,7 +4845,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4875,7 +4875,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4905,7 +4905,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4935,7 +4935,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4965,7 +4965,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -4995,7 +4995,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5025,7 +5025,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5055,7 +5055,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5085,7 +5085,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5115,7 +5115,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5145,7 +5145,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5175,7 +5175,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5205,7 +5205,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5235,7 +5235,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5265,7 +5265,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5295,7 +5295,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5325,7 +5325,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5355,7 +5355,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5385,7 +5385,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5415,7 +5415,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS12}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5445,7 +5445,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS22}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5475,7 +5475,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS32}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5505,7 +5505,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS42}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5535,7 +5535,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS52}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5565,7 +5565,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS62}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5595,7 +5595,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS72}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5625,7 +5625,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS82}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5655,7 +5655,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS92}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
@@ -5685,7 +5685,7 @@
                                         font-size="10pt"
                                         padding="1mm">#{if}($!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102})$!{FAVOURITE_CHARACTERS-0-FAVOURITE_CHARACTERS102}#{else}<fo:external-graphic src="mask_number.png"/>
                                  <fo:external-graphic src="mask_number.png"/>
-                                 <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline/>
+                                 <fo:external-graphic src="mask_number.png"/>#{end}
                               </fo:block>
                            </fo:block>
                         </fo:block>
