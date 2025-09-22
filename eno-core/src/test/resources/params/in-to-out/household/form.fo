@@ -1757,7 +1757,7 @@
                          padding="1mm"
                          text-align="justify">#{if}($!{DUREECHOM})$!{DUREECHOM}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>mois</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">mois</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3681,7 +3681,7 @@
                          padding="1mm"
                          text-align="justify">#{if}($!{TPS_PREP_VAC})$!{TPS_PREP_VAC}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3716,7 +3716,7 @@
                          text-align="justify">#{if}($!{TPS_PREP_ETE})$!{TPS_PREP_ETE}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3842,7 +3842,7 @@
                          padding="1mm"
                          text-align="justify">#{if}($!{NBJOURHEBDO})$!{NBJOURHEBDO}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3918,7 +3918,7 @@
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3952,7 +3952,7 @@
                          text-align="justify">#{if}($!{NBRTT})$!{NBRTT}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -3998,7 +3998,7 @@
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -4032,7 +4032,7 @@
                          text-align="justify">#{if}($!{NBCET})$!{NBCET}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -4068,7 +4068,7 @@
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -4114,7 +4114,7 @@
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -4148,7 +4148,7 @@
                          text-align="justify">#{if}($!{JOURSRECUP})$!{JOURSRECUP}#{else}<fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>
@@ -4206,7 +4206,7 @@
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:external-graphic src="mask_number.png"/>
                   <fo:inline> , </fo:inline>
-                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline>jour(s)</fo:inline>
+                  <fo:external-graphic src="mask_number.png"/>#{end}<fo:inline padding-before="2mm">jour(s)</fo:inline>
                </fo:block>
             </fo:block>
          </fo:block>

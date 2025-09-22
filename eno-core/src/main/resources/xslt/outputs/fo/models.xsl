@@ -1023,7 +1023,7 @@
 										<xsl:copy-of select="$optical-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<fo:inline padding-before="2mm"><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
 							</fo:block>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1039,7 +1039,7 @@
 										<xsl:copy-of select="$optical-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<fo:inline padding-before="2mm"><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
 							</fo:block>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -1084,7 +1084,7 @@
 										<xsl:copy-of select="$manual-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<fo:inline padding-before="2mm"><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
 							</fo:block>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1100,7 +1100,7 @@
 										<xsl:copy-of select="$manual-content"/>
 									</xsl:otherwise>
 								</xsl:choose>
-								<fo:inline><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
+								<fo:inline padding-before="2mm"><xsl:value-of select="enofo:get-suffix($source-context, $languages[1])"/></fo:inline>
 							</fo:block>
 						</xsl:otherwise>
 					</xsl:choose>
