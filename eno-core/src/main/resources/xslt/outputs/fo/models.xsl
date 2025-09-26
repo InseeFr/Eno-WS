@@ -1025,7 +1025,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 								<xsl:if test="$suffix != ''">
-									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+									<fo:inline padding-start="2mm"><xsl:value-of select="$suffix"/></fo:inline>
 								</xsl:if>
 							</fo:block>
 						</xsl:when>
@@ -1043,7 +1043,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 								<xsl:if test="$suffix != ''">
-									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+									<fo:inline padding-start="2mm"><xsl:value-of select="$suffix"/></fo:inline>
 								</xsl:if>
 							</fo:block>
 						</xsl:otherwise>
@@ -1090,7 +1090,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 								<xsl:if test="$suffix != ''">
-									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+									<fo:inline padding-start="2mm"><xsl:value-of select="$suffix"/></fo:inline>
 								</xsl:if>
 							</fo:block>
 						</xsl:when>
@@ -1108,7 +1108,7 @@
 									</xsl:otherwise>
 								</xsl:choose>
 								<xsl:if test="$suffix != ''">
-									<fo:inline padding-before="2mm"><xsl:value-of select="$suffix"/></fo:inline>
+									<fo:inline padding-start="2mm"><xsl:value-of select="$suffix"/></fo:inline>
 								</xsl:if>
 							</fo:block>
 						</xsl:otherwise>
