@@ -121,7 +121,7 @@
 				<xsl:text>&#xd;#end&#xd;</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:variable name="label" select="enofo:get-flowcontrol-label($source-context,$languages[1])"/>
+				<xsl:variable name="label" select="enofo:get-flowcontrol-label($source-context, $languages[1],$loop-navigation)"/>
 				<xsl:if test="$label != ''">
 					<fo:block page-break-inside="avoid" keep-with-previous="always">
 						<xsl:copy-of select="$style-parameters/filter-block/@*"/>

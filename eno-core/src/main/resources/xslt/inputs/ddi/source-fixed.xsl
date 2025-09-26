@@ -889,6 +889,22 @@
 
     <xd:doc>
         <xd:desc>
+            <xd:p>Defining getter get-flowcontrol-label-conditioning-variables.</xd:p>
+            <xd:p>Function that returns the list of the variables of the label of a filter.</xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:template match="d:ThenConstructReference" mode="enoddi:get-flowcontrol-label-conditioning-variables">
+        <xsl:param name="language" tunnel="yes"/>
+        <xsl:variable name="variable-list" as="xs:string *">
+            <xsl:call-template name="enoddi:variables-from-label">
+                <xsl:with-param name="label" select="eno:serialize(enoddi:get-flowcontrol-label(.,$language))"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:sequence select="$variable-list"/>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:desc>
             <xd:p>Defining getter get-computated-maximum-lines-variables.</xd:p>
             <xd:p>Function that returns the list of the variables of the ConditionForContinuation of a dynamic array.</xd:p>
         </xd:desc>
