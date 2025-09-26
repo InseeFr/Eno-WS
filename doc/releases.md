@@ -1,5 +1,16 @@
 # Eno Releases note
 
+## [2.22.0] - 2025-09-26
+### :sparkles: New Features
+- [`8e0fd43`](https://github.com/InseeFr/Eno-WS/commit/8e0fd43f8db01c9c88e46dc7c1bf2af85a744ab9) - **fo**: several improvment about fo generation *(PR [#249](https://github.com/InseeFr/Eno-WS/pull/249) by [@nsenave](https://github.com/nsenave))*
+
+### :bug: Bug Fixes
+- [`ea6a807`](https://github.com/InseeFr/Eno-WS/commit/ea6a807bf29d52371a276dec18f855198a7849eb) - **deps**: update all minor dependencies *(PR [#251](https://github.com/InseeFr/Eno-WS/pull/251) by [@renovate[bot]](https://github.com/apps/renovate))*
+
+### :construction_worker: Build System
+- [`1975bfc`](https://github.com/InseeFr/Eno-WS/commit/1975bfc1a5bf20da210ef0e1b7a62ff4704467fb) - makeLatest to true [skip ci] *(commit by [@laurentC35](https://github.com/laurentC35))*
+
+
 ## [v2.20.1] - 2025-09-17
 ### :bug: Bug Fixes
 - [`b57cad1`](https://github.com/InseeFr/Eno/commit/b57cad16a4e278e72d0ed12d470a9a0aa3348482) - **deps**: update all minor dependencies *(PR [#1335](https://github.com/InseeFr/Eno/pull/1335) by [@renovate[bot]](https://github.com/apps/renovate))*
@@ -472,3 +483,4 @@
 [v2.18.2]: https://github.com/InseeFr/Eno/compare/v2.18.1...v2.18.2
 [v2.19.0]: https://github.com/InseeFr/Eno/compare/v2.18.3...v2.19.0
 [v2.20.1]: https://github.com/InseeFr/Eno/compare/v2.20.0...v2.20.1
+[2.22.0]: https://github.com/InseeFr/Eno-WS/compare/2.21.0...2.22.0
