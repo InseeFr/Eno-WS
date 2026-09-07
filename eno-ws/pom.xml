@@ -10,7 +10,7 @@
   <artifactId>eno-ws</artifactId>
   <name>Eno - Web-Service</name>
 
-  <properties>
+	<properties>
 		<!-- Project -->
 		<final.jar.name>eno-ws</final.jar.name>
 		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
@@ -24,10 +24,10 @@
 		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<jaxb-impl.version>2.3.9</jaxb-impl.version>
 		<jaxb-core.version>4.0.9</jaxb-core.version>
-		<springdoc-openapi-ui.version>3.0.3</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>3.1.0</springdoc-openapi-ui.version>
 
 		<!-- Sonar -->
-		<jacoco.version>0.8.15</jacoco.version>	
+		<jacoco.version>0.8.15</jacoco.version>
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -35,10 +35,8 @@
 		<sonar.language>java</sonar.language>
 		<argLine>-Xms256m -Xmx512m -XX:MaxMetaspaceSize=128m -ea -Dfile.encoding=UTF-8</argLine>
 
-	  	<!-- !!! Version properties overridden from Spring Boot !!! -->
-	  	<jackson-2-bom.version>2.21.5</jackson-2-bom.version>
-	  	<jackson-bom.version>3.1.5</jackson-bom.version>
-	  <!--  <tomcat.version>11.0.22</tomcat.version> -->
+		<!-- !!! Version properties overridden from Spring Boot !!! -->
+		<tomcat.version>11.0.25</tomcat.version>
 	</properties>
 
 	<dependencies>
@@ -55,6 +53,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Eno -->
