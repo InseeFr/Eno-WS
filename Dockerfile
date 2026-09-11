@@ -1,4 +1,4 @@
-FROM eclipse-temurin:25.0.1_8-jre
+FROM eclipse-temurin:25.0.4_7-jre
 
 WORKDIR /opt/eno-ws/
 COPY ./eno-ws/target/*.jar /opt/eno-ws/eno-ws.jar
